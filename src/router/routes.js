@@ -25,6 +25,11 @@ const routes = [
     name: "Cadastrar",
     component: () => import("pages/Cadastrar.vue"),
   },
+  {
+    path: "/Test",
+    name: "Test",
+    component: () => import("pages/Test.vue"),
+  },
 
   // Always leave this as last one,
   // but you can also remove it

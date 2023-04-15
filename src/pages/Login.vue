@@ -78,7 +78,6 @@
       <div class="parceria q-pt-xl">
         <p>Deseja se tornar parceiro?</p>
         <q-btn
-          @click="login"
           type="submit"
           label="solicitar parceria"
           class="button-parc"
@@ -92,7 +91,6 @@
 <script>
 import { ref } from "vue";
 import axios from "axios";
-import { Notify } from "quasar";
 import { useQuasar } from "quasar";
 export default {
   name: "Login",
@@ -107,12 +105,6 @@ export default {
   },
 
   methods: {
-    showNotif() {
-      this.$q.notify({
-        message: "Credenciais inválidas! Tente novamente!",
-        color: "purple",
-      });
-    },
     async login() {
       console.log("clicado");
       const $q = useQuasar();
@@ -169,6 +161,7 @@ export default {
 
 .bg-login {
   z-index: 2;
+  overflow: hidden;
 }
 .circles li {
   position: absolute;
@@ -178,7 +171,7 @@ export default {
   height: 20px;
   background: rgba(255, 255, 255, 0.2);
   animation: animate 10s linear infinite;
-  bottom: -10px;
+  bottom: 100px;
   overflow: hidden;
 }
 
@@ -192,6 +185,7 @@ export default {
 
 .bg-img {
   margin: 0 auto; /* centraliza horizontalmente */
+  overflow: hidden;
 }
 .circles li:nth-child(2) {
   left: 10%;
@@ -207,6 +201,8 @@ export default {
   width: 20px;
   height: 20px;
   animation-delay: 4s;
+  overflow: hidden;
+  
 }
 
 .circles li:nth-child(4) {
@@ -215,6 +211,7 @@ export default {
   height: 60px;
   animation-delay: 0s;
   animation-duration: 18s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(5) {
@@ -222,6 +219,7 @@ export default {
   width: 20px;
   height: 20px;
   animation-delay: 0s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(6) {
@@ -229,6 +227,7 @@ export default {
   width: 110px;
   height: 110px;
   animation-delay: 3s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(7) {
@@ -236,6 +235,7 @@ export default {
   width: 150px;
   height: 150px;
   animation-delay: 0s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(8) {
@@ -244,6 +244,7 @@ export default {
   height: 25px;
   animation-delay: 15s;
   animation-duration: 10s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(9) {
@@ -252,6 +253,7 @@ export default {
   height: 15px;
   animation-delay: 12s;
   animation-duration: 6s;
+  overflow: hidden;
 }
 
 .circles li:nth-child(10) {
@@ -260,6 +262,7 @@ export default {
   height: 150px;
   animation-delay: 0s;
   animation-duration: 11s;
+  overflow: hidden;
 }
 
 @keyframes animate {
@@ -267,12 +270,14 @@ export default {
     transform: translateY(0) rotate(0deg);
     opacity: 1;
     border-radius: 0;
+    overflow: hidden;
   }
 
   100% {
     transform: translateY(-1000px) rotate(720deg);
     opacity: 0;
     border-radius: 50%;
+    overflow: hidden;
   }
 }
 .half {
@@ -285,6 +290,7 @@ export default {
 
 hr {
   width: 70%;
+  overflow: hidden;
 }
 
 .button-parc {
@@ -302,4 +308,5 @@ hr {
   color: #0775f3;
   cursor: pointer;
 }
+
 </style>
