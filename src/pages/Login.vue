@@ -18,7 +18,7 @@
         <li></li>
       </ul>
 
-      <div class="window-height window-width row items-center">
+      <div class="asset window-height window-width row items-center">
         <div class="bg-login">
           <img src="~assets/logo-login.svg" />
         </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
   <div class="half">
-    <div class="">
+    <div class="q-pt-xl">
       <div class="my-card q-pa-md card" align="center">
         <h4>Fazer Login</h4>
         <div class="q-gutter-md" style="width: 360px">
@@ -35,13 +35,16 @@
             type="email"
             v-model="email"
             required
+            :error-message="emailErrorMessage"
+            :error="!validarEmail(email) && email !== ''"
             label="E-mail"
           />
-          <q-space></q-space>
           <q-input
             filled
             v-model="senha"
             required
+            :error="!validarSenha(senha) && senha !== ''"
+            :error-message="senhaErrorMessage"
             label="Senha"
             :type="isPwd ? 'password' : 'text'"
           >
@@ -53,15 +56,16 @@
               />
             </template>
           </q-input>
-          <div style="margin-left: 50%">
+          <div style="margin-left: 60%">
             <p class="textLink">Esqueceu a senha?</p>
           </div>
           <q-btn
-            style="width: 310px; height: 25px"
+            style="width: 310px; height: 35px"
             color="primary"
             @click="login"
             type="submit"
             label="entrar"
+            :disable="!validarEmail(email) || !validarSenha(senha)"
           >
             <div v-if="isLoading">
               <q-spinner-facebook color="white" size="20px" />
@@ -69,13 +73,13 @@
             </div>
           </q-btn>
         </div>
-        <q-row class="q-ma-md">
+        <div class="q-ma-md">
           <p>Ainda não possui uma conta?</p>
-          <q-col class="textLink" @click="cadastrarPage">Cadastrar-se</q-col>
-        </q-row>
+          <p class="textLink" @click="cadastrarPage">Cadastrar-se</p>
+        </div>
       </div>
       <hr />
-      <div class="parceria q-pt-xl">
+      <div class="parceria q-pt-sm">
         <p>Deseja se tornar parceiro?</p>
         <q-btn
           type="submit"
@@ -101,10 +105,22 @@ export default {
       senha: "",
       isPwd: ref(true),
       isLoading: false,
+      senhaErrorMessage: "Por favor, insira uma senha válida!",
+      emailErrorMessage: "Por favor, insira um e-mail válido!"
     };
   },
 
   methods: {
+    validarEmail(email) {
+      const regex = /\S+@\S+\.\S+/;
+      return regex.test(email);
+    },
+
+    validarSenha(senha) {
+      return senha.length >= 8;
+    },
+
+
     async login() {
       console.log("clicado");
       const $q = useQuasar();
@@ -129,7 +145,7 @@ export default {
       }
     },
     cadastrarPage() {
-      console.log('lcicado')
+      console.log("lcicado");
       this.$router.push("/cadastrar");
     },
   },
@@ -148,7 +164,6 @@ export default {
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   overflow: hidden;
 }
-
 
 .circles {
   top: 0;
@@ -185,8 +200,8 @@ export default {
 
 .bg-img {
   margin: 0 auto; /* centraliza horizontalmente */
-  overflow: hidden;
 }
+
 .circles li:nth-child(2) {
   left: 10%;
   width: 20px;
@@ -202,7 +217,6 @@ export default {
   height: 20px;
   animation-delay: 4s;
   overflow: hidden;
-  
 }
 
 .circles li:nth-child(4) {
@@ -308,5 +322,4 @@ hr {
   color: #0775f3;
   cursor: pointer;
 }
-
 </style>

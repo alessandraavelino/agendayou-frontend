@@ -27,9 +27,9 @@
   </div>
   <div class="half">
     <div class="">
-      <div class="my-card q-pa-md card" align="center">
-        <h4>Fazer Cadastro</h4>
-        <div class="q-gutter-md" style="width: 660px">
+      <div class="my-card q-pa-sm card" align="center">
+        <h5>Fazer Cadastro</h5>
+        <div class="q-gutter-sm" style="width: 660px">
           <q-input
             filled
             type="text"
@@ -41,10 +41,14 @@
             <div class="col" style="padding-right: 10px">
               <q-input
                 filled
-                type="number"
+                type="number_format"
+                name="cpf"
+                pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})"
                 v-model="fields.cpf"
                 required
                 label="CPF"
+                :error-message="CpfErrorMessage"
+                :error="!validarCpf(fields.cpf) && fields.cpf !== ''"
               />
             </div>
             <div class="col">
@@ -55,10 +59,13 @@
             <div class="col" style="padding-right: 10px">
               <q-input
                 filled
-                type="number"
+                type="cep"
                 v-model="fields.cep"
                 required
                 label="CEP"
+                pattern="\d{5}-\d{3}"
+                :error-message="cepErrorMessage"
+                :error="!validarCep(fields.cep) && fields.cep !== ''"
               />
             </div>
             <div class="col">
@@ -112,15 +119,23 @@
                 v-model="fields.email"
                 required
                 label="E-mail"
+                :error-message="emailErrorMessage"
+                :error="!validarEmail(fields.email) && fields.email !== ''"
               />
             </div>
             <div class="col">
               <q-input
                 filled
-                type="number"
+                type="tel"
                 v-model="fields.telefone"
                 required
                 label="Telefone"
+                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                placeholder="(DD) XXXXX-XXXX"
+                :error="
+                  !validarTelefone(fields.telefone) && fields.telefone !== ''
+                "
+                :error-message="senhaIgualMessage"
               />
             </div>
           </div>
@@ -131,6 +146,8 @@
                 v-model="fields.senha"
                 required
                 label="Senha"
+                :error="!validarSenha(fields.senha) && fields.senha !== ''"
+                :error-message="senhaErrorMessage"
                 :type="isPwd ? 'password' : 'text'"
               >
               </q-input>
@@ -142,6 +159,11 @@
                 required
                 label="Confirmar senha"
                 :type="isPwd ? 'password' : 'text'"
+                :error="
+                  !validarSenhaIgual(fields.senha, fields.confirmarSenha) &&
+                  fields.confirmarSenha !== ''
+                "
+                :error-message="senhaIgualMessage"
               >
                 <template v-slot:append>
                   <q-icon
@@ -160,6 +182,7 @@
             @click="cadastrar"
             type="submit"
             label="cadastrar-se"
+            :disable="!validarEmail(fields.email) || !validarSenha(fields.senha) || !validarCep(fields.cep) || !validarCpf(fields.cpf) || !validarTelefone(fields.telefone)"
           >
             <div v-if="isLoading">
               <q-spinner-facebook color="white" size="20px" />
@@ -199,6 +222,11 @@ export default {
         senha: "",
         confirmarSenha: "",
       },
+      cepErrorMessage: "CEP inválido!",
+      CpfErrorMessage: "CPF inválido!",
+      senhaIgualMessage: "As senhas digitadas não coincidem!",
+      senhaErrorMessage: "A senha deve ter pelo menos 8 caractéres.",
+      emailErrorMessage: "Por favor, insira um e-mail válido.",
       optionsEstado: [],
       optionsCidade: [],
 
@@ -211,6 +239,60 @@ export default {
     await this.getEstado();
   },
   methods: {
+    validarCpf(cpf) {
+      cpf = cpf.replace(/\D/g, ""); // remover caracteres não numéricos
+      if (cpf.length !== 11) return false; // verificar se tem 11 dígitos
+
+      // calcular primeiro dígito verificador
+      let soma = 0;
+      for (let i = 0; i < 9; i++) {
+        soma += parseInt(cpf.charAt(i)) * (10 - i);
+      }
+      let resto = soma % 11;
+      let digitoVerificador1 = resto < 2 ? 0 : 11 - resto;
+
+      // calcular segundo dígito verificador
+      soma = 0;
+      for (let i = 0; i < 10; i++) {
+        soma += parseInt(cpf.charAt(i)) * (11 - i);
+      }
+      resto = soma % 11;
+      let digitoVerificador2 = resto < 2 ? 0 : 11 - resto;
+
+      // verificar se os dígitos verificadores correspondem
+      if (
+        parseInt(cpf.charAt(9)) !== digitoVerificador1 ||
+        parseInt(cpf.charAt(10)) !== digitoVerificador2
+      ) {
+        return false;
+      }
+      return true;
+    },
+
+    validarTelefone(telefone) {
+      const telefoneRegex = /^(\(\d{2}\)\s)?\d{4,5}-\d{4}$/;
+      return telefoneRegex.test(telefone);
+    },
+
+    validarEmail(email) {
+      const regex = /\S+@\S+\.\S+/;
+      return regex.test(email);
+    },
+    validarSenha(senha) {
+      return senha.length >= 8;
+    },
+    validarSenhaIgual(senha, confirm) {
+      return senha === confirm;
+    },
+    validarCep(cep) {
+      const cepRegex = /^[0-9]{8}$/; // Expressão regular para validar CEPs com 8 dígitos
+      if (!cepRegex.test(cep)) {
+        // CEP inválido
+        return false;
+      }
+      // CEP válido
+      return true;
+    },
     async cadastrar() {
       const $q = useQuasar();
       try {
@@ -223,14 +305,17 @@ export default {
           cpf: this.fields.cpf,
           telefone: this.fields.telefone,
           endereco: {
-            cep: this.fields.cpf,
+            cep: this.fields.cep,
             estado: this.fields.estado.label,
             cidade: this.fields.cidade.label,
             bairro: this.fields.bairro,
             rua: this.fields.rua,
           },
-        }
-        const response = await axios.post("http://127.0.0.1:5000/clientes", data)
+        };
+        const response = await axios.post(
+          "http://127.0.0.1:5000/clientes",
+          data
+        );
       } catch (error) {
         console.log(error);
         this.$q.notify({
