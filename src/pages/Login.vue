@@ -83,12 +83,89 @@
         <p>Deseja se tornar parceiro?</p>
         <q-btn
           type="submit"
+          @click="solicitarParceria = true"
           label="solicitar parceria"
           class="button-parc"
           rounded
         />
       </div>
     </div>
+    <q-dialog v-model="solicitarParceria" persistent>
+      <q-card>
+        <q-card-section class="bg-blue">
+          <div class="text-h6" style="color: white">Solicitar parceria</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt">
+          <div class="q-pa-md">
+            <div class="q-gutter-md" style="width: 500px">
+              <q-input v-model="parceriaFields.nome" label="Nome" />
+              <q-input
+                v-model="parceriaFields.email"
+                :error="
+                  !validarEmail(parceriaFields.email) &&
+                  parceriaFields.email !== ''
+                "
+                :error-message="emailErrorMessage"
+                label="E-mail"
+              />
+              <q-input
+                v-model="parceriaFields.cnpj"
+                :error="
+                  !validarCnpj(parceriaFields.cnpj) &&
+                  parceriaFields.cnpj !== ''
+                "
+                :error-message="cnpjErrorMessage"
+                label="CNPJ"
+              />
+              <q-input
+                v-model="parceriaFields.qtdFunc"
+                type="number"
+                label="Qtd. de Funcionários"
+              />
+              <q-input
+                :error="
+                  !validarDescricao(parceriaFields.descricao) &&
+                  parceriaFields.descricao !== ''
+                "
+                :error-message="descricaoErrorMessage"
+                v-model="parceriaFields.descricao"
+                label="Descreva o seu negócio"
+              />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="cancelar" color="red" v-close-popup />
+          <q-btn
+            flat
+            label="enviar"
+            color="primary"
+            @click="enviarSolicitacao"
+            :disable="!validarDescricao(parceriaFields.descricao) || !validarCnpj(parceriaFields.cnpj) || !validarEmail(parceriaFields.email)"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="confirmSolicitacao">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6" style="color: green">Sucesso!</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Sua solicitação de parceria foi enviada com sucesso. Nossos bot irá
+          avaliar suas informações e dentro de 24hrs, caso seja aprovado, você
+          receberá suas credenciais de acesso pelo e-mail informado.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -96,6 +173,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
+import { validate } from 'cnpj'
 export default {
   name: "Login",
 
@@ -106,7 +184,18 @@ export default {
       isPwd: ref(true),
       isLoading: false,
       senhaErrorMessage: "Por favor, insira uma senha válida!",
-      emailErrorMessage: "Por favor, insira um e-mail válido!"
+      emailErrorMessage: "Por favor, insira um e-mail válido!",
+      solicitarParceria: false,
+      confirmSolicitacao: false,
+      parceriaFields: {
+        nome: "",
+        email: "",
+        cnpj: "",
+        qtdFunc: 0,
+        descricao: "",
+      },
+      descricaoErrorMessage: "Sua descrição deve conter pelo menos 100 caractéres",
+      cnpjErrorMessage: "CNPJ inválido!"
     };
   },
 
@@ -119,7 +208,6 @@ export default {
     validarSenha(senha) {
       return senha.length >= 8;
     },
-
 
     async login() {
       console.log("clicado");
@@ -144,10 +232,50 @@ export default {
         this.isLoading = false;
       }
     },
+
+    async enviarSolicitacao() {
+      const $q = useQuasar();
+      try {
+        this.isLoading = true;
+        const response = await axios.post(
+          "http://127.0.0.1:5000/solicitarparceria",
+          {
+            nome: this.parceriaFields.nome,
+            email: this.parceriaFields.email,
+            cnpj: this.parceriaFields.cnpj,
+            qtdFunc: parseInt(this.parceriaFields.qtdFunc),
+            descricao: this.parceriaFields.descricao,
+          }
+        );
+        this.confirmSolicitacao = true;
+      } catch (error) {
+        console.log(error);
+        this.$q.notify({
+          message: "Algo deu errado! Tente novamente!",
+          color: "red",
+        });
+      } finally {
+        this.isLoading = false;
+      }
+    },
     cadastrarPage() {
       console.log("lcicado");
       this.$router.push("/cadastrar");
     },
+
+    openSolicitacaoParceria() {
+      this.solicitarParceria = true;
+    },
+    validarDescricao(descricao) {
+      return descricao.length >= 50;
+    },
+    validarCnpj(cnpj) {
+      if (validate(cnpj)) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
 };
 </script>

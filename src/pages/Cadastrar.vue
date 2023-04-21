@@ -135,7 +135,7 @@
                 :error="
                   !validarTelefone(fields.telefone) && fields.telefone !== ''
                 "
-                :error-message="senhaIgualMessage"
+                :error-message="telefoneErrorMessage"
               />
             </div>
           </div>
@@ -182,7 +182,13 @@
             @click="cadastrar"
             type="submit"
             label="cadastrar-se"
-            :disable="!validarEmail(fields.email) || !validarSenha(fields.senha) || !validarCep(fields.cep) || !validarCpf(fields.cpf) || !validarTelefone(fields.telefone)"
+            :disable="
+              !validarEmail(fields.email) ||
+              !validarSenha(fields.senha) ||
+              !validarCep(fields.cep) ||
+              !validarCpf(fields.cpf) ||
+              !validarTelefone(fields.telefone)
+            "
           >
             <div v-if="isLoading">
               <q-spinner-facebook color="white" size="20px" />
@@ -196,6 +202,25 @@
         Privacidade.
       </p>
     </div>
+  </div>
+  <div class="q-pa-md q-gutter-sm">
+    <q-btn label="Alert" color="primary" @click="alert = true" />
+
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Cadastro realizado com sucesso!</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          Seja bem-vindo(a) ao nosso sistema. É um prazer ter você aqui! Faça login para começar a agendar algum serviço.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="IR PARA LOGIN" color="primary" @click="navToLogin" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -227,11 +252,13 @@ export default {
       senhaIgualMessage: "As senhas digitadas não coincidem!",
       senhaErrorMessage: "A senha deve ter pelo menos 8 caractéres.",
       emailErrorMessage: "Por favor, insira um e-mail válido.",
+      telefoneErrorMessage: "Telefone inválido!",
       optionsEstado: [],
       optionsCidade: [],
 
       isPwd: ref(true),
       isLoading: false,
+      alert: false
     };
   },
 
@@ -315,7 +342,9 @@ export default {
         const response = await axios.post(
           "http://127.0.0.1:5000/clientes",
           data
+          
         );
+        this.alert = true
       } catch (error) {
         console.log(error);
         this.$q.notify({
@@ -363,6 +392,10 @@ export default {
         console.log(error.response.data); // aqui estamos imprimindo a propriedade 'data' da resposta do axios
       }
     },
+
+    navToLogin() {
+      this.$router.push("/Login");
+    }
   },
 };
 </script>
