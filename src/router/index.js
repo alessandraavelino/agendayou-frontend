@@ -6,18 +6,9 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
-import { checkAuth } from "src/auth";
+import { checkAuth, isAdmin } from "src/auth";
 
-/*
- * If not building with SSR mode, you can
- * directly export the Router instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Router instance.
- */
-
-export default route(function (/* { store, ssrContext } */) {
+export default route(function () {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === "history"
@@ -28,19 +19,36 @@ export default route(function (/* { store, ssrContext } */) {
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
-    // Leave this as is and make changes in quasar.conf.js instead!
-    // quasar.conf.js -> build -> vueRouterMode
-    // quasar.conf.js -> build -> publicPath
     history: createHistory(
       process.env.MODE === "ssr" ? void 0 : process.env.VUE_ROUTER_BASE
     ),
   });
 
   Router.beforeEach((to, from, next) => {
-    console.log(to);
-    if (to.meta.requiresAuth && !checkAuth()) {
-      next({ name: "Login" });
+    const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+    console.log("requires auth", requiresAuth);
+
+    const allowedUserTypes = to.matched.reduce((types, record) => {
+      if (record.meta.allowedUserTypes) {
+        types.push(...record.meta.allowedUserTypes);
+      }
+      return types;
+    }, []);
+    console.log("allowed user types", allowedUserTypes);
+
+    const userType = isAdmin(); // função que retorna o tipo de usuário logado
+    console.log("user type", userType);
+
+    if (requiresAuth && !checkAuth()) {
+      next("/Login");
+    } else if (
+      allowedUserTypes.length > 0 &&
+      !allowedUserTypes.includes(userType)
+    ) {
+      console.log("user not allowed");
+      next({ name: "Admin" });
     } else {
+      console.log("user allowed");
       next();
     }
   });

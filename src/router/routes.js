@@ -13,7 +13,23 @@ const routes = [
         component: () => import("pages/AgendarHorario.vue"),
       },
     ],
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, allowedUserTypes: ["cliente"] },
+  },
+  {
+    path: "/admin/",
+    component: () => import("layouts/LayoutAdmin.vue"),
+    children: [
+      {
+        path: "dashboard",
+        component: () => import("pages/Admin/Index.vue"),
+        name: "Dashboard",
+      },
+      {
+        path: "solicitacoes",
+        component: () => import("pages/Admin/SolicitacoesParceria.vue"),
+      },
+    ],
+    meta: { requiresAuth: true, allowedUserTypes: ["admin"] },
   },
   {
     path: "/Login",

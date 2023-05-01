@@ -13,4 +13,13 @@ export const checkAuth = () => {
   }
 };
 
+export const isAdmin = () => {
+  const tipo_pessoa = localStorage.getItem("tipo_pessoa");
+
+  if (tipo_pessoa === "admin") {
+    return tipo_pessoa;
+  } else {
+    return false;
+  }
+};
 console.log(checkAuth());

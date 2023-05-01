@@ -57,7 +57,9 @@
             </template>
           </q-input>
           <div style="margin-left: 60%">
-            <p class="textLink">Esqueceu a senha?</p>
+            <p class="textLink" @click="esqueciSenhaModal = true">
+              Esqueceu a senha?
+            </p>
           </div>
           <q-btn
             style="width: 310px; height: 35px"
@@ -143,7 +145,11 @@
             label="enviar"
             color="primary"
             @click="enviarSolicitacao"
-            :disable="!validarDescricao(parceriaFields.descricao) || !validarCnpj(parceriaFields.cnpj) || !validarEmail(parceriaFields.email)"
+            :disable="
+              !validarDescricao(parceriaFields.descricao) ||
+              !validarCnpj(parceriaFields.cnpj) ||
+              !validarEmail(parceriaFields.email)
+            "
             v-close-popup
           />
         </q-card-actions>
@@ -156,13 +162,89 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          Sua solicitação de parceria foi enviada com sucesso. Nossos bot irá
-          avaliar suas informações e dentro de 24hrs, caso seja aprovado, você
-          receberá suas credenciais de acesso pelo e-mail informado.
+          {{ mensagemConfirm }}
         </q-card-section>
 
         <q-card-actions align="right">
           <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="esqueciSenhaModal" persistent>
+      <q-card>
+        <q-card-section class="bg-blue">
+          <div class="text-h6" style="color: white">
+            Digite seu e-mail para receber o código para redefinição de senha
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt">
+          <div class="q-pa-md">
+            <div class="q-gutter-md" style="width: 500px">
+              <q-input v-model="emailRedefinir" label="E-mail" />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="cancelar" color="red" v-close-popup />
+          <q-btn
+            flat
+            label="enviar"
+            color="primary"
+            @click="enviarEmailRedefincao"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="codeRecebido" persistent>
+      <q-card>
+        <q-card-section class="bg-blue">
+          <div class="text-h6" style="color: white">
+            Insira o código que você recebeu no e-mail
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt">
+          <div class="q-pa-md">
+            <div class="q-gutter-md" style="width: 500px">
+              <q-input v-model="emailRedefinir" label="Código" />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="cancelar" color="red" v-close-popup />
+          <q-btn
+            flat
+            label="enviar"
+            color="primary"
+            @click="confirmCode"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="novaSenhaModal" persistent>
+      <q-card>
+        <q-card-section class="bg-blue">
+          <div class="text-h6" style="color: white">
+            Insira o código recebido
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt">
+          <div class="q-pa-md">
+            <div class="q-gutter-md" style="width: 500px">
+              <q-input v-model="emailRedefinir" label="E-mail" />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="cancelar" color="red" v-close-popup />
+          <q-btn flat label="enviar" color="primary" v-close-popup />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -173,7 +255,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
-import { validate } from 'cnpj'
+import { validate } from "cnpj";
 export default {
   name: "Login",
 
@@ -181,12 +263,15 @@ export default {
     return {
       email: "",
       senha: "",
+      emailRedefinir: "",
       isPwd: ref(true),
       isLoading: false,
       senhaErrorMessage: "Por favor, insira uma senha válida!",
       emailErrorMessage: "Por favor, insira um e-mail válido!",
+      esqueciSenhaModal: false,
       solicitarParceria: false,
       confirmSolicitacao: false,
+      codeRecebido: false,
       parceriaFields: {
         nome: "",
         email: "",
@@ -194,8 +279,9 @@ export default {
         qtdFunc: 0,
         descricao: "",
       },
-      descricaoErrorMessage: "Sua descrição deve conter pelo menos 100 caractéres",
-      cnpjErrorMessage: "CNPJ inválido!"
+      descricaoErrorMessage:
+        "Sua descrição deve conter pelo menos 100 caractéres",
+      cnpjErrorMessage: "CNPJ inválido!",
     };
   },
 
@@ -218,8 +304,11 @@ export default {
           email: this.email,
           senha: this.senha,
         });
+        console.log("response", response);
 
         localStorage.setItem("key", response.data.key);
+        localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
+
 
         this.$router.push("/dashboard");
       } catch (error) {
@@ -258,6 +347,53 @@ export default {
         this.isLoading = false;
       }
     },
+
+    async enviarEmailRedefincao() {
+      const $q = useQuasar();
+      try {
+        this.isLoading = true;
+        const response = await axios.post(
+          "http://127.0.0.1:5000/esquecisenha",
+          {
+            email: this.emailRedefinir,
+          }
+        );
+        this.codeRecebido = true;
+      } catch (error) {
+        console.log(error);
+        this.$q.notify({
+          message: "Algo deu errado! Tente novamente!",
+          color: "red",
+        });
+      } finally {
+        this.isLoading = false;
+      }
+    },
+    async confirmCode() {
+      const $q = useQuasar();
+      try {
+        this.isLoading = true;
+        const response = await axios.post(
+          `http://127.0.0.1:5000/solicitarparceria/${id_pessoa}`,
+          {
+            nome: this.parceriaFields.nome,
+            email: this.parceriaFields.email,
+            cnpj: this.parceriaFields.cnpj,
+            qtdFunc: parseInt(this.parceriaFields.qtdFunc),
+            descricao: this.parceriaFields.descricao,
+          }
+        );
+        this.confirmSolicitacao = true;
+      } catch (error) {
+        console.log(error);
+        this.$q.notify({
+          message: "Algo deu errado! Tente novamente!",
+          color: "red",
+        });
+      } finally {
+        this.isLoading = false;
+      }
+    },
     cadastrarPage() {
       console.log("lcicado");
       this.$router.push("/cadastrar");
@@ -266,16 +402,17 @@ export default {
     openSolicitacaoParceria() {
       this.solicitarParceria = true;
     },
+
     validarDescricao(descricao) {
       return descricao.length >= 50;
     },
     validarCnpj(cnpj) {
       if (validate(cnpj)) {
-        return true
+        return true;
       } else {
-        return false
+        return false;
       }
-    }
+    },
   },
 };
 </script>

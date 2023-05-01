@@ -204,7 +204,6 @@
     </div>
   </div>
   <div class="q-pa-md q-gutter-sm">
-    <q-btn label="Alert" color="primary" @click="alert = true" />
 
     <q-dialog v-model="alert">
       <q-card>
@@ -358,7 +357,6 @@ export default {
 
     async getEstado() {
       const estadoId = this.fields.estado.value;
-      console.log("estado val", estadoId); // [13]
       const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
       try {
         const response = await axios.get(url);

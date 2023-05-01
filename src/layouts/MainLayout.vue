@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf ">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="q-tool">
         <q-btn
           flat
           dense
@@ -24,7 +24,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above>
+    <q-drawer class="menu" v-model="leftDrawerOpen" show-if-above>
       <q-list>
         <q-item-label header> Menu </q-item-label>
 
@@ -45,7 +45,7 @@
 <script>
 import { defineComponent, ref } from "vue";
 import EssentialLink from "components/EssentialLink.vue";
-
+import { isAdmin } from "src/auth";
 const linksList = [
   {
     title: "Dashboard",
@@ -95,6 +95,7 @@ export default defineComponent({
   components: {
     EssentialLink,
   },
+
   methods: {
     logout() {
       localStorage.removeItem("key");
@@ -115,3 +116,10 @@ export default defineComponent({
   },
 });
 </script>
+
+<style>
+body {
+  background-color: rgba(249, 249, 249, 0.801);
+}
+
+</style>
