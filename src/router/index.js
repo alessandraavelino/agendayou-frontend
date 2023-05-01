@@ -6,7 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router";
 import routes from "./routes";
-import { checkAuth, isAdmin } from "src/auth";
+import { checkAuth, isAdmin, isCliente } from "src/auth";
 
 export default route(function () {
   const createHistory = process.env.SERVER
@@ -37,7 +37,9 @@ export default route(function () {
     console.log("allowed user types", allowedUserTypes);
 
     const userType = isAdmin(); // função que retorna o tipo de usuário logado
+    const userTypeCliente = isCliente();
     console.log("user type", userType);
+    console.log("user type cliente", userTypeCliente);
 
     if (requiresAuth && !checkAuth()) {
       next("/Login");
@@ -47,7 +49,14 @@ export default route(function () {
     ) {
       console.log("user not allowed");
       next({ name: "Admin" });
-    } else {
+    } else if (
+      allowedUserTypes.length > 0 &&
+      !allowedUserTypes.includes(userTypeCliente)
+    ) {
+      console.log("user not allowed");
+      next({ name: "Dashboard" });
+    }
+    else {
       console.log("user allowed");
       next();
     }

@@ -209,7 +209,7 @@
         <q-card-section class="q-pt">
           <div class="q-pa-md">
             <div class="q-gutter-md" style="width: 500px">
-              <q-input v-model="emailRedefinir" label="Código" />
+              <q-input v-model="codigo" label="Código" />
             </div>
           </div>
         </q-card-section>
@@ -220,7 +220,7 @@
             flat
             label="enviar"
             color="primary"
-            @click="confirmCode"
+            @click="abrirModalRedefinicao"
             v-close-popup
           />
         </q-card-actions>
@@ -248,6 +248,33 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="novaSenhaModal" persistent>
+      <q-card>
+        <q-card-section class="bg-blue">
+          <div class="text-h6" style="color: white">Digite sua nova senha</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt">
+          <div class="q-pa-md">
+            <div class="q-gutter-md" style="width: 500px">
+              <q-input v-model="nova_senha" label="nova senha" />
+            </div>
+          </div>
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="cancelar" color="red" v-close-popup />
+          <q-btn
+            flat
+            label="enviar"
+            color="primary"
+            @click="confirmCode(emailRedefinir)"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -268,6 +295,9 @@ export default {
       isLoading: false,
       senhaErrorMessage: "Por favor, insira uma senha válida!",
       emailErrorMessage: "Por favor, insira um e-mail válido!",
+      codigo: "",
+      nova_senha: "",
+      novaSenhaModal: false,
       esqueciSenhaModal: false,
       solicitarParceria: false,
       confirmSolicitacao: false,
@@ -308,7 +338,6 @@ export default {
 
         localStorage.setItem("key", response.data.key);
         localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
-
 
         this.$router.push("/dashboard");
       } catch (error) {
@@ -369,18 +398,15 @@ export default {
         this.isLoading = false;
       }
     },
-    async confirmCode() {
+    async confirmCode(emailRedefinir) {
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post(
-          `http://127.0.0.1:5000/solicitarparceria/${id_pessoa}`,
+        const response = await axios.put(
+          `http://127.0.0.1:5000/esquecisenha/${emailRedefinir}`,
           {
-            nome: this.parceriaFields.nome,
-            email: this.parceriaFields.email,
-            cnpj: this.parceriaFields.cnpj,
-            qtdFunc: parseInt(this.parceriaFields.qtdFunc),
-            descricao: this.parceriaFields.descricao,
+            codigo: this.codigo,
+            nova_senha: this.nova_senha,
           }
         );
         this.confirmSolicitacao = true;
@@ -401,6 +427,9 @@ export default {
 
     openSolicitacaoParceria() {
       this.solicitarParceria = true;
+    },
+    abrirModalRedefinicao() {
+      this.novaSenhaModal = true;
     },
 
     validarDescricao(descricao) {

@@ -22,4 +22,14 @@ export const isAdmin = () => {
     return false;
   }
 };
+
+export const isCliente = () => {
+  const tipo_pessoa = localStorage.getItem("tipo_pessoa");
+
+  if (tipo_pessoa === "cliente") {
+    return tipo_pessoa;
+  } else {
+    return false;
+  }
+};
 console.log(checkAuth());
