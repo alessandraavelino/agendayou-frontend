@@ -22,14 +22,50 @@ const routes = [
       {
         path: "dashboard",
         component: () => import("pages/Admin/Index.vue"),
-        name: "Dashboard",
+        name: "Admin",
       },
       {
         path: "solicitacoes",
         component: () => import("pages/Admin/SolicitacoesParceria.vue"),
       },
+      {
+        path: "atualizarperfil",
+        component: () => import("pages/Admin/AtualizarPerfil.vue"),
+      },
+      {
+        path: "/servicosdisponiveis",
+        name: "ServicosDisponiveis",
+        component: () => import("pages/ServicosDisponiveis.vue"),
+      },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["admin"] },
+  },
+  {
+    path: "/parceiro/",
+    component: () => import("layouts/LayoutParceiro.vue"),
+    children: [
+      {
+        path: "dashboard",
+        component: () => import("pages/Parceiros/Index.vue"),
+        name: "Parceiro",
+      },
+      {
+        path: "/servicosdisponiveis",
+        name: "ServicosDisponiveis",
+        component: () => import("pages/ServicosDisponiveis.vue"),
+      },
+      {
+        path: "/cadastrarservico",
+        name: "CadastrarServico",
+        component: () => import("pages/Parceiros/CadastrarServicos.vue"),
+      },
+      {
+        path: "/agendamentos",
+        name: "Agendamentos",
+        component: () => import("pages/Parceiros/Agendamentos.vue"),
+      }
+    ],
+    meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
   },
   {
     path: "/Login",

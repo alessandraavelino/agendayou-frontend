@@ -42,11 +42,10 @@ export default route(function () {
     if (requiresAuth && !checkAuth()) {
       next("/Login");
     } else if (
-      allowedUserTypes.length > 0 &&
-      !allowedUserTypes.includes(userType)
+      (allowedUserTypes.length > 0 && !allowedUserTypes.includes(userType)) ||
+      (userType === "parceiro" && !allowedUserTypes.includes("parceiro"))
     ) {
-      console.log("user not allowed");
-      next({ name: "Admin" });
+      next({ name: userType === "cliente" ? "Cliente" : userType === "parceiro" ? "Parceiro" : "Admin" });
     } else {
       console.log("user allowed");
       next();

@@ -18,8 +18,10 @@ export const isAdmin = () => {
 
   if (tipo_pessoa === "admin") {
     return tipo_pessoa;
-  } else {
-    return false;
+  } else if (tipo_pessoa === "cliente") {
+    return tipo_pessoa
+  } else if (tipo_pessoa === "parceiro") {
+    return tipo_pessoa
   }
 };
 console.log(checkAuth());

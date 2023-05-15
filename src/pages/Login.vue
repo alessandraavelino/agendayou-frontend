@@ -102,6 +102,8 @@
           <div class="q-pa-md">
             <div class="q-gutter-md" style="width: 500px">
               <q-input v-model="parceriaFields.nome" label="Nome" />
+              <q-input v-model="parceriaFields.nomeFantasia" label="Nome Fantasia" />
+              <q-select v-model="parceriaFields.categoria" :options="optionsCategorias" label="Categoria" @update:modelValue="getCategoria" />
               <q-input
                 v-model="parceriaFields.email"
                 :error="
@@ -272,8 +274,11 @@ export default {
       solicitarParceria: false,
       confirmSolicitacao: false,
       codeRecebido: false,
+      optionsCategorias: [
+      ],
       parceriaFields: {
         nome: "",
+        nomeFantasia: "",
         email: "",
         cnpj: "",
         qtdFunc: 0,
@@ -283,6 +288,9 @@ export default {
         "Sua descrição deve conter pelo menos 100 caractéres",
       cnpjErrorMessage: "CNPJ inválido!",
     };
+  },
+  async mounted() {
+    await this.getCategoria();
   },
 
   methods: {
@@ -308,6 +316,8 @@ export default {
 
         localStorage.setItem("key", response.data.key);
         localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
+        localStorage.setItem("nome", response.data.pessoa.nome);
+        
 
 
         this.$router.push("/dashboard");
@@ -330,10 +340,12 @@ export default {
           "http://127.0.0.1:5000/solicitarparceria",
           {
             nome: this.parceriaFields.nome,
+            nome_fantasia: this.parceriaFields.nomeFantasia,
             email: this.parceriaFields.email,
             cnpj: this.parceriaFields.cnpj,
             qtdFunc: parseInt(this.parceriaFields.qtdFunc),
             descricao: this.parceriaFields.descricao,
+            categoria: this.parceriaFields.categoria.label
           }
         );
         this.confirmSolicitacao = true;
@@ -392,6 +404,22 @@ export default {
         });
       } finally {
         this.isLoading = false;
+      }
+    },
+    async getCategoria() {
+      const url = "http://127.0.0.1:5000/categorias";
+      try {
+        const response = await axios.get(url);
+        const allCategorias = response.data.map((el) => ({
+          value: el.id_categoria,
+          label: el.categoria,
+        }));
+
+        this.optionsCategorias = allCategorias;
+        console.log('all ccategorias', this.optionsCategorias)
+
+      } catch (error) {
+        console.log(error);
       }
     },
     cadastrarPage() {

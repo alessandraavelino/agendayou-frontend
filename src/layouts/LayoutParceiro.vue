@@ -50,7 +50,7 @@ const listAdmin = [
   {
     title: "Dashboard",
     icon: "dashboard",
-    to: "/admin/dashboard",
+    to: "/parceiro/dashboard",
   },
   {
     title: "Buscar Serviços",
@@ -58,19 +58,14 @@ const listAdmin = [
     to: "/servicosdisponiveis",
   },
   {
-    title: "Solicitações de Parceria",
-    icon: "add_task",
-    to: "/admin/solicitacoes",
-  },
-  {
-    title: "Atualizar Perfil",
-    icon: "person",
-    to: "/solicitacoes",
+    title: "Cadastrar Serviços",
+    icon: "dashboard",
+    to: "/cadastrarservicos",
   },
 ];
 
 export default defineComponent({
-  name: "LayoutAdmin",
+  name: "LayoutParceiro",
 
   components: {
     EssentialLink,
@@ -87,7 +82,7 @@ export default defineComponent({
     },
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
-      console.log("nome", this.nomeUsuario)
+      console.log("nome", this.nomeUsuario);
     },
   },
 
