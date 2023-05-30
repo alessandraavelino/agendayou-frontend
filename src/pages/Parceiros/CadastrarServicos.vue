@@ -92,7 +92,7 @@
                       >
                         <q-date
                           v-model="fields.horario"
-                          mask="DD-MM-YYYY HH:mm"
+                          mask="DD/MM/YYYY HH:mm"
                         >
                           <div class="row items-center justify-end">
                             <q-btn
@@ -116,7 +116,7 @@
                       >
                         <q-time
                           v-model="fields.horario"
-                          mask="DD-MM-YYYY HH:mm"
+                          mask="DD/MM/YYYY HH:mm"
                           format24h
                         >
                           <div class="row items-center justify-end">
@@ -270,7 +270,7 @@ export default defineComponent({
         tipo_servico: this.fields.tipo_servico,
         profissional: this.fields.profissional,
         valor: this.fields.valor,
-        horario: dayjs(this.fields.horario).format("YYYY-MM-DD HH:mm"),
+        horario: this.fields.horario,
       };
 
       if (this.fields.id_servico) {
@@ -295,7 +295,6 @@ export default defineComponent({
             "http://127.0.0.1:5000/servicos",
             data
           );
-          console.log("post response", response);
           this.alert = false;
           this.getServicos();
         } catch (error) {
@@ -356,7 +355,7 @@ export default defineComponent({
         const servicos = response.data.map((el) => ({
           id_servico: el.id_servico,
           tipo_servico: el.tipo_servico,
-          horario: dayjs(el.horario).format("DD-MM-YYYY HH:mm"),
+          horario: el.horario,
           profissional: el.profissional,
           valor: el.valor,
         }));

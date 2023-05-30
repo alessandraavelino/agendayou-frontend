@@ -1,7 +1,12 @@
 <template>
   <div class="q-pa-md">
     <div class="q-gutter-y-md" style="max-width: 100%">
-      <q-input v-model="buscar" label="Buscar..." style="max-width: 300px">
+      <q-input
+        v-model="buscar"
+        label="Buscar..."
+        @input="filtrarResultados"
+        style="max-width: 300px"
+      >
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
@@ -232,9 +237,7 @@
             :key="id_servico"
             v-show="isCategoriaSelecionada('educacao')"
           >
-            <q-img
-              src=""
-            />
+            <q-img src="" />
 
             <q-card-section>
               <q-btn
@@ -256,8 +259,6 @@
                   2,4 km
                 </div>
               </div>
-
-              <q-rating v-model="stars" :max="5" size="20px" />
             </q-card-section>
 
             <q-card-section class="q-pt-none">
@@ -269,6 +270,11 @@
               </div>
               <div class="text-caption text-grey">
                 Valor: {{ servico.valor }}
+              </div>
+              <div class="q-gutter-xs">
+                <q-chip color="green" text-color="white" icon="event">
+                  {{ formatDate(servico.horario) }}
+                </q-chip>
               </div>
             </q-card-section>
 
@@ -337,56 +343,10 @@
               label="Profissional"
             />
           </div>
-          <div class="q-gutter-md" :disable="true" style="width: 500px">
-            <div class="q-gutter-md">
-              <label>Selecione o horário</label>
-            </div>
-            <div class="q-pa-md" style="max-width: 300px">
-              <q-input filled v-model="date">
-                <template v-slot:prepend>
-                  <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-date v-model="date" mask="YYYY-MM-DD HH:mm">
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-date>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-
-                <template v-slot:append>
-                  <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
-                      <q-time v-model="date" mask="YYYY-MM-DD HH:mm" format24h>
-                        <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Close"
-                            color="primary"
-                            flat
-                          />
-                        </div>
-                      </q-time>
-                    </q-popup-proxy>
-                  </q-icon>
-                </template>
-              </q-input>
-            </div>
-          </div>
+          <div class="q-pt-md">Horário de agendamento</div>
+          <q-chip color="green" text-color="white" icon="event">
+            {{ inputHorario }}
+          </q-chip>
         </div>
       </q-card-section>
 
@@ -399,18 +359,16 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { reactive, computed } from "vue";
+import dayjs from "dayjs";
 import axios from "axios";
 export default {
   data() {
     return {
-      date: ref("2019-02-01 12:44"),
+      buscar: "",
       formularioConfirmacao: false,
-      tab: ref("saude"),
-      servicos: "",
-      categoria: "",
-      datasDisponiveis: ["Google", "Facebook", "Twitter", "Apple", "Oracle"],
+      tab: "saude",
+      servicos: [],
+      categoria: ""
     };
   },
 
@@ -424,8 +382,10 @@ export default {
     this.getServicos();
   },
   methods: {
+    async agendarHorario() {},
+
+
     async getServicos() {
-      console.log("testeeeee")
       this.loading = true;
       const url = "http://127.0.0.1:5000/servicos";
       try {
@@ -452,6 +412,9 @@ export default {
         console.log(error);
       }
     },
+    formatDate(date) {
+      return dayjs(date).format("DD/MM/YYYY HH:mm");
+    },
 
     isCategoriaSelecionada(categoria) {
       if (!this.tab || !categoria) {
@@ -472,7 +435,8 @@ export default {
       this.inputParceiro = servico.nome_parceiro;
       this.inputServico = servico.tipo_servico;
       this.inputProfissional = servico.profissional;
-      this.formularioConfirmacao = true;
+      (this.inputHorario = dayjs(servico.horario).format("DD/MM/YYYY HH:mm")),
+        (this.formularioConfirmacao = true);
     },
   },
 };
