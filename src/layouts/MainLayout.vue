@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Agenday </q-toolbar-title>
+        <q-toolbar-title> AgendaYOU - Cliente </q-toolbar-title>
 
         <div>
           <q-icon name="logout" @click="logout" />

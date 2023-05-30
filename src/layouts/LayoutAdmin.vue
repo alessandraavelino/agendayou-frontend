@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Agenday </q-toolbar-title>
+        <q-toolbar-title> AgendaYOU - Admin </q-toolbar-title>
 
         <div>
           <q-icon name="logout" @click="logout" />
@@ -54,8 +54,13 @@ const listAdmin = [
   },
   {
     title: "Buscar Serviços",
-    icon: "dashboard",
+    icon: "event_available",
     to: "/servicosdisponiveis",
+  },
+  {
+    title: "Meus Agendamentos",
+    icon: "schedule_send",
+    to: "",
   },
   {
     title: "Solicitações de Parceria",
@@ -82,7 +87,9 @@ export default defineComponent({
 
   methods: {
     logout() {
+      localStorage.removeItem("tipo_pessoa");
       localStorage.removeItem("key");
+      localStorage.removeItem("nome");
       this.$router.push("/login");
     },
     getProfile() {

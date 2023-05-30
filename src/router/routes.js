@@ -34,7 +34,7 @@ const routes = [
       },
       {
         path: "/servicosdisponiveis",
-        name: "ServicosDisponiveis",
+        name: "Servicos Disponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
     ],
@@ -51,7 +51,7 @@ const routes = [
       },
       {
         path: "/servicosdisponiveis",
-        name: "ServicosDisponiveis",
+        name: "Servicos Disponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
       {

@@ -312,11 +312,15 @@ export default {
           email: this.email,
           senha: this.senha,
         });
-        console.log("response", response);
+        console.log("response login", response);
 
         localStorage.setItem("key", response.data.key);
         localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
         localStorage.setItem("nome", response.data.pessoa.nome);
+        localStorage.setItem("telefone", response.data.pessoa.telefone);
+        localStorage.setItem("id_parceiro", response.data.parceiro.id_parceiro);
+        localStorage.setItem("categoria", response.data.parceiro.categoria);
+
         
 
 
