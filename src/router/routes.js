@@ -33,7 +33,7 @@ const routes = [
         component: () => import("pages/Admin/AtualizarPerfil.vue"),
       },
       {
-        path: "/servicosdisponiveis",
+        path: "/servicosdisponiveiss",
         name: "Servicos Disponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
@@ -51,7 +51,7 @@ const routes = [
       },
       {
         path: "/servicosdisponiveis",
-        name: "Servicos Disponiveis",
+        name: "ServicosDisponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
       {
@@ -63,6 +63,11 @@ const routes = [
         path: "/agendamentos",
         name: "Agendamentos",
         component: () => import("pages/Parceiros/Agendamentos.vue"),
+      },
+      {
+        path: "/clientesagendados",
+        name: "ClientesAgendados",
+        component: () => import("pages/Parceiros/ClientesAgendados.vue"),
       }
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },

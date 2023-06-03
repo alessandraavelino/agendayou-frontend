@@ -150,6 +150,11 @@
               <div class="text-caption text-grey">
                 Valor: {{ servico.valor }}
               </div>
+              <div class="q-gutter-xs">
+                <q-chip color="green" text-color="white" icon="event">
+                  {{ servico.horario }}
+                </q-chip>
+              </div>
             </q-card-section>
 
             <q-separator />
@@ -273,7 +278,7 @@
               </div>
               <div class="q-gutter-xs">
                 <q-chip color="green" text-color="white" icon="event">
-                  {{ formatDate(servico.horario) }}
+                  {{ servico.horario }}
                 </q-chip>
               </div>
             </q-card-section>
@@ -352,7 +357,7 @@
 
       <q-card-actions align="right">
         <q-btn flat label="cancelar" color="red" v-close-popup />
-        <q-btn flat label="enviar" color="primary" @click="enviarFeedback" />
+        <q-btn flat label="confirmar" color="primary" @click="agendarHorario()" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -382,7 +387,37 @@ export default {
     this.getServicos();
   },
   methods: {
-    async agendarHorario() {},
+    async agendarHorario(servico) {
+      try {
+        this.isLoading = true;
+        const response = await axios.post("http://127.0.0.1:5000/agendamentos", {
+          nome_cliente: this.inputNome,
+          telefone: this.inputTelefone,
+          tipo_servico: this.inputServico,
+          profissional: this.inputProfissional,
+          horario: this.inputHorario,
+          valor: this.inputValor,
+          parceiro_id: this.inputIdParceiro,
+          pessoa_id: localStorage.getItem("id_pessoa"),
+
+        })
+        this.$q.notify({
+          message: "Seu agendamento foi realizado com sucesso!",
+          color: "green",
+        });
+        this.formularioConfirmacao = false;
+        
+      } catch (error) {
+        console.log(error);
+        this.$q.notify({
+          message: "Ocorreu um erro! Tente novamente!",
+          color: "red",
+        });
+
+      } finally {
+        this.isLoading = false;
+      }
+    },
 
 
     async getServicos() {
@@ -399,12 +434,12 @@ export default {
           valor: el.valor,
           horario: el.horario,
           categoria: el.categoria,
+          parceiro_id: el.parceiro_id
         }));
+        console.log("servicosss", servicos)
 
         // const horarios = servicos.filter((el) => el.horario1)
         // console.log('horarios teste', horarios)
-
-        console.log("servicos", servicos);
 
         this.servicos = servicos;
         console.log("this", this.servicos);
@@ -435,8 +470,10 @@ export default {
       this.inputParceiro = servico.nome_parceiro;
       this.inputServico = servico.tipo_servico;
       this.inputProfissional = servico.profissional;
-      (this.inputHorario = dayjs(servico.horario).format("DD/MM/YYYY HH:mm")),
-        (this.formularioConfirmacao = true);
+      this.inputValor = servico.valor;
+      this.inputHorario = servico.horario;
+      this.inputIdParceiro = servico.parceiro_id;
+      this.formularioConfirmacao = true;
     },
   },
 };

@@ -55,7 +55,7 @@ const listAdmin = [
   {
     title: "Buscar Serviços",
     icon: "event_available",
-    to: "/servicosdisponiveis",
+    to: "/servicosdisponiveiss",
   },
   {
     title: "Meus Agendamentos",

@@ -46,7 +46,7 @@
 import { defineComponent, ref } from "vue";
 import { isAdmin } from "src/auth";
 import EssentialLink from "components/EssentialLink.vue";
-const listAdmin = [
+const listParceiro = [
   {
     title: "Dashboard",
     icon: "dashboard",
@@ -70,7 +70,7 @@ const listAdmin = [
   {
     title: "Clientes Agendados",
     icon: "group",
-    to: "",
+    to: "/clientesagendados",
   },
 ];
 
@@ -102,7 +102,7 @@ export default defineComponent({
     const leftDrawerOpen = ref(false);
 
     return {
-      essentialLinks: listAdmin,
+      essentialLinks: listParceiro,
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -116,4 +116,6 @@ export default defineComponent({
 body {
   background-color: rgba(249, 249, 249, 0.801);
 }
+
+
 </style>
