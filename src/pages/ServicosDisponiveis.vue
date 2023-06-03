@@ -1,304 +1,102 @@
 <template>
   <div class="q-pa-md">
     <div class="q-gutter-y-md" style="max-width: 100%">
-      <q-input
+      <div class="flex flex-center">
+        <q-input
         v-model="buscar"
-        label="Buscar..."
+        label="Busque por um serviço ou profissioal específico..."
         @input="filtrarResultados"
-        style="max-width: 300px"
+        style="width: 500px"
       >
         <template v-slot:prepend>
           <q-icon name="search" />
         </template>
       </q-input>
-
-      <q-tabs
-        v-model="tab"
-        inline-label
-        class="bg-primary text-white shadow-5"
-        outside-arrows
-        mobile-arrows
-      >
-        <q-tab name="saude" icon="medical_services" label="Saúde" />
-
-        <q-tab name="beleza" icon="star_outline" label="Beleza" />
-        <q-tab
-          name="consertos"
-          icon="construction"
-          label="Consertos e Reparos"
-        />
-        <q-tab name="petshop" icon="pets" label="Petshop" />
-        <q-tab name="educacao" icon="book" label="Educação" />
-        <q-tab name="alimentacao" icon="lunch_dining" label="Alimentação" />
+      </div>
+      <q-tabs v-model="tab" class="text-teal">
+        <template v-for="tabItem in tabs" :key="tabItem.name">
+          <q-tab
+            :name="tabItem.name"
+            :icon="tabItem.icon"
+            :label="tabItem.label"
+          />
+        </template>
       </q-tabs>
+
+      <q-tab-panels v-model="tab" class="q-mt-md">
+        <q-tab-panel
+          v-for="tabItem in tabs"
+          :key="tabItem.name"
+          :name="tabItem.name"
+        >
+          <div class="q-pa-md row items-start q-gutter-md">
+            <q-card
+            
+              class="my-card"
+              flat
+              bordered
+              v-for="(servico, id_servico) in getServicosPorCategoria(
+                tabItem.name
+              )"
+              
+              :key="id_servico"
+              v-show="filtrarPorNome(servico)"
+              
+            >
+              <q-img src="" />
+
+              <q-card-section>
+                <q-btn
+                  fab
+                  color="primary"
+                  icon="place"
+                  class="absolute"
+                  style="top: 0; right: 12px; transform: translateY(-50%)"
+                />
+
+                <div class="row no-wrap items-center">
+                  <div class="col text-h6 ellipsis">
+                    {{ servico.nome_parceiro }}
+                  </div>
+                  <div
+                    class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
+                  >
+                    <q-icon name="place" />
+                    2,4 km
+                  </div>
+                </div>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <div class="text-subtitle1">
+                  Serviço: {{ servico.tipo_servico }}
+                </div>
+                <div class="text-subtitle1">
+                  Profissional: {{ servico.profissional }}
+                </div>
+                <div class="text-caption text-grey">
+                  Valor: {{ servico.valor }}
+                </div>
+                <div class="q-gutter-xs">
+                  <q-chip color="green" text-color="white" icon="event">
+                    {{ servico.horario }}
+                  </q-chip>
+                </div>
+              </q-card-section>
+
+              <q-separator />
+
+              <q-card-actions>
+                <q-btn flat round icon="event" />
+                <q-btn flat color="primary" @click="openModalAgendar(servico)">
+                  Agendar
+                </q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
+        </q-tab-panel>
+      </q-tab-panels>
     </div>
-
-    <q-tab-panels
-      v-model="tab"
-      animated
-      swipeable
-      vertical
-      transition-prev="jump-up"
-      transition-next="jump-up"
-    >
-      <q-tab-panel name="beleza">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card"
-            flat
-            bordered
-            v-for="(servico, id_servico) in getServicosPorCategoria('Beleza')"
-            :key="id_servico"
-            v-show="isCategoriaSelecionada('beleza')"
-          >
-            <q-img
-              src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1787&q=80"
-            />
-
-            <q-card-section>
-              <q-btn
-                fab
-                color="primary"
-                icon="place"
-                class="absolute"
-                style="top: 0; right: 12px; transform: translateY(-50%)"
-              />
-
-              <div class="row no-wrap items-center">
-                <div class="col text-h6 ellipsis">
-                  {{ servico.nome_parceiro }}
-                </div>
-                <div
-                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-                >
-                  <q-icon name="place" />
-                  2,4 km
-                </div>
-              </div>
-
-              <q-rating v-model="stars" :max="5" size="20px" />
-            </q-card-section>
-
-            <q-card-section class="q-pt-none">
-              <div class="text-subtitle1">
-                Serviço: {{ servico.tipo_servico }}
-              </div>
-              <div class="text-subtitle1">
-                Profissional: {{ servico.profissional }}
-              </div>
-              <div class="text-caption text-grey">
-                Valor: {{ servico.valor }}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions>
-              <q-btn flat round icon="event" />
-              <q-btn flat color="primary" @click="openModalAgendar(servico)">
-                Agendar
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </q-tab-panel>
-      <q-tab-panel name="petshop">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card"
-            flat
-            bordered
-            v-for="(servico, id_servico) in getServicosPorCategoria('PetShop')"
-            :key="id_servico"
-            v-show="isCategoriaSelecionada('petshop')"
-          >
-            <q-img
-              src="https://images.unsplash.com/photo-1651777000971-42922a2e12ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            />
-
-            <q-card-section>
-              <q-btn
-                fab
-                color="primary"
-                icon="place"
-                class="absolute"
-                style="top: 0; right: 12px; transform: translateY(-50%)"
-              />
-
-              <div class="row no-wrap items-center">
-                <div class="col text-h6 ellipsis">
-                  {{ servico.nome_parceiro }}
-                </div>
-                <div
-                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-                >
-                  <q-icon name="place" />
-                  2,4 km
-                </div>
-              </div>
-
-              <q-rating v-model="stars" :max="5" size="20px" />
-            </q-card-section>
-
-            <q-card-section class="q-pt-none">
-              <div class="text-subtitle1">
-                Serviço: {{ servico.tipo_servico }}
-              </div>
-              <div class="text-subtitle1">
-                Profissional: {{ servico.profissional }}
-              </div>
-              <div class="text-caption text-grey">
-                Valor: {{ servico.valor }}
-              </div>
-              <div class="q-gutter-xs">
-                <q-chip color="green" text-color="white" icon="event">
-                  {{ servico.horario }}
-                </q-chip>
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions>
-              <q-btn flat round icon="event" />
-              <q-btn flat color="primary" @click="openModalAgendar(servico)">
-                Agendar
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel name="consertos">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card"
-            flat
-            bordered
-            v-for="(servico, id_servico) in getServicosPorCategoria(
-              'Consertos'
-            )"
-            :key="id_servico"
-            v-show="isCategoriaSelecionada('consertos')"
-          >
-            <q-img
-              src="https://images.unsplash.com/photo-1651777000971-42922a2e12ad?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            />
-
-            <q-card-section>
-              <q-btn
-                fab
-                color="primary"
-                icon="place"
-                class="absolute"
-                style="top: 0; right: 12px; transform: translateY(-50%)"
-              />
-
-              <div class="row no-wrap items-center">
-                <div class="col text-h6 ellipsis">
-                  {{ servico.nome_parceiro }}
-                </div>
-                <div
-                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-                >
-                  <q-icon name="place" />
-                  2,4 km
-                </div>
-              </div>
-
-              <q-rating v-model="stars" :max="5" size="20px" />
-            </q-card-section>
-
-            <q-card-section class="q-pt-none">
-              <div class="text-subtitle1">
-                Serviço: {{ servico.tipo_servico }}
-              </div>
-              <div class="text-subtitle1">
-                Profissional: {{ servico.profissional }}
-              </div>
-              <div class="text-caption text-grey">
-                Valor: {{ servico.valor }}
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions>
-              <q-btn flat round icon="event" />
-              <q-btn flat color="primary" @click="openModalAgendar(servico)">
-                Agendar
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </q-tab-panel>
-      <q-tab-panel name="educacao">
-        <div class="q-pa-md row items-start q-gutter-md">
-          <q-card
-            class="my-card"
-            flat
-            bordered
-            v-for="(servico, id_servico) in getServicosPorCategoria('Educação')"
-            :key="id_servico"
-            v-show="isCategoriaSelecionada('educacao')"
-          >
-            <q-img src="" />
-
-            <q-card-section>
-              <q-btn
-                fab
-                color="primary"
-                icon="place"
-                class="absolute"
-                style="top: 0; right: 12px; transform: translateY(-50%)"
-              />
-
-              <div class="row no-wrap items-center">
-                <div class="col text-h6 ellipsis">
-                  {{ servico.nome_parceiro }}
-                </div>
-                <div
-                  class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-                >
-                  <q-icon name="place" />
-                  2,4 km
-                </div>
-              </div>
-            </q-card-section>
-
-            <q-card-section class="q-pt-none">
-              <div class="text-subtitle1">
-                Serviço: {{ servico.tipo_servico }}
-              </div>
-              <div class="text-subtitle1">
-                Profissional: {{ servico.profissional }}
-              </div>
-              <div class="text-caption text-grey">
-                Valor: {{ servico.valor }}
-              </div>
-              <div class="q-gutter-xs">
-                <q-chip color="green" text-color="white" icon="event">
-                  {{ servico.horario }}
-                </q-chip>
-              </div>
-            </q-card-section>
-
-            <q-separator />
-
-            <q-card-actions>
-              <q-btn flat round icon="event" />
-              <q-btn flat color="primary" @click="openModalAgendar(servico)">
-                Agendar
-              </q-btn>
-            </q-card-actions>
-          </q-card>
-        </div>
-      </q-tab-panel>
-
-      <q-tab-panel name="movies">
-        <div class="text-h4 q-mb-md">Movies</div>
-      </q-tab-panel>
-    </q-tab-panels>
   </div>
   <q-dialog v-model="formularioConfirmacao" persistent>
     <q-card>
@@ -357,7 +155,12 @@
 
       <q-card-actions align="right">
         <q-btn flat label="cancelar" color="red" v-close-popup />
-        <q-btn flat label="confirmar" color="primary" @click="agendarHorario()" />
+        <q-btn
+          flat
+          label="confirmar"
+          color="primary"
+          @click="agendarHorario()"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -366,21 +169,39 @@
 <script>
 import dayjs from "dayjs";
 import axios from "axios";
+import { ref, computed } from "vue";
 export default {
   data() {
+    const tabs = [
+      { name: "Todos", icon: "apps", label: "Todos" },
+      { name: "Beleza", icon: "face_retouching_natural", label: "Beleza" },
+      { name: "Educação", icon: "auto_stories", label: "Educação" },
+      { name: "Saúde", icon: "health_and_safety", label: "Saúde" },
+      { name: "Alimentação", icon: "fastfood", label: "Alimentação" },
+      { name: "Consertos", icon: "handyman", label: "Consertos e Reparos" },
+      { name: "PetShop", icon: "pets", label: "PetShop" },
+      { name: "Dentista", icon: "mood", label: "Dentista" },
+      { name: "Lava Car", icon: "no_crash", label: "Lava Car" },
+      // Add more tab items as needed
+    ];
+
+    const tabPanels = computed(() => {
+      return tabs.map((tabItem) => ({
+        name: tabItem.name,
+        content: tabItem.content,
+      }));
+    });
+
     return {
+      filtro: "",
       buscar: "",
       formularioConfirmacao: false,
-      tab: "saude",
+      tab: "Todos",
       servicos: [],
-      categoria: ""
+      categoria: "",
+      tabs,
+      tabPanels,
     };
-  },
-
-  created() {
-    if (!this.tab) {
-      this.tab = "beleza";
-    }
   },
 
   mounted() {
@@ -390,35 +211,34 @@ export default {
     async agendarHorario(servico) {
       try {
         this.isLoading = true;
-        const response = await axios.post("http://127.0.0.1:5000/agendamentos", {
-          nome_cliente: this.inputNome,
-          telefone: this.inputTelefone,
-          tipo_servico: this.inputServico,
-          profissional: this.inputProfissional,
-          horario: this.inputHorario,
-          valor: this.inputValor,
-          parceiro_id: this.inputIdParceiro,
-          pessoa_id: localStorage.getItem("id_pessoa"),
-
-        })
+        const response = await axios.post(
+          "http://127.0.0.1:5000/agendamentos",
+          {
+            nome_cliente: this.inputNome,
+            telefone: this.inputTelefone,
+            tipo_servico: this.inputServico,
+            profissional: this.inputProfissional,
+            horario: this.inputHorario,
+            valor: this.inputValor,
+            parceiro_id: this.inputIdParceiro,
+            pessoa_id: localStorage.getItem("id_pessoa"),
+          }
+        );
         this.$q.notify({
           message: "Seu agendamento foi realizado com sucesso!",
           color: "green",
         });
         this.formularioConfirmacao = false;
-        
       } catch (error) {
         console.log(error);
         this.$q.notify({
           message: "Ocorreu um erro! Tente novamente!",
           color: "red",
         });
-
       } finally {
         this.isLoading = false;
       }
     },
-
 
     async getServicos() {
       this.loading = true;
@@ -434,9 +254,9 @@ export default {
           valor: el.valor,
           horario: el.horario,
           categoria: el.categoria,
-          parceiro_id: el.parceiro_id
+          parceiro_id: el.parceiro_id,
         }));
-        console.log("servicosss", servicos)
+        console.log("servicosss", servicos);
 
         // const horarios = servicos.filter((el) => el.horario1)
         // console.log('horarios teste', horarios)
@@ -451,16 +271,38 @@ export default {
       return dayjs(date).format("DD/MM/YYYY HH:mm");
     },
 
-    isCategoriaSelecionada(categoria) {
-      if (!this.tab || !categoria) {
-        return this.tab === "saude";
+    filtrarPorNome(servico) {
+      if (!this.buscar) {
+        return true;
       }
-      return this.tab === categoria;
+
+      const nome = servico.nome_parceiro.toLowerCase();
+      const termoBusca = this.buscar.toLowerCase();
+
+      return nome.includes(termoBusca);
     },
 
     getServicosPorCategoria(categoria) {
-      console.log("categoria");
-      return this.servicos.filter((servico) => servico.categoria === categoria);
+      let servicosFiltrados = this.servicos;
+
+      if (categoria !== "Todos") {
+        servicosFiltrados = servicosFiltrados.filter(
+          (servico) => servico.categoria === categoria
+        );
+      }
+
+      if (this.filtro) {
+        servicosFiltrados = servicosFiltrados.filter((servico) =>
+          servico.nome_parceiro.toLowerCase().includes(this.filtro)
+        );
+      }
+
+      return servicosFiltrados;
+    },
+
+    filtrarResultados() {
+      this.filtro = this.buscar.toLowerCase();
+      this.tab = "Todos"; // Reseta a categoria selecionada para "Todos"
     },
 
     openModalAgendar(servico) {
