@@ -31,24 +31,25 @@
         <h5>Fazer Cadastro</h5>
         <div class="q-gutter-sm" style="width: 660px">
           <q-input
-            filled
+            label="Nome"
+            name="nome"
             type="text"
             v-model="fields.nome"
             required
-            label="Nome"
+            filled
           />
           <div class="row">
             <div class="col" style="padding-right: 10px">
               <q-input
-                filled
-                type="number_format"
-                name="cpf"
-                pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})"
-                v-model="fields.cpf"
-                required
                 label="CPF"
+                name="cpf"
+                mask="###.###.###-##"
+                placeholder="XXX.XXX.XXX-XX"
+                v-model="fields.cpf"
                 :error-message="CpfErrorMessage"
                 :error="!validarCpf(fields.cpf) && fields.cpf !== ''"
+                required
+                filled
               />
             </div>
             <div class="col">
@@ -58,112 +59,120 @@
           <div class="row">
             <div class="col" style="padding-right: 10px">
               <q-input
-                filled
-                type="cep"
-                v-model="fields.cep"
-                required
                 label="CEP"
-                pattern="\d{5}-\d{3}"
+                name="cep"
+                mask="#####-###"
+                placeholder="XXXXX-XXX"
+                v-model="fields.cep"
                 :error-message="cepErrorMessage"
                 :error="!validarCep(fields.cep) && fields.cep !== ''"
+                required
+                filled
               />
             </div>
             <div class="col">
               <q-select
-                filled
+                label="Estado"
+                name="estado"
                 type="text"
                 v-model="fields.estado"
-                label="Estado"
                 :options="optionsEstado"
                 @update:modelValue="getEstado"
                 required
+                filled
               />
             </div>
           </div>
           <div class="row">
             <div class="col" style="padding-right: 10px">
               <q-select
-                filled
+                label="Cidade"
+                name="cidade"
                 type="text"
                 v-model="fields.cidade"
-                required
                 :options="optionsCidade"
-                label="Cidade"
                 @update:modelValue="getCidade"
+                required
+                filled
               />
             </div>
             <div class="col">
               <q-input
-                filled
+                label="Bairro"
+                name="bairro"
                 type="text"
                 v-model="fields.bairro"
                 required
-                label="Bairro"
+                filled
               />
             </div>
           </div>
           <div class="col">
             <q-input
-              filled
+              label="Rua"
+              name="rua"
               type="text"
               v-model="fields.rua"
               required
-              label="Rua"
+              filled
             />
           </div>
           <div class="row">
             <div class="col" style="padding-right: 10px">
               <q-input
-                filled
+                label="E-mail"
+                name="email"
                 type="email"
                 v-model="fields.email"
-                required
-                label="E-mail"
                 :error-message="emailErrorMessage"
                 :error="!validarEmail(fields.email) && fields.email !== ''"
+                required
+                filled
               />
             </div>
             <div class="col">
               <q-input
-                filled
-                type="tel"
-                v-model="fields.telefone"
-                required
                 label="Telefone"
-                pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
+                name="telefone"
+                mask="(##) ####-####"
                 placeholder="(DD) XXXXX-XXXX"
+                v-model="fields.telefone"
                 :error="
                   !validarTelefone(fields.telefone) && fields.telefone !== ''
                 "
                 :error-message="telefoneErrorMessage"
+                required
+                filled
               />
             </div>
           </div>
           <div class="row">
             <div class="col" style="padding-right: 10px">
               <q-input
-                filled
-                v-model="fields.senha"
-                required
                 label="Senha"
+                name="senha"
+                v-model="fields.senha"
                 :error="!validarSenha(fields.senha) && fields.senha !== ''"
                 :error-message="senhaErrorMessage"
                 :type="isPwd ? 'password' : 'text'"
+                required
+                filled
               >
               </q-input>
             </div>
             <div class="col">
               <q-input
-                filled
-                v-model="fields.confirmarSenha"
-                required
                 label="Confirmar senha"
+                name="confirmarSenha"
+                v-model="fields.confirmarSenha"
                 :type="isPwd ? 'password' : 'text'"
                 :error="
                   !validarSenhaIgual(fields.senha, fields.confirmarSenha) &&
                   fields.confirmarSenha !== ''
                 "
                 :error-message="senhaIgualMessage"
+                filled
+                required
               >
                 <template v-slot:append>
                   <q-icon
@@ -204,7 +213,6 @@
     </div>
   </div>
   <div class="q-pa-md q-gutter-sm">
-
     <q-dialog v-model="alert">
       <q-card>
         <q-card-section>
@@ -212,11 +220,18 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          Seja bem-vindo(a) ao nosso sistema. É um prazer ter você aqui! Faça login para começar a agendar algum serviço.
+          Seja bem-vindo(a) ao nosso sistema. É um prazer ter você aqui! Faça
+          login para começar a agendar algum serviço.
         </q-card-section>
 
         <q-card-actions align="right">
-          <q-btn flat label="IR PARA LOGIN" color="primary" @click="navToLogin" v-close-popup />
+          <q-btn
+            flat
+            label="IR PARA LOGIN"
+            color="primary"
+            @click="navToLogin"
+            v-close-popup
+          />
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -257,7 +272,7 @@ export default {
 
       isPwd: ref(true),
       isLoading: false,
-      alert: false
+      alert: false,
     };
   },
 
@@ -311,13 +326,8 @@ export default {
       return senha === confirm;
     },
     validarCep(cep) {
-      const cepRegex = /^[0-9]{8}$/; // Expressão regular para validar CEPs com 8 dígitos
-      if (!cepRegex.test(cep)) {
-        // CEP inválido
-        return false;
-      }
-      // CEP válido
-      return true;
+      const cepRegex = /^[0-9]{5}-[0-9]{3}$/;
+      return cepRegex.test(cep);
     },
     async cadastrar() {
       const $q = useQuasar();
@@ -341,9 +351,8 @@ export default {
         const response = await axios.post(
           "http://127.0.0.1:5000/clientes",
           data
-          
         );
-        this.alert = true
+        this.alert = true;
       } catch (error) {
         console.log(error);
         this.$q.notify({
@@ -393,7 +402,7 @@ export default {
 
     navToLogin() {
       this.$router.push("/Login");
-    }
+    },
   },
 };
 </script>
