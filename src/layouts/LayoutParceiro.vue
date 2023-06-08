@@ -108,6 +108,11 @@ const listParceiro = [
     icon: "group",
     to: "/clientesagendados",
   },
+  {
+    title: "Relatório de Atendimentos",
+    icon: "group",
+    to: "/relatorio",
+  },
 ];
 
 export default defineComponent({

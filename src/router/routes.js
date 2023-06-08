@@ -68,6 +68,11 @@ const routes = [
         path: "/clientesagendados",
         name: "ClientesAgendados",
         component: () => import("pages/Parceiros/ClientesAgendados.vue"),
+      },
+      {
+        path: "/relatorio",
+        name: "Relatorio",
+        component: () => import("pages/Parceiros/Relatorio.vue"),
       }
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
