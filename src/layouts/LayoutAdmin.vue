@@ -54,10 +54,7 @@
         <q-item-label header>
           <q-row>
             <q-col cols="6" class="flex items-center justify-center">
-              <img src="../assets/logo-agenda.svg" style="width: 50px" />
-            </q-col>
-            <q-col cols="6" class="flex items-center justify-center">
-              <label>AgendaYOU</label>
+              <img src="../assets/agendayou-logo.png" style="width: 100%" />
             </q-col>
           </q-row>
         </q-item-label>

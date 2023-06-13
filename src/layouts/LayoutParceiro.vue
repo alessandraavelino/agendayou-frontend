@@ -53,11 +53,8 @@
       <q-list>
         <q-item-label header>
           <q-row>
-            <q-col cols="6" class="flex items-center justify-center" >
-              <img src="../assets/logo-agenda.svg" style="width: 50px" />
-            </q-col>
             <q-col cols="6" class="flex items-center justify-center">
-              <label>AgendaYOU</label>
+              <img src="../assets/agendayou-logo.png" style="width: 100%" />
             </q-col>
           </q-row>
         </q-item-label>
@@ -67,9 +64,15 @@
           v-for="to in essentialLinks"
           :key="to.title"
           v-bind="to"
+          @click="selectItem(item)"
         />
       </q-list>
     </q-drawer>
+    <q-footer elevated>
+      <q-toolbar>
+        <span>AgendaYOU v1.0 &copy; Copyright - Todos os direitos reservados. </span>
+      </q-toolbar>
+    </q-footer>
 
     <q-page-container>
       <router-view />
@@ -108,6 +111,11 @@ const listParceiro = [
     icon: "group",
     to: "/clientesagendados",
   },
+  {
+    title: "Relatório de Atendimentos",
+    icon: "list_alt",
+    to: "/relatorio",
+  },
 ];
 
 export default defineComponent({
@@ -123,7 +131,7 @@ export default defineComponent({
 
   methods: {
     async logout() {
-      const key = localStorage.getItem("key")
+      const key = localStorage.getItem("key");
       const url = `http://127.0.0.1:5000/logout/${key}`;
       try {
         await axios.delete(url);
@@ -131,7 +139,6 @@ export default defineComponent({
         localStorage.removeItem("tipo_pessoa");
         localStorage.removeItem("nome");
         this.$router.push("/login");
-
       } catch (error) {
         console.log(error);
       } finally {
@@ -141,8 +148,9 @@ export default defineComponent({
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
       console.log("nome", this.nomeUsuario);
-    },
+    }
   },
+  
 
   setup() {
     const leftDrawerOpen = ref(false);
