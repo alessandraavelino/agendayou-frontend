@@ -415,8 +415,8 @@ export default {
 }
 
 .area {
-  background: #4e54c8;
-  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
+  background: #4B56D2;
+  background: -webkit-linear-gradient(to left, #8f94fb, #4B56D2);
   overflow: hidden;
 }
 

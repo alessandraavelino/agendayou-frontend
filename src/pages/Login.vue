@@ -18,9 +18,9 @@
         <li></li>
       </ul>
 
-      <div class="asset window-height window-width row items-center">
-        <div class="bg-login">
-          <img src="~assets/logo-login.svg" />
+      <div class="asset window-height q-pt-xl q-mx-auto ">
+        <div class="bg-login q-pt-xl">
+          <img class="q-pt-xl" src="~assets/logo-login.svg" />
         </div>
       </div>
     </div>
@@ -29,13 +29,12 @@
     <div class="q-pt-xl">
       <div class="my-card q-pa-md card" align="center">
         <h4>Fazer Login</h4>
-        <div class="q-gutter-md" style="width: 360px">
+        <div class="q-pa-md" style="width: 360px">
           <q-input
             filled
             type="email"
             v-model="email"
             required
-            :error-message="emailErrorMessage"
             :error="!validarEmail(email) && email !== ''"
             label="E-mail"
           />
@@ -44,7 +43,6 @@
             v-model="senha"
             required
             :error="!validarSenha(senha) && senha !== ''"
-            :error-message="senhaErrorMessage"
             label="Senha"
             :type="isPwd ? 'password' : 'text'"
           >
@@ -56,7 +54,7 @@
               />
             </template>
           </q-input>
-          <div style="margin-left: 60%">
+          <div style="margin-left: 50%">
             <p class="textLink" @click="esqueciSenhaModal = true">
               Esqueceu a senha?
             </p>
@@ -66,6 +64,7 @@
             color="primary"
             @click="login"
             type="submit"
+            rounded
             label="entrar"
             :disable="!validarEmail(email) || !validarSenha(senha)"
           >

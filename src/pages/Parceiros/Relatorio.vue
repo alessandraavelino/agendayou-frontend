@@ -24,7 +24,7 @@
           <q-btn
             label="Baixar PDF"
             class="q-ml-xl"
-            color="blue"
+            color="primary"
             @click="download"
             ref="downloadButton"
           />
