@@ -113,7 +113,7 @@ const listParceiro = [
   },
   {
     title: "Relatório de Atendimentos",
-    icon: "group",
+    icon: "list_alt",
     to: "/relatorio",
   },
 ];
