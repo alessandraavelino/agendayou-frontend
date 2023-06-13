@@ -25,6 +25,11 @@ const routes = [
         name: "Admin",
       },
       {
+        path: "parceiros",
+        component: () => import("pages/Admin/Parceiros.vue"),
+        name: "Parceiros",
+      },
+      {
         path: "solicitacoes",
         component: () => import("pages/Admin/SolicitacoesParceria.vue"),
       },
