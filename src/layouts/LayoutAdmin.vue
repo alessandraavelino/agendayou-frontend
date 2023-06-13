@@ -107,6 +107,11 @@ const listAdmin = [
     icon: "person",
     to: "/solicitacoes",
   },
+  {
+    title: "Parceiros",
+    icon: "handshake",
+    to: "/admin/parceiros",
+  },
 ];
 
 export default defineComponent({
