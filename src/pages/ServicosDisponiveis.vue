@@ -88,7 +88,7 @@
 
               <q-card-actions>
                 <q-btn flat round icon="event" />
-                <q-btn flat color="primary" @click="openModalAgendar(servico)">
+                <q-btn :disable="!verifyTypeUser()" flat color="primary" @click="openModalAgendar(servico)">
                   Agendar
                 </q-btn>
               </q-card-actions>
@@ -337,6 +337,16 @@ export default {
         this.isLoading = false;
       }
     },
+
+    verifyTypeUser () {
+      const tipo_pessoa = localStorage.getItem("tipo_pessoa")
+
+      if (tipo_pessoa === "parceiro") {
+        return false
+      } else {
+        return true
+      }
+    }
   },
 };
 </script>

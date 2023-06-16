@@ -4,13 +4,23 @@ const routes = [
     component: () => import("src/layouts/LayoutCliente.vue"),
     children: [
       {
-        path: "dashboard",
+        path: "/dashboard",
         component: () => import("pages/IndexPage.vue"),
         name: "Dashboard",
       },
       {
         path: "agendarhorario",
         component: () => import("pages/AgendarHorario.vue"),
+      },
+      {
+        path: "servicosdisponiveisss",
+        name: "ServicosDisponiveis",
+        component: () => import("pages/ServicosDisponiveis.vue"),
+      },
+      {
+        path: "meusagendamentos",
+        name: "MeusAgendamentos",
+        component: () => import("pages/Clientes/MeusAgendamentos.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["cliente"] },
@@ -39,8 +49,13 @@ const routes = [
       },
       {
         path: "/servicosdisponiveiss",
-        name: "Servicos Disponiveis",
+        name: "ServicosDisponiveisAdmin",
         component: () => import("pages/ServicosDisponiveis.vue"),
+      },
+      {
+        path: "/meusagendamentoss",
+        name: "MeusAgendamentsos",
+        component: () => import("pages/Clientes/MeusAgendamentos.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["admin"] },
@@ -56,7 +71,7 @@ const routes = [
       },
       {
         path: "/servicosdisponiveis",
-        name: "ServicosDisponiveis",
+        name: "ServicosDisponiveisParceiro",
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
       {
@@ -78,7 +93,12 @@ const routes = [
         path: "/relatorio",
         name: "Relatorio",
         component: () => import("pages/Parceiros/Relatorio.vue"),
-      }
+      },
+      {
+        path: "/meusagendamentosss",
+        name: "MeusAggendamentsos",
+        component: () => import("pages/Clientes/MeusAgendamentos.vue"),
+      },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
   },

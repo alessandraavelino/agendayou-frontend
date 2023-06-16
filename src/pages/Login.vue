@@ -302,6 +302,7 @@ export default {
         localStorage.setItem("nome", response.data.pessoa.nome);
         localStorage.setItem("telefone", response.data.pessoa.telefone);
         localStorage.setItem("id_parceiro", response.data.parceiro.id_parceiro);
+        localStorage.setItem("nome_fantasia", response.data.parceiro.nome_fantasia);
         localStorage.setItem("categoria", response.data.parceiro.categoria);
         localStorage.setItem("id_pessoa", response.data.pessoa.id_pessoa);
 

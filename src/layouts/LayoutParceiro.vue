@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> AgendaYOU - Parceiro </q-toolbar-title>
+        <q-toolbar-title> Seja bem vindo (a), {{ nomeFantasia }} !</q-toolbar-title>
 
         <q-avatar color="blue" class="rounded" label="Configurações">
           <img class="rounded" src="https://cdn.quasar.dev/img/avatar4.jpg" />
@@ -31,7 +31,7 @@
                 </q-avatar>
 
                 <div class="text-subtitle1 q-mt-md q-mb-xs">
-                  {{ nomeUsuario }}
+                  {{ nomeFantasia }}
                 </div>
 
                 <q-btn
@@ -116,6 +116,11 @@ const listParceiro = [
     icon: "list_alt",
     to: "/relatorio",
   },
+  {
+    title: "Meus Agendamentos",
+    icon: "watch_later",
+    to: "/meusagendamentosss",
+  },
 ];
 
 export default defineComponent({
@@ -147,7 +152,9 @@ export default defineComponent({
     },
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
+      this.nomeFantasia = localStorage.getItem("nome_fantasia");
       console.log("nome", this.nomeUsuario);
+      console.log("nomefantasia", this.nomeFantasia);
     }
   },
   

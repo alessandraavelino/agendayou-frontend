@@ -11,7 +11,7 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> AgendaYOU - Admin </q-toolbar-title>
+        <q-toolbar-title> Painel do Administrador</q-toolbar-title>
 
         <q-avatar color="blue" class="rounded" label="Configurações">
           <img class="rounded" src="https://cdn.quasar.dev/img/avatar4.jpg" />
@@ -90,11 +90,6 @@ const listAdmin = [
     to: "/servicosdisponiveiss",
   },
   {
-    title: "Meus Agendamentos",
-    icon: "schedule_send",
-    to: "",
-  },
-  {
     title: "Solicitações de Parceria",
     icon: "add_task",
     to: "/admin/solicitacoes",
@@ -108,6 +103,11 @@ const listAdmin = [
     title: "Parceiros",
     icon: "handshake",
     to: "/admin/parceiros",
+  },
+  {
+    title: "Meus Agendamentos",
+    icon: "watch_later",
+    to: "/meusagendamentoss",
   },
 ];
 

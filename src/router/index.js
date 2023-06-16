@@ -43,12 +43,13 @@ export default route(function () {
       next("/Login");
     } else if (
       (allowedUserTypes.length > 0 && !allowedUserTypes.includes(userType)) ||
-      (userType === "parceiro" && !allowedUserTypes.includes("parceiro"))
+      (userType === "parceiro" && !allowedUserTypes.includes("parceiro")) ||
+      (userType === "cliente" && !allowedUserTypes.includes("cliente"))
     ) {
       const redirectRoute =
-        userType === "cliente" ? "Cliente" : userType === "parceiro" ? "Parceiro" : "Admin";
+        userType === "cliente" ? "cliente" : userType === "parceiro" ? "Parceiro" : "Admin";
   
-      // Verifica se já está sendo redirecionado para o rota correta para evitar o loop
+      // Verifica se já está sendo redirecionado para a rota correta para evitar o loop
       if (to.name !== redirectRoute) {
         next({ name: redirectRoute });
       } else {
@@ -60,6 +61,6 @@ export default route(function () {
     }
   });
   
-
   return Router;
+  
 });
