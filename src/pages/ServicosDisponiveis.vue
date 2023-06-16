@@ -224,6 +224,9 @@ export default {
             pessoa_id: localStorage.getItem("id_pessoa"),
           }
         );
+        const id = this.inputIdServico
+        console.log("id parceiro", )
+        await this.deleteServicos(id)
         this.$q.notify({
           message: "Seu agendamento foi realizado com sucesso!",
           color: "green",
@@ -257,6 +260,7 @@ export default {
           parceiro_id: el.parceiro_id,
         }));
         console.log("servicosss", servicos);
+        
 
         // const horarios = servicos.filter((el) => el.horario1)
         // console.log('horarios teste', horarios)
@@ -307,6 +311,7 @@ export default {
 
     openModalAgendar(servico) {
       console.log("clicado");
+      this.inputIdServico = servico.id_servico;
       this.inputNome = localStorage.getItem("nome");
       this.inputTelefone = localStorage.getItem("telefone");
       this.inputParceiro = servico.nome_parceiro;
@@ -316,6 +321,21 @@ export default {
       this.inputHorario = servico.horario;
       this.inputIdParceiro = servico.parceiro_id;
       this.formularioConfirmacao = true;
+    },
+
+    async deleteServicos(id_servico) {
+      this.isLoading = true;
+      console.log("id", this.solicitacoes);
+      const url = `http://127.0.0.1:5000/servicos/${id_servico}`;
+      try {
+        await axios.delete(url);
+
+        this.getServicos();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.isLoading = false;
+      }
     },
   },
 };
