@@ -1,5 +1,5 @@
 <template>
-  <q-item clickable :to="to">
+  <q-item clickable :to="to" :active-class="tabActive">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" />
     </q-item-section>
@@ -30,6 +30,11 @@ export default defineComponent({
     to: {
       type: String,
       default: "#",
+    },
+
+    tabActive: {
+      type: String,
+      default: ""
     },
 
     icon: {

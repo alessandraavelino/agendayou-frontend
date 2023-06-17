@@ -44,8 +44,9 @@ const routes = [
         component: () => import("pages/Admin/SolicitacoesParceria.vue"),
       },
       {
-        path: "atualizarperfil",
-        component: () => import("pages/Admin/AtualizarPerfil.vue"),
+        path: "/atualizarperfil",
+        name: "AtualizarPerfil",
+        component: () => import("pages/AtualizarPerfil.vue"),
       },
       {
         path: "/servicosdisponiveiss",

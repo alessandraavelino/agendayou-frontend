@@ -11,10 +11,10 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title> Painel do Administrador</q-toolbar-title>
+        <q-toolbar-title>Painel do Administrador</q-toolbar-title>
 
-        <q-avatar color="blue" class="rounded" label="Configurações">
-          <img class="rounded" src="https://cdn.quasar.dev/img/avatar4.jpg" />
+        <q-avatar class="rounded sair" label="Configurações">
+          <q-icon name="arrow_drop_down" color="white" clickable/>
           <q-menu>
             <div class="row no-wrap q-pa-md">
               <div class="column">
@@ -27,7 +27,7 @@
 
               <div class="column items-center">
                 <q-avatar size="72px">
-                  <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+                  <img :src="fotoPerfil" />
                 </q-avatar>
 
                 <div class="text-subtitle1 q-mt-md q-mb-xs">
@@ -49,24 +49,50 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="menu" v-model="leftDrawerOpen" show-if-above>
-      <q-list>
-        <q-item-label header>
-          <q-row>
-            <q-col cols="6" class="flex items-center justify-center">
-              <img src="../assets/agendayou-logo.png" style="width: 100%" />
-            </q-col>
-          </q-row>
-        </q-item-label>
-        <hr style="max-width: 90%" />
+    <q-drawer
+      class="left-navigation text-white"
+      show-if-above
+      v-model="leftDrawerOpen"
+      style="
+        background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;
+      "
+      side="left"
+      elevated
+    >
+      <div
+        class="full-height"
+        :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'"
+      >
+        <div style="height: calc(100% - 117px); padding: 10px">
+          <q-toolbar>
+            <q-avatar>
+              <img src="../assets/logo-menu-agenda.svg" />
+            </q-avatar>
 
-        <EssentialLink
-          v-for="to in essentialLinks"
-          :key="to.title"
-          v-bind="to"
-        />
-      </q-list>
+            <q-toolbar-title>AgendaYOU</q-toolbar-title>
+          </q-toolbar>
+          <hr />
+          <q-scroll-area style="height: 100%">
+            <q-list>
+
+              <EssentialLink
+                tabActive
+                :class="{ tabActive: isActive(to) }"
+                v-for="to in essentialLinks"
+                :key="to.title"
+                v-bind="to"
+                @click="setActive(to)"
+              />
+            </q-list>
+          </q-scroll-area>
+        </div>
+      </div>
     </q-drawer>
+    <q-footer elevated>
+      <q-toolbar>
+        <span>AgendaYOU v1.0 &copy; Copyright - Todos os direitos reservados. </span>
+      </q-toolbar>
+    </q-footer>
 
     <q-page-container>
       <router-view />
@@ -97,7 +123,7 @@ const listAdmin = [
   {
     title: "Atualizar Perfil",
     icon: "person",
-    to: "/solicitacoes",
+    to: "/atualizarperfil",
   },
   {
     title: "Parceiros",
@@ -127,12 +153,20 @@ export default defineComponent({
       localStorage.removeItem("tipo_pessoa");
       localStorage.removeItem("key");
       localStorage.removeItem("nome");
+      localStorage.removeItem("foto");
       this.$router.push("/login");
     },
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
+      this.fotoPerfil = localStorage.getItem("foto");
       console.log("nome", this.nomeUsuario);
     },
+    isActive(to) {
+      return this.activeLink === to;
+    },
+    setActive(to) {
+      this.activeLink = to;
+    }
   },
 
   setup() {
@@ -140,6 +174,8 @@ export default defineComponent({
 
     return {
       essentialLinks: listAdmin,
+      activeLink: null,
+      fotoPerfil: "",
       leftDrawerOpen,
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
@@ -153,4 +189,42 @@ export default defineComponent({
 body {
   background-color: rgba(249, 249, 249, 0.801);
 }
+.q-drawer {
+  /*background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;*/
+  background-image: url("/statics/images/lake.jpg") !important;
+  background-size: cover !important;
+}
+
+.drawer_normal {
+  background-color: rgba(1, 1, 1, 0.75);
+}
+
+.drawer_dark {
+  background-color: #010101f2;
+}
+
+.navigation-item {
+  border-radius: 5px;
+}
+
+.tabActive {
+  background-color: #472183;
+  border-radius: 30px;
+}
+
+
+body {
+  background: #f1f1f1 !important;
+}
+
+.sair {
+  cursor: pointer;
+}
+
+.sair:hover {
+  background-color: rgba(255, 255, 255, 0.491);
+}
+
+
+
 </style>
