@@ -22,6 +22,11 @@ const routes = [
         name: "MeusAgendamentos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
       },
+      {
+        path: "atualizarperfilll",
+        name: "AtualizarRPerfil",
+        component: () => import("pages/AtualizarPerfil.vue"),
+      },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["cliente"] },
   },
@@ -44,11 +49,6 @@ const routes = [
         component: () => import("pages/Admin/SolicitacoesParceria.vue"),
       },
       {
-        path: "/atualizarperfil",
-        name: "AtualizarPerfil",
-        component: () => import("pages/AtualizarPerfil.vue"),
-      },
-      {
         path: "/servicosdisponiveiss",
         name: "ServicosDisponiveisAdmin",
         component: () => import("pages/ServicosDisponiveis.vue"),
@@ -58,6 +58,12 @@ const routes = [
         name: "MeusAgendamentsos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
       },
+      {
+        path: "/atualizarperfil",
+        name: "AtualizaraPerfilAdmin",
+        component: () => import("pages/AtualizarPerfil.vue"),
+      },
+      
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["admin"] },
   },
@@ -99,6 +105,11 @@ const routes = [
         path: "/meusagendamentosss",
         name: "MeusAggendamentsos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
+      },
+      {
+        path: "/atualizarperfill",
+        name: "AtualizarPerfil",
+        component: () => import("pages/AtualizarPerfil.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },

@@ -8,7 +8,7 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar style="height: 70px; width: 70px">
-            <q-img :src="fotoPerfil" />
+            <q-img :src="inputFoto" />
           </q-avatar>
         </q-item-section>
 
@@ -131,7 +131,7 @@
 
       <q-card-section class="q-pt-none" style="width: 500px">
         <div class="q-gutter-md">
-          <q-input label="Link da Foto de Perfil" v-model="fotoPerfil" required />
+          <q-input label="Link da Foto de Perfil" v-model="inputFoto" required />
           <q-input label="Nome" v-model="inputNome" required />
           <q-input label="E-mail" v-model="inputEmail" disable required />
           <q-input
@@ -173,7 +173,7 @@ export default defineComponent({
   data() {
     return {
       alert: false,
-      fotoPerfil: '',
+      inputFoto: '',
       tipoUsuario: ''
     };
   },
@@ -208,11 +208,11 @@ export default defineComponent({
 
         agendamentos.forEach((el) => {
           this.inputNome = el.nome;
-          this.fotoPerfil = el.foto;
-          (this.inputTelefone = el.telefone),
-            (this.inputEmail = el.email),
-            (this.inputCpf = el.cpf),
-            (this.inputDateNasc = el.dt_nasc);
+          this.inputFoto = el.foto;
+          this.inputTelefone = el.telefone
+          this.inputEmail = el.email
+          this.inputCpf = el.cpf
+          this.inputDateNasc = el.dt_nasc
           this.inputEstado = el.endereco.estado;
           this.inputCidade = el.endereco.cidade;
           this.inputBairro = el.endereco.bairro;
@@ -220,8 +220,6 @@ export default defineComponent({
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
-
-        console.log("this.inputFoto", this.fotoPerfil )
 
         console.log("this", this.agendamentos);
       } catch (error) {
@@ -233,6 +231,7 @@ export default defineComponent({
       const pessoa_id = localStorage.getItem('id_pessoa');
       const url = `http://127.0.0.1:5000/pessoas/${pessoa_id}`;
       const dadosAtualizados = {
+        foto: this.inputFoto,
         nome: this.inputNome,
         telefone: this.inputTelefone,
         email: this.inputEmail,
@@ -266,6 +265,16 @@ export default defineComponent({
       // Abra o q-dialog de alerta
       this.alert = true;
     },
+
+    cleanFields() {
+      this.inputFoto = ""
+      this.inputBairro = "",
+      this.inputCidade = "",
+      this.inputTelefone = "",
+      this.inputEstado = ""
+      this.inputNome = ""
+      this.inputRua = ""
+    }
   },
 });
 </script>

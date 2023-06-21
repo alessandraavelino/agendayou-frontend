@@ -13,8 +13,8 @@
 
         <q-toolbar-title> Seja bem vindo (a), {{ nomeFantasia }} !</q-toolbar-title>
 
-        <q-avatar color="blue" class="rounded" label="Configurações">
-          <img class="rounded" src="https://cdn.quasar.dev/img/avatar4.jpg" />
+        <q-avatar class="rounded sair" label="Configurações">
+          <q-icon name="arrow_drop_down" color="white" clickable/>
           <q-menu>
             <div class="row no-wrap q-pa-md">
               <div class="column">
@@ -27,11 +27,11 @@
 
               <div class="column items-center">
                 <q-avatar size="72px">
-                  <img src="https://cdn.quasar.dev/img/avatar4.jpg" />
+                  <img :src="fotoPerfil" />
                 </q-avatar>
 
                 <div class="text-subtitle1 q-mt-md q-mb-xs">
-                  {{ nomeFantasia }}
+                  {{ nomeUsuario }}
                 </div>
 
                 <q-btn
@@ -49,24 +49,44 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer class="menu" v-model="leftDrawerOpen" show-if-above>
-      <q-list>
-        <q-item-label header>
-          <q-row>
-            <q-col cols="6" class="flex items-center justify-center">
-              <img src="../assets/agendayou-logo.png" style="width: 100%" />
-            </q-col>
-          </q-row>
-        </q-item-label>
-        <hr style="max-width: 90%" />
+    <q-drawer
+      class="left-navigation text-white"
+      show-if-above
+      v-model="leftDrawerOpen"
+      style="
+        background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;
+      "
+      side="left"
+      elevated
+    >
+      <div
+        class="full-height"
+        :class="$q.dark.isActive ? 'drawer_dark' : 'drawer_normal'"
+      >
+        <div style="height: calc(100% - 117px); padding: 10px">
+          <q-toolbar>
+            <q-avatar>
+              <img src="../assets/logo-menu-agenda.svg" />
+            </q-avatar>
 
-        <EssentialLink
-          v-for="to in essentialLinks"
-          :key="to.title"
-          v-bind="to"
-          @click="selectItem(item)"
-        />
-      </q-list>
+            <q-toolbar-title>AgendaYOU</q-toolbar-title>
+          </q-toolbar>
+          <hr />
+          <q-scroll-area style="height: 100%">
+            <q-list>
+
+              <EssentialLink
+                tabActive
+                :class="{ tabActive: isActive(to) }"
+                v-for="to in essentialLinks"
+                :key="to.title"
+                v-bind="to"
+                @click="setActive(to)"
+              />
+            </q-list>
+          </q-scroll-area>
+        </div>
+      </div>
     </q-drawer>
     <q-footer elevated>
       <q-toolbar>
@@ -121,6 +141,11 @@ const listParceiro = [
     icon: "watch_later",
     to: "/meusagendamentosss",
   },
+  {
+    title: "Atualizar Perfil",
+    icon: "manage_accounts",
+    to: "/atualizarperfill",
+  },
 ];
 
 export default defineComponent({
@@ -155,6 +180,12 @@ export default defineComponent({
       this.nomeFantasia = localStorage.getItem("nome_fantasia");
       console.log("nome", this.nomeUsuario);
       console.log("nomefantasia", this.nomeFantasia);
+    },
+    isActive(to) {
+      return this.activeLink === to;
+    },
+    setActive(to) {
+      this.activeLink = to;
     }
   },
   
@@ -165,6 +196,8 @@ export default defineComponent({
     return {
       essentialLinks: listParceiro,
       leftDrawerOpen,
+      activeLink: null,
+      fotoPerfil: "",
       toggleLeftDrawer() {
         leftDrawerOpen.value = !leftDrawerOpen.value;
       },
@@ -174,7 +207,39 @@ export default defineComponent({
 </script>
 
 <style>
+.q-drawer {
+  /*background-image: url(https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg) !important;*/
+  background-image: url("/statics/images/lake.jpg") !important;
+  background-size: cover !important;
+}
+
+.drawer_normal {
+  background-color: rgba(1, 1, 1, 0.75);
+}
+
+.drawer_dark {
+  background-color: #010101f2;
+}
+
+.navigation-item {
+  border-radius: 5px;
+}
+
+.tabActive {
+  background-color: #472183;
+  border-radius: 30px;
+}
+
+
 body {
-  background-color: rgba(249, 249, 249, 0.801);
+  background: #f1f1f1 !important;
+}
+
+.sair {
+  cursor: pointer;
+}
+
+.sair:hover {
+  background-color: rgba(255, 255, 255, 0.491);
 }
 </style>
