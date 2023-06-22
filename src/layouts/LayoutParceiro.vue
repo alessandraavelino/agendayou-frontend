@@ -114,7 +114,7 @@ const listParceiro = [
   {
     title: "Novo Agendamento",
     icon: "group_add",
-    to: "",
+    to: "/agendarhorario",
   },
   {
     title: "Buscar Serviços",

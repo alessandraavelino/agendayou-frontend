@@ -9,10 +9,6 @@ const routes = [
         name: "Dashboard",
       },
       {
-        path: "agendarhorario",
-        component: () => import("pages/AgendarHorario.vue"),
-      },
-      {
         path: "servicosdisponiveisss",
         name: "ServicosDisponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
@@ -110,6 +106,11 @@ const routes = [
         path: "/atualizarperfill",
         name: "AtualizarPerfil",
         component: () => import("pages/AtualizarPerfil.vue"),
+      },
+      {
+        path: "/agendarhorario",
+        name: "AgendarHorario",
+        component: () => import("pages/Parceiros/AgendarHorario.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
