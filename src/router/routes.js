@@ -9,10 +9,6 @@ const routes = [
         name: "Dashboard",
       },
       {
-        path: "agendarhorario",
-        component: () => import("pages/AgendarHorario.vue"),
-      },
-      {
         path: "servicosdisponiveisss",
         name: "ServicosDisponiveis",
         component: () => import("pages/ServicosDisponiveis.vue"),
@@ -21,6 +17,11 @@ const routes = [
         path: "meusagendamentos",
         name: "MeusAgendamentos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
+      },
+      {
+        path: "atualizarperfilll",
+        name: "AtualizarRPerfil",
+        component: () => import("pages/AtualizarPerfil.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["cliente"] },
@@ -44,11 +45,6 @@ const routes = [
         component: () => import("pages/Admin/SolicitacoesParceria.vue"),
       },
       {
-        path: "/atualizarperfil",
-        name: "AtualizarPerfil",
-        component: () => import("pages/AtualizarPerfil.vue"),
-      },
-      {
         path: "/servicosdisponiveiss",
         name: "ServicosDisponiveisAdmin",
         component: () => import("pages/ServicosDisponiveis.vue"),
@@ -58,6 +54,12 @@ const routes = [
         name: "MeusAgendamentsos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
       },
+      {
+        path: "/atualizarperfil",
+        name: "AtualizaraPerfilAdmin",
+        component: () => import("pages/AtualizarPerfil.vue"),
+      },
+      
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["admin"] },
   },
@@ -104,6 +106,16 @@ const routes = [
         path: "/meusagendamentosss",
         name: "MeusAggendamentsos",
         component: () => import("pages/Clientes/MeusAgendamentos.vue"),
+      },
+      {
+        path: "/atualizarperfill",
+        name: "AtualizarPerfil",
+        component: () => import("pages/AtualizarPerfil.vue"),
+      },
+      {
+        path: "/agendarhorario",
+        name: "AgendarHorario",
+        component: () => import("pages/Parceiros/AgendarHorario.vue"),
       },
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },

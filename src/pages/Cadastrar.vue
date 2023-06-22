@@ -134,7 +134,7 @@
               <q-input
                 label="Telefone"
                 name="telefone"
-                mask="(##) ####-####"
+                mask="(##) ####-#####"
                 placeholder="(DD) XXXXX-XXXX"
                 v-model="fields.telefone"
                 :error="

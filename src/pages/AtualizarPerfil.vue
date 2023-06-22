@@ -8,12 +8,12 @@
       <q-item>
         <q-item-section avatar>
           <q-avatar style="height: 70px; width: 70px">
-            <q-img :src="fotoPerfil" />
+            <q-img :src="inputFoto" />
           </q-avatar>
         </q-item-section>
 
         <q-item-section>
-          <q-item-label>Alessandra Avelino</q-item-label>
+          <q-item-label>{{ inputNome }}</q-item-label>
           <q-item-label><strong>{{tipoUsuario }}</strong></q-item-label>
         </q-item-section>
         <div class="q-pa-md q-gutter-sm">
@@ -126,22 +126,27 @@
   <q-dialog v-model="alert" persistent>
     <q-card>
       <q-card-section class="bg-primary color-white">
-        <div class="text-h6" >Editar Perfil:</div>
+        <div class="text-h6" style="color: white">Editar Perfil</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none" style="width: 500px">
         <div class="q-gutter-md">
-          <q-input label="Link da Foto de Perfil" v-model="fotoPerfil" required />
+          <q-input label="Link da Foto de Perfil" v-model="inputFoto" required />
           <q-input label="Nome" v-model="inputNome" required />
           <q-input label="E-mail" v-model="inputEmail" disable required />
           <q-input
             label="Telefone"
-            type="number"
+            mask="(##) #####-####"
+            placeholder="(DD) XXXXX-XXXX"
             v-model="inputTelefone"
             required
+            error-message="Formato de telefone inválido!"
+            :error="
+                  !validarTelefone(inputTelefone) && inputTelefone !== ''
+                "
           />
           <q-input type="date" v-model="inputDateNasc" required />
-          <q-input type="CPF" label="CPF" disable v-model="inputCpf" required />
+          <q-input type="text" label="CPF" mask="###.###.###-##" disable v-model="inputCpf" required />
           <q-input type="text" label="Estado" v-model="inputEstado" required />
           <q-input type="text" label="Cidade" v-model="inputCidade" required />
           <q-input type="text" label="Bairro" v-model="inputBairro" required />
@@ -158,6 +163,7 @@
           type="button"
           color="primary"
           @click="atualizarPerfil"
+          :disable="!validarTelefone(inputTelefone) || inputEstado === '' || inputCidade === '' || inputBairro === '' || inputRua === '' "
           v-close-popup
         />
       </q-card-actions>
@@ -173,8 +179,17 @@ export default defineComponent({
   data() {
     return {
       alert: false,
-      fotoPerfil: '',
-      tipoUsuario: ''
+      inputFoto: '',
+      inputNome: '',
+      tipoUsuario: '',
+      inputDateNasc: '',
+      inputTelefone: '',
+      inputEstado: '',
+      inputCidade: '',
+      inputBairro: '',
+      inputRua: ''
+
+
     };
   },
 
@@ -208,11 +223,11 @@ export default defineComponent({
 
         agendamentos.forEach((el) => {
           this.inputNome = el.nome;
-          this.fotoPerfil = el.foto;
-          (this.inputTelefone = el.telefone),
-            (this.inputEmail = el.email),
-            (this.inputCpf = el.cpf),
-            (this.inputDateNasc = el.dt_nasc);
+          this.inputFoto = el.foto;
+          this.inputTelefone = el.telefone
+          this.inputEmail = el.email
+          this.inputCpf = el.cpf
+          this.inputDateNasc = el.dt_nasc
           this.inputEstado = el.endereco.estado;
           this.inputCidade = el.endereco.cidade;
           this.inputBairro = el.endereco.bairro;
@@ -220,8 +235,6 @@ export default defineComponent({
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
-
-        console.log("this.inputFoto", this.fotoPerfil )
 
         console.log("this", this.agendamentos);
       } catch (error) {
@@ -233,6 +246,7 @@ export default defineComponent({
       const pessoa_id = localStorage.getItem('id_pessoa');
       const url = `http://127.0.0.1:5000/pessoas/${pessoa_id}`;
       const dadosAtualizados = {
+        foto: this.inputFoto,
         nome: this.inputNome,
         telefone: this.inputTelefone,
         email: this.inputEmail,
@@ -248,7 +262,10 @@ export default defineComponent({
 
       try {
         const response = await axios.put(url, dadosAtualizados);
-        console.log('Atualização realizada com sucesso!', response);
+        this.$q.notify({
+          message: "Informações atualizadas com sucesso!",
+          color: "green",
+        });
       } catch (error) {
         console.log('Erro ao atualizar perfil', error);
       }
@@ -266,6 +283,20 @@ export default defineComponent({
       // Abra o q-dialog de alerta
       this.alert = true;
     },
+
+    cleanFields() {
+      this.inputFoto = ""
+      this.inputBairro = "",
+      this.inputCidade = "",
+      this.inputTelefone = "",
+      this.inputEstado = ""
+      this.inputNome = ""
+      this.inputRua = ""
+    },
+    validarTelefone(telefone) {
+      const telefoneRegex = /^\(\d{2}\)\s\d{5}-\d{4}$/;
+      return telefoneRegex.test(telefone);
+    }
   },
 });
 </script>

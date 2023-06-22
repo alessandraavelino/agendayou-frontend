@@ -122,7 +122,7 @@ const listAdmin = [
   },
   {
     title: "Atualizar Perfil",
-    icon: "person",
+    icon: "manage_accounts",
     to: "/atualizarperfil",
   },
   {

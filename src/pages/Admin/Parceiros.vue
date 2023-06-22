@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <div class="flex flex-center">
-        <q-input
+      <q-input
         v-model="buscar"
         label="Busque por um parceiro específico"
         @input="filtrarResultados"
@@ -11,7 +11,7 @@
           <q-icon name="search" />
         </template>
       </q-input>
-      </div>
+    </div>
     <div class="q-pa-md row items-start q-gutter-md">
       <span class="col-4 text-h6">Lista de Parceiros</span>
     </div>
@@ -28,7 +28,6 @@
           <div class="text-subtitle3">{{ parceiro.cnpj }}</div>
           <div class="text-subtitle3">{{ parceiro.email }}</div>
         </q-card-section>
-
       </q-card>
     </div>
     <div class="flex flex-center" v-if="isLoading">
@@ -37,24 +36,23 @@
   </q-page>
 
   <q-dialog v-model="confirmDialogVisible" persistent>
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Tem certeza que deseja excluir o parceiro?</div>
-        </q-card-section>
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Tem certeza que deseja excluir o parceiro?</div>
+      </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat label="Cancelar" color="gray" v-close-popup />
-          <q-btn
-            flat
-            label="Excluir"
-            @click="excluirItem"
-            color="negative"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-
+      <q-card-actions align="right">
+        <q-btn flat label="Cancelar" color="gray" v-close-popup />
+        <q-btn
+          flat
+          label="Excluir"
+          @click="excluirItem"
+          color="negative"
+          v-close-popup
+        />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -90,7 +88,7 @@ export default defineComponent({
           cnpj: el.cnpj,
           nome_fantasia: el.nome_fantasia,
           email: el.email,
-          categoria: el.categoria
+          categoria: el.categoria,
         }));
 
         console.log("parceirosAqui: ", parceiros);
@@ -153,7 +151,7 @@ export default defineComponent({
       } finally {
         this.isLoading = false;
       }
-    }
+    },
   },
 });
 </script>
