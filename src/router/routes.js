@@ -23,6 +23,12 @@ const routes = [
         name: "AtualizarRPerfil",
         component: () => import("pages/AtualizarPerfil.vue"),
       },
+      {
+        path: "/suporte",
+        name: "ClienteSuporte",
+        component: () => import("pages/Suporte.vue"),
+      }
+    
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["cliente"] },
   },
@@ -58,6 +64,11 @@ const routes = [
         path: "/atualizarperfil",
         name: "AtualizaraPerfilAdmin",
         component: () => import("pages/AtualizarPerfil.vue"),
+      },
+      {
+        path: "/solicitacoessuporte",
+        name: "SolicitacoesSuporte",
+        component: () => import("pages/Admin/SolicitacoesSuporte.vue"),
       },
       
     ],
@@ -112,6 +123,11 @@ const routes = [
         name: "AgendarHorario",
         component: () => import("pages/Parceiros/AgendarHorario.vue"),
       },
+      {
+        path: "/suporte",
+        name: "Suporte",
+        component: () => import("pages/Suporte.vue"),
+      }
     ],
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
   },

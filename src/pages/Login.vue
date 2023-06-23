@@ -1,10 +1,10 @@
 <template>
   <div class="half ">
-    <div class="area q-pt-xl" align="center">
+    <div class="area" align="center">
       
       <div class="asset  q-pt-xl window-height">
         <div class="bg-login q-pt-xl">
-          <img class="q-pt-xl" src="~assets/logo-login.svg" />
+          <img class="q-pt-xl" style="width: 600px; height: 400px" src="~assets/bg-login.svg" />
         </div>
       </div>
     </div>
@@ -157,7 +157,7 @@
     </q-dialog>
     <q-dialog v-model="esqueciSenhaModal" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Digite seu e-mail para receber o código para redefinição de senha
           </div>
@@ -185,7 +185,7 @@
     </q-dialog>
     <q-dialog v-model="codeRecebido" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Insira o código que você recebeu no e-mail
           </div>
@@ -213,7 +213,7 @@
     </q-dialog>
     <q-dialog v-model="novaSenhaModal" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Insira o código recebido
           </div>

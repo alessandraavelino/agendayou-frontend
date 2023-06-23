@@ -135,6 +135,11 @@ const listAdmin = [
     icon: "watch_later",
     to: "/meusagendamentoss",
   },
+  {
+    title: "Solicitações de Suporte",
+    icon: "contact_support",
+    to: "/solicitacoessuporte",
+  },
 ];
 
 export default defineComponent({

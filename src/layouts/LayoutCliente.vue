@@ -130,8 +130,8 @@ const linksList = [
   },
   {
     title: "Suporte",
-    icon: "help",
-    to: "",
+    icon: "contact_support",
+    to: "/suporte",
   },
 ];
 

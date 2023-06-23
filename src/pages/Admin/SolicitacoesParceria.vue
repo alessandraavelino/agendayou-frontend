@@ -44,7 +44,7 @@
 
   <q-dialog v-model="formularioConfirmacao" persistent>
     <q-card>
-      <q-card-section class="bg-blue">
+      <q-card-section class="bg-primary">
         <div class="text-h6" style="color: white">Aprovar Parceria</div>
       </q-card-section>
 

@@ -146,6 +146,11 @@ const listParceiro = [
     icon: "manage_accounts",
     to: "/atualizarperfill",
   },
+  {
+    title: "Suporte",
+    icon: "contact_support",
+    to: "/suporte",
+  },
 ];
 
 export default defineComponent({
