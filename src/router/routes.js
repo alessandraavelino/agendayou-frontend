@@ -89,6 +89,11 @@ const routes = [
         component: () => import("pages/ServicosDisponiveis.vue"),
       },
       {
+        path: "/cadastrarfuncionario",
+        name: "FuncionariosCadastrados",
+        component: () => import("pages/Parceiros/CadastrarFuncionario.vue"),
+      },
+      {
         path: "/cadastrarservico",
         name: "CadastrarServico",
         component: () => import("pages/Parceiros/CadastrarServicos.vue"),
