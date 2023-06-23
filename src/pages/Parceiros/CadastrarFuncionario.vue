@@ -90,7 +90,7 @@
             flat
             label="Salvar"
             type="button"
-            @click="cadastrarServico()"
+            @click="cadastrarProfissinal()"
             :disable="!inputNome || !inputCargo || !inputSalario"
             color="primary"
             v-close-popup
@@ -170,9 +170,10 @@ import { useQuasar } from "quasar";
 import dayjs from "dayjs";
 
 export default defineComponent({
-  name: "CadastrarServicos",
+  name: "CadastrarProfissional",
   data() {
     return {
+
       inputNome: "",
       inputCargo: "",
       inputSalario: "",
@@ -189,7 +190,7 @@ export default defineComponent({
   },
 
   methods: {
-    async cadastrarServico() {
+    async cadastrarProfissinal() {
       const $q = useQuasar();
 
       const data = {
@@ -199,16 +200,16 @@ export default defineComponent({
         parceiro_id: localStorage.getItem("id_parceiro")
       };
 
-      if (this.fields.id_servico) {
+      if (this.id_profissional) {
         console.log("caiu aquiu");
-        console.log("id_servic", this.fields.id_servico);
+        console.log("id_servic", this.id_profissional);
         try {
           const response = await axios.put(
-            `http://127.0.0.1:5000/servicos/${this.fields.id_servico}`,
+            `http://127.0.0.1:5000/profissional/${this.id_profissional}`,
             data
           );
           console.log("response", response);
-          this.getServicos();
+          this.getProfissionais();
         } catch (error) {
           console.log(error);
         }
@@ -218,18 +219,18 @@ export default defineComponent({
           this.isLoading = true;
 
           const response = await axios.post(
-            "http://127.0.0.1:5000/servicos",
+            "http://127.0.0.1:5000/profissional",
             data
           );
           this.alert = false;
-          this.getServicos();
+          this.getProfissionais();
         } catch (error) {
           console.log(error);
           this.$q.notify({
             message: "Ocorreu um erro! Tente novamente!",
             color: "red",
           });
-          this.getServicos();
+          this.getProfissionais();
         } finally {
           this.isLoading = false;
         }
@@ -237,23 +238,21 @@ export default defineComponent({
     },
 
     async editarItem(row) {
-      this.fields.id_servico = row.id_servico;
+      this.id_profissional = row.id_profissional;
       // Preencha os campos do formulário com os dados do item a ser editado
-      this.fields.tipo_servico = row.tipo_servico;
-      this.fields.profissional = row.profissional;
-      this.fields.valor = row.valor;
-      this.fields.horario = row.horario;
+      this.inputNome = row.inputNome;
+      this.inputCargo = row.inputCargo;
+      this.inputSalario = row.inputSalario;
 
       // Abra o q-dialog de alerta
       this.alert = true;
     },
 
     cleanFields() {
-      this.fields.id_servico = "";
-      this.fields.tipo_servico = "";
-      this.fields.profissional = "";
-      this.fields.valor = "";
-      this.fields.horario = "";
+      this.id_profissional = "";
+      this.inputNome = "";
+      this.inputCargo = "";
+      this.inputSalario = "";
       this.alert = true;
     },
 
@@ -264,7 +263,7 @@ export default defineComponent({
 
     deleteItem(row) {
       // Defina o item que será excluído
-      this.deleteItemId = row.id_servico;
+      this.deleteItemId = row.id_profissional;
 
       // Abra o diálogo de confirmação
       this.confirmDialogVisible = true;
@@ -279,13 +278,13 @@ export default defineComponent({
         const response = await axios.get(url);
         console.log("reponse", response);
         const profissionais = response.data.map((el) => ({
-          id_profissional: el.id_profisional,
+          id_profissional: el.id_profissional,
           nome: el.nome,
           cargo: el.cargo,
           salario: el.salario,
         }));
 
-        console.log("servic", servicos);
+        console.log("servic", profissionais);
 
         this.rows = profissionais;
       } catch (error) {
@@ -294,15 +293,15 @@ export default defineComponent({
     },
     async excluirItem() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/servicos/${this.deleteItemId}`;
+      const url = `http://127.0.0.1:5000/profissional/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 
         this.$q.notify({
-          message: "Serviço excluído com sucesso!",
+          message: "Profissional excluído com sucesso!",
           color: "green",
         });
-        this.getServicos();
+        this.getProfissionais();
       } catch (error) {
         console.log(error);
       } finally {
