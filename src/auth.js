@@ -26,4 +26,3 @@ export const isAdmin = () => {
     return tipo_pessoa
   }
 };
-console.log(checkAuth());

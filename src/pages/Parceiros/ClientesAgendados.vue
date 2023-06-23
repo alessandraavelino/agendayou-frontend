@@ -129,7 +129,6 @@ export default defineComponent({
       const url = `http://127.0.0.1:5000/agendamentos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
         const agendamentos = response.data.map((el) => ({
           id_agendamento: el.id_agendamento,
           nome_cliente: el.nome_cliente,
@@ -142,7 +141,6 @@ export default defineComponent({
         }));
 
         this.agendamentos = agendamentos;
-        console.log("this", this.agendamentos);
       } catch (error) {
         console.log(error);
       }
@@ -171,7 +169,6 @@ export default defineComponent({
           pessoa_id: this.pessoa_id
         });
         const idPessoa = this.pessoa_id
-        console.log('1id da solicitac', idPessoa)
         this.$q.notify({
           message: "O usuário foi atendido!",
           color: "green",
@@ -202,8 +199,6 @@ export default defineComponent({
           parceiro_id: parseInt(localStorage.getItem("id_parceiro")),
           pessoa_id: this.pessoa_id
         });
-        const idPessoa = this.pessoa_id
-        console.log('1id da solicitac', idPessoa)
         this.$q.notify({
           message: "O usuário não compareceu!",
           color: "orange",
@@ -220,7 +215,6 @@ export default defineComponent({
     },
     async excluirItem(id) {
       this.isLoading = true;
-      console.log('delete item id agend', this.deleteItemId)
       const url = `http://127.0.0.1:5000/agendamentos/${id}`;
       try {
         await axios.delete(url);
@@ -232,7 +226,6 @@ export default defineComponent({
       }
     },
     openModalConfirmar(user) {
-      console.log("clicado");
       this.id_agendamento = user.id_agendamento
       this.nome_cliente = user.nome_cliente;
       this.telefone = user.telefone;
@@ -245,7 +238,6 @@ export default defineComponent({
       this.formularioConfirmacao = true;
     },
     openModalConfirmarAusente(user) {
-      console.log("clicado");
       this.id_agendamento = user.id_agendamento
       this.nome_cliente = user.nome_cliente;
       this.telefone = user.telefone;

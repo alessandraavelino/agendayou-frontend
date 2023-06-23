@@ -135,6 +135,11 @@ const listAdmin = [
     icon: "watch_later",
     to: "/meusagendamentoss",
   },
+  {
+    title: "Solicitações de Suporte",
+    icon: "contact_support",
+    to: "/solicitacoessuporte",
+  },
 ];
 
 export default defineComponent({
@@ -159,7 +164,6 @@ export default defineComponent({
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
       this.fotoPerfil = localStorage.getItem("foto");
-      console.log("nome", this.nomeUsuario);
     },
     isActive(to) {
       return this.activeLink === to;

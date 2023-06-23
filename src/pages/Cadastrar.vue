@@ -1,31 +1,15 @@
 <template>
-  <div class="half">
-    <div class="area">
-      <ul class="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-
-        <li></li>
-      </ul>
-
-      <div class="window-height window-width row items-center">
-        <div class="bg-login">
-          <img src="~assets/logo-login.svg" />
+  <div class="half ">
+    <div class="area q-pt-xl" align="center">
+      
+      <div class="asset  q-pt-xl window-height">
+        <div class="bg-login q-pt-xl">
+          <img class="q-pt-xl" style="width: 600px; height: 400px" src="~assets/bg-login.svg" />
         </div>
       </div>
     </div>
   </div>
-  <div class="half">
+  <div class="half q-p-xl">
     <div class="">
       <div class="my-card q-pa-sm card" align="center">
         <h5>Fazer Cadastro</h5>
@@ -394,9 +378,8 @@ export default {
         }));
 
         this.optionsCidade = nomeCidades;
-        console.log("cidade selec", this.fields.cidade.value);
       } catch (error) {
-        console.log(error.response.data); // aqui estamos imprimindo a propriedade 'data' da resposta do axios
+        console.log(error);
       }
     },
 
@@ -420,135 +403,6 @@ export default {
   overflow: hidden;
 }
 
-.circles {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 98.3%;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.bg-login {
-  z-index: 2;
-  overflow: hidden;
-}
-.circles li {
-  position: absolute;
-  display: block;
-  list-style: none;
-  width: 20px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.2);
-  animation: animate 10s linear infinite;
-  bottom: 100px;
-  overflow: hidden;
-}
-
-.circles li:nth-child(1) {
-  left: 25%;
-  width: 80px;
-  height: 80px;
-  animation-delay: 0s;
-  overflow: hidden;
-}
-
-.bg-img {
-  margin: 0 auto; /* centraliza horizontalmente */
-  overflow: hidden;
-}
-.circles li:nth-child(2) {
-  left: 10%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 2s;
-  animation-duration: 12s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(3) {
-  left: 70%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 4s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(4) {
-  left: 40%;
-  width: 60px;
-  height: 60px;
-  animation-delay: 0s;
-  animation-duration: 18s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(5) {
-  left: 65%;
-  width: 20px;
-  height: 20px;
-  animation-delay: 0s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(6) {
-  left: 75%;
-  width: 110px;
-  height: 110px;
-  animation-delay: 3s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(7) {
-  left: 35%;
-  width: 150px;
-  height: 150px;
-  animation-delay: 0s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(8) {
-  left: 50%;
-  width: 25px;
-  height: 25px;
-  animation-delay: 15s;
-  animation-duration: 10s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(9) {
-  left: 20%;
-  width: 15px;
-  height: 15px;
-  animation-delay: 12s;
-  animation-duration: 6s;
-  overflow: hidden;
-}
-
-.circles li:nth-child(10) {
-  left: 85%;
-  width: 150px;
-  height: 150px;
-  animation-delay: 0s;
-  animation-duration: 11s;
-  overflow: hidden;
-}
-
-@keyframes animate {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-    border-radius: 0;
-    overflow: hidden;
-  }
-
-  100% {
-    transform: translateY(-1000px) rotate(720deg);
-    opacity: 0;
-    border-radius: 50%;
-    overflow: hidden;
-  }
-}
 .half {
   width: 50%;
   height: 100%;

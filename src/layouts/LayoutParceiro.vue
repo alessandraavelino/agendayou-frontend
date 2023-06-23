@@ -146,6 +146,11 @@ const listParceiro = [
     icon: "manage_accounts",
     to: "/atualizarperfill",
   },
+  {
+    title: "Suporte",
+    icon: "contact_support",
+    to: "/suporte",
+  },
 ];
 
 export default defineComponent({
@@ -178,8 +183,6 @@ export default defineComponent({
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
       this.nomeFantasia = localStorage.getItem("nome_fantasia");
-      console.log("nome", this.nomeUsuario);
-      console.log("nomefantasia", this.nomeFantasia);
     },
     isActive(to) {
       return this.activeLink === to;

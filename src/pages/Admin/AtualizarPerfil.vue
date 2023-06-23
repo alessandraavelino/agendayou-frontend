@@ -36,7 +36,6 @@ export default defineComponent({
       const url = "http://127.0.0.1:5000/solicitarparceria";
       try {
         const response = await axios.get(url);
-        console.log("reponse".response);
         const solicitacoes = response.data.map((el) => ({
           id_solicitacao: el.id_solicitacao,
           nome: el.nome,
@@ -46,18 +45,13 @@ export default defineComponent({
           descricao: el.descricao,
         }));
 
-        console.log("solicita", solicitacoes);
-
         this.solicitacoes = solicitacoes;
-        console.log("this", this.solicitacoes);
       } catch (error) {
         console.log(error);
       }
     },
     async deleteSolicitacoes(id_solicitacao, email) {
-      console.log("id e email", id_solicitacao, email);
       this.isLoading = true;
-      console.log("id", this.solicitacoes);
       const url = `http://127.0.0.1:5000/solicitarparceria/${id_solicitacao}/${email}`;
       try {
         await axios.delete(url);

@@ -130,8 +130,8 @@ const linksList = [
   },
   {
     title: "Suporte",
-    icon: "help",
-    to: "",
+    icon: "contact_support",
+    to: "/suporte",
   },
 ];
 
@@ -164,7 +164,6 @@ export default defineComponent({
     },
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
-      console.log("nome", this.nomeUsuario);
     },
     isActive(to) {
       return this.activeLink === to;

@@ -1,10 +1,10 @@
 <template>
   <div class="half ">
-    <div class="area q-pt-xl" align="center">
+    <div class="area" align="center">
       
       <div class="asset  q-pt-xl window-height">
         <div class="bg-login q-pt-xl">
-          <img class="q-pt-xl" src="~assets/logo-login.svg" />
+          <img class="q-pt-xl" style="width: 600px; height: 400px" src="~assets/bg-login.svg" />
         </div>
       </div>
     </div>
@@ -157,7 +157,7 @@
     </q-dialog>
     <q-dialog v-model="esqueciSenhaModal" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Digite seu e-mail para receber o código para redefinição de senha
           </div>
@@ -185,7 +185,7 @@
     </q-dialog>
     <q-dialog v-model="codeRecebido" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Insira o código que você recebeu no e-mail
           </div>
@@ -213,7 +213,7 @@
     </q-dialog>
     <q-dialog v-model="novaSenhaModal" persistent>
       <q-card>
-        <q-card-section class="bg-blue">
+        <q-card-section class="bg-primary">
           <div class="text-h6" style="color: white">
             Insira o código recebido
           </div>
@@ -287,7 +287,6 @@ export default {
     },
 
     async login() {
-      console.log("clicado");
       const $q = useQuasar();
       try {
         this.isLoading = true;
@@ -295,7 +294,6 @@ export default {
           email: this.email,
           senha: this.senha,
         });
-        console.log("response login", response);
 
         localStorage.setItem("key", response.data.key);
         localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
@@ -306,9 +304,6 @@ export default {
         localStorage.setItem("nome_fantasia", response.data.parceiro.nome_fantasia);
         localStorage.setItem("categoria", response.data.parceiro.categoria);
         localStorage.setItem("id_pessoa", response.data.pessoa.id_pessoa);
-
-        
-
 
         this.$router.push("/dashboard");
       } catch (error) {
@@ -406,14 +401,12 @@ export default {
         }));
 
         this.optionsCategorias = allCategorias;
-        console.log('all ccategorias', this.optionsCategorias)
 
       } catch (error) {
         console.log(error);
       }
     },
     cadastrarPage() {
-      console.log("lcicado");
       this.$router.push("/cadastrar");
     },
 

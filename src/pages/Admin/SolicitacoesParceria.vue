@@ -44,7 +44,7 @@
 
   <q-dialog v-model="formularioConfirmacao" persistent>
     <q-card>
-      <q-card-section class="bg-blue">
+      <q-card-section class="bg-primary">
         <div class="text-h6" style="color: white">Aprovar Parceria</div>
       </q-card-section>
 
@@ -112,7 +112,6 @@ export default defineComponent({
       const url = "http://127.0.0.1:5000/solicitarparceria";
       try {
         const response = await axios.get(url);
-        console.log("reponse".response);
         const solicitacoes = response.data.map((el) => ({
           id_solicitacao: el.id_solicitacao,
           nome: el.nome,
@@ -124,10 +123,7 @@ export default defineComponent({
           categoria: el.categoria
         }));
 
-        console.log("solicita", solicitacoes);
-
         this.solicitacoes = solicitacoes;
-        console.log("this", this.solicitacoes);
       } catch (error) {
         console.log(error);
       }
@@ -137,7 +133,6 @@ export default defineComponent({
       this.solicitacoes.forEach((el) => {
         el.id_solicitacao;
       });
-      console.log("id", this.solicitacoes);
       const url = `http://127.0.0.1:5000/solicitarparceria/${id_solicitacao}/${email}`;
       try {
         await axios.delete(url);
@@ -168,7 +163,6 @@ export default defineComponent({
         });
         
         const email = this.inputEmail;
-        console.log('1id da solicitac', email)
         await this.deleteSolicitacoesAprovada(email)
       } catch (error) {
         console.log(error);
@@ -183,7 +177,6 @@ export default defineComponent({
 
     async deleteSolicitacoesAprovada(email) {
       this.isLoading = true;
-      console.log("id", this.solicitacoes);
       const url = `http://127.0.0.1:5000/solicitarparceria/${email}`;
       try {
         await axios.delete(url);
@@ -201,7 +194,6 @@ export default defineComponent({
     },
 
     openModalAceitar(user) {
-      console.log("clicado");
       this.inputNome = user.nome;
       this.inputNomeFantasia = user.nome_fantasia;
       this.inputEmail = user.email;
