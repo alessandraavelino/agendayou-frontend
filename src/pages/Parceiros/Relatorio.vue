@@ -158,11 +158,9 @@ export default defineComponent({
     async getRelatorio() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      console.log("parceiro id", parceiro_id);
       const url = `http://127.0.0.1:5000/faturamentos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
         const servicos = response.data.map((el) => ({
           id_faturamento: el.id_faturamento,
           status: el.status,
@@ -190,11 +188,9 @@ export default defineComponent({
     async getFaturamentoTotal() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      console.log("parceiro id", parceiro_id);
       const url = `http://127.0.0.1:5000/faturamento/${parceiro_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
         this.ausente = response.data.ausente;
         this.presente = response.data.presente;
         this.valor = response.data.valor;

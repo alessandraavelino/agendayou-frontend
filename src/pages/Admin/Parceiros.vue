@@ -81,7 +81,6 @@ export default defineComponent({
       const url = "http://127.0.0.1:5000/parceiros";
       try {
         const response = await axios.get(url);
-        console.log("reponse".response);
         const parceiros = response.data.map((el) => ({
           id_parceiro: el.id_parceiro,
           nome: el.nome,
@@ -91,10 +90,7 @@ export default defineComponent({
           categoria: el.categoria,
         }));
 
-        console.log("parceirosAqui: ", parceiros);
-
         this.parceiros = parceiros;
-        console.log("this", this.parceiros);
       } catch (error) {
         console.log(error);
       }

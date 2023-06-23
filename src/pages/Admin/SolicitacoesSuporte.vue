@@ -70,7 +70,6 @@ export default defineComponent({
       const url = `http://127.0.0.1:5000/suporte`;
       try {
         const response = await axios.get(url);
-        console.log("reponse suporte", response);
         const suporte = response.data.map((el) => ({
           id_suporte: el.id_suporte,
           descricao: el.descricao,
@@ -92,7 +91,6 @@ export default defineComponent({
 
     async excluirSuporte() {
       this.isLoading = true;
-      console.log('delete item', this.deleteItemId)
       const url = `http://127.0.0.1:5000/suporte/${this.deleteItemId}`;
       try {
         await axios.delete(url);

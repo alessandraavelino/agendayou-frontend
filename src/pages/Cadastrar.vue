@@ -378,9 +378,8 @@ export default {
         }));
 
         this.optionsCidade = nomeCidades;
-        console.log("cidade selec", this.fields.cidade.value);
       } catch (error) {
-        console.log(error.response.data); // aqui estamos imprimindo a propriedade 'data' da resposta do axios
+        console.log(error);
       }
     },
 

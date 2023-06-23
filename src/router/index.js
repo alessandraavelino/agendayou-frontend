@@ -26,7 +26,6 @@ export default route(function () {
 
   Router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-    console.log("requires auth", requiresAuth);
   
     const allowedUserTypes = to.matched.reduce((types, record) => {
       if (record.meta.allowedUserTypes) {
@@ -34,10 +33,8 @@ export default route(function () {
       }
       return types;
     }, []);
-    console.log("allowed user types", allowedUserTypes);
   
     const userType = isAdmin(); // função que retorna o tipo de usuário logado
-    console.log("user type", userType);
   
     if (requiresAuth && !checkAuth()) {
       next("/Login");
@@ -56,7 +53,6 @@ export default route(function () {
         next();
       }
     } else {
-      console.log("user allowed");
       next();
     }
   });

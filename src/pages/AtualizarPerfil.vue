@@ -204,7 +204,6 @@ export default defineComponent({
       const url = `http://127.0.0.1:5000/pessoas/${pessoa_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
         const agendamentos = response.data.map((el) => ({
           id_pessoa: el.id_pessoa,
           foto: el.foto,
@@ -235,8 +234,6 @@ export default defineComponent({
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
-
-        console.log("this", this.agendamentos);
       } catch (error) {
         console.log(error);
       }
@@ -267,12 +264,11 @@ export default defineComponent({
           color: "green",
         });
       } catch (error) {
-        console.log('Erro ao atualizar perfil', error);
+        console.log(error);
       }
     },
     
     editarItem() {
-      console.log("clicado");
       // this.fields.id_servico = row.id_servico;
       // Preencha os campos do formulário com os dados do item a ser editado
       // this.fields.tipo_servico = row.tipo_servico;

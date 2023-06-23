@@ -274,14 +274,11 @@ export default defineComponent({
       };
 
       if (this.fields.id_servico) {
-        console.log("caiu aquiu");
-        console.log("id_servic", this.fields.id_servico);
         try {
           const response = await axios.put(
             `http://127.0.0.1:5000/servicos/${this.fields.id_servico}`,
             data
           );
-          console.log("response", response);
           this.getServicos();
         } catch (error) {
           console.log(error);
@@ -347,11 +344,9 @@ export default defineComponent({
     async getServicos() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      console.log("parceiro id", parceiro_id);
       const url = `http://127.0.0.1:5000/servicos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
         const servicos = response.data.map((el) => ({
           id_servico: el.id_servico,
           tipo_servico: el.tipo_servico,
@@ -359,8 +354,6 @@ export default defineComponent({
           profissional: el.profissional,
           valor: el.valor,
         }));
-
-        console.log("servic", servicos);
 
         this.rows = servicos;
       } catch (error) {

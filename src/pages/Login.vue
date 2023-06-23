@@ -287,7 +287,6 @@ export default {
     },
 
     async login() {
-      console.log("clicado");
       const $q = useQuasar();
       try {
         this.isLoading = true;
@@ -295,7 +294,6 @@ export default {
           email: this.email,
           senha: this.senha,
         });
-        console.log("response login", response);
 
         localStorage.setItem("key", response.data.key);
         localStorage.setItem("tipo_pessoa", response.data.pessoa.tipo_pessoa);
@@ -306,9 +304,6 @@ export default {
         localStorage.setItem("nome_fantasia", response.data.parceiro.nome_fantasia);
         localStorage.setItem("categoria", response.data.parceiro.categoria);
         localStorage.setItem("id_pessoa", response.data.pessoa.id_pessoa);
-
-        
-
 
         this.$router.push("/dashboard");
       } catch (error) {
@@ -406,14 +401,12 @@ export default {
         }));
 
         this.optionsCategorias = allCategorias;
-        console.log('all ccategorias', this.optionsCategorias)
 
       } catch (error) {
         console.log(error);
       }
     },
     cadastrarPage() {
-      console.log("lcicado");
       this.$router.push("/cadastrar");
     },
 
