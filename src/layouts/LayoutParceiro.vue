@@ -137,6 +137,11 @@ const listParceiro = [
     to: "/relatorio",
   },
   {
+    title: "Cadastrar Profissionais",
+    icon: "badge",
+    to: "/cadastrarfuncionario",
+  },
+  {
     title: "Meus Agendamentos",
     icon: "watch_later",
     to: "/meusagendamentosss",
@@ -149,7 +154,7 @@ const listParceiro = [
   {
     title: "Suporte",
     icon: "contact_support",
-    to: "/suporte",
+    to: "/suporrte",
   },
 ];
 

@@ -26,7 +26,6 @@ export default route(function () {
 
   Router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  
     const allowedUserTypes = to.matched.reduce((types, record) => {
       if (record.meta.allowedUserTypes) {
         types.push(...record.meta.allowedUserTypes);
@@ -40,11 +39,9 @@ export default route(function () {
       next("/Login");
     } else if (
       (allowedUserTypes.length > 0 && !allowedUserTypes.includes(userType)) ||
-      (userType === "parceiro" && !allowedUserTypes.includes("parceiro")) ||
-      (userType === "cliente" && !allowedUserTypes.includes("cliente"))
+      (to.path.includes("/suporte") && ![ "cliente", "parceiro" ].includes(userType))
     ) {
-      const redirectRoute =
-        userType === "cliente" ? "cliente" : userType === "parceiro" ? "Parceiro" : "Admin";
+      const redirectRoute = userType === "cliente" ? "cliente" : userType === "parceiro" ? "Parceiro" : "Admin";
   
       // Verifica se já está sendo redirecionado para a rota correta para evitar o loop
       if (to.name !== redirectRoute) {
@@ -56,6 +53,7 @@ export default route(function () {
       next();
     }
   });
+  
   
   return Router;
   

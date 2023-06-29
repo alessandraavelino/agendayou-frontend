@@ -43,7 +43,7 @@
               v-show="filtrarPorNome(servico)"
               
             >
-              <q-img src="" />
+              <q-img :src="servico.foto_parceiro" style="height: 180px" />
 
               <q-card-section>
                 <q-btn
@@ -88,7 +88,7 @@
 
               <q-card-actions>
                 <q-btn flat round icon="event" />
-                <q-btn :disable="!verifyTypeUser()" flat color="primary" @click="openModalAgendar(servico)">
+                <q-btn :disable="!verifyTypeUser(servico.parceiro_id)" flat color="primary" @click="openModalAgendar(servico)">
                   Agendar
                 </q-btn>
               </q-card-actions>
@@ -193,6 +193,7 @@ export default {
     });
 
     return {
+      foto: localStorage.getItem("foto"),
       filtro: "",
       buscar: "",
       formularioConfirmacao: false,
@@ -201,6 +202,7 @@ export default {
       categoria: "",
       tabs,
       tabPanels,
+      parceiro: ''
     };
   },
 
@@ -256,7 +258,11 @@ export default {
           horario: el.horario,
           categoria: el.categoria,
           parceiro_id: el.parceiro_id,
+          foto_parceiro: el.foto_parceiro
         }));
+
+        this.parceiro = servicos.parceiro_id
+        console.log('this.parceiro', this.parceiro)
 
         this.servicos = servicos;
       } catch (error) {
@@ -328,10 +334,11 @@ export default {
       }
     },
 
-    verifyTypeUser () {
-      const tipo_pessoa = localStorage.getItem("tipo_pessoa")
+    verifyTypeUser (parceiro) {
+      const id_parceiro = localStorage.getItem("id_parceiro")
+      console.log('this.inputIdParceiro', parceiro)
 
-      if (tipo_pessoa === "parceiro") {
+      if (id_parceiro == parceiro) {
         return false
       } else {
         return true

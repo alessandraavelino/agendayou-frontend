@@ -129,7 +129,7 @@ const routes = [
         component: () => import("pages/Parceiros/AgendarHorario.vue"),
       },
       {
-        path: "/suporte",
+        path: "/suporrte",
         name: "Suporte",
         component: () => import("pages/Suporte.vue"),
       }

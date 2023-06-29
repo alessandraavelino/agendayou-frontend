@@ -3,7 +3,7 @@
     <div class="q-pa-md">
       <div class="row q-pb-md">
         <div>
-          <span class="col-4">Cadastrar Funcionario</span>
+          <span class="col-4">Cadastrar Profissionais</span>
         </div>
         <div class="col row justify-end">
           <q-btn
@@ -240,9 +240,9 @@ export default defineComponent({
     async editarItem(row) {
       this.id_profissional = row.id_profissional;
       // Preencha os campos do formulário com os dados do item a ser editado
-      this.inputNome = row.inputNome;
-      this.inputCargo = row.inputCargo;
-      this.inputSalario = row.inputSalario;
+      this.inputNome = row.nome
+      this.inputCargo = row.cargo;
+      this.inputSalario = row.salario;
 
       // Abra o q-dialog de alerta
       this.alert = true;
