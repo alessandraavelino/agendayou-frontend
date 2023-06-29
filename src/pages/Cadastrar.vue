@@ -296,7 +296,7 @@ export default {
     },
 
     validarTelefone(telefone) {
-      const telefoneRegex = /^(\(\d{2}\)\s)?\d{4,5}-\d{4}$/;
+      const telefoneRegex = /^(\(\d{2}\)\s)?\d{4,5}-\d{5}$/;
       return telefoneRegex.test(telefone);
     },
 
