@@ -16,6 +16,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
+import { API } from '../api/api'
 export default defineComponent({
   name: "AtualizarPerfil",
   data() {
@@ -33,7 +34,7 @@ export default defineComponent({
   methods: {
     async getSolicitacoes() {
       this.loading = true;
-      const url = "http://127.0.0.1:5000/solicitarparceria";
+      const url = `${API}/solicitarparceria`;
       try {
         const response = await axios.get(url);
         const solicitacoes = response.data.map((el) => ({
@@ -52,7 +53,7 @@ export default defineComponent({
     },
     async deleteSolicitacoes(id_solicitacao, email) {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/solicitarparceria/${id_solicitacao}/${email}`;
+      const url = `${API}/solicitarparceria/${id_solicitacao}/${email}`;
       try {
         await axios.delete(url);
         this.solicitacoes = this.solicitacoes.filter(

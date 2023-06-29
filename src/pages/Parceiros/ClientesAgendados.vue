@@ -96,6 +96,7 @@
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
+import { API } from '../../api/api'
 export default defineComponent({
   name: "ClientesAgendados",
   data() {
@@ -126,7 +127,7 @@ export default defineComponent({
     async getAgendamentos() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      const url = `http://127.0.0.1:5000/agendamentos/${parceiro_id}`;
+      const url = `${API}/agendamentos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
         const agendamentos = response.data.map((el) => ({
@@ -157,7 +158,7 @@ export default defineComponent({
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post("http://127.0.0.1:5000/faturamentos", {
+        const response = await axios.post(`${API}/faturamentos`, {
           status: 1,
           nome_cliente: this.nome_cliente,
           telefone: this.telefone,
@@ -188,7 +189,7 @@ export default defineComponent({
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post("http://127.0.0.1:5000/faturamentos", {
+        const response = await axios.post(`${API}/faturamentos`, {
           status: 0,
           nome_cliente: this.nome_cliente,
           telefone: this.telefone,
@@ -215,7 +216,7 @@ export default defineComponent({
     },
     async excluirItem(id) {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/agendamentos/${id}`;
+      const url = `${API}/agendamentos/${id}`;
       try {
         await axios.delete(url);
         this.getAgendamentos();

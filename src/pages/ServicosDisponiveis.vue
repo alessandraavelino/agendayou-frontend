@@ -170,6 +170,7 @@
 import dayjs from "dayjs";
 import axios from "axios";
 import { ref, computed } from "vue";
+import { API } from '../api/api'
 export default {
   data() {
     const tabs = [
@@ -214,7 +215,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios.post(
-          "http://127.0.0.1:5000/agendamentos",
+          `${API}/agendamentos`,
           {
             nome_cliente: this.inputNome,
             telefone: this.inputTelefone,
@@ -246,7 +247,7 @@ export default {
 
     async getServicos() {
       this.loading = true;
-      const url = "http://127.0.0.1:5000/servicos";
+      const url = `${API}/servicos`;
       try {
         const response = await axios.get(url);
         const servicos = response.data.map((el) => ({
@@ -322,7 +323,7 @@ export default {
 
     async deleteServicos(id_servico) {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/servicos/${id_servico}`;
+      const url = `${API}/servicos/${id_servico}`;
       try {
         await axios.delete(url);
 

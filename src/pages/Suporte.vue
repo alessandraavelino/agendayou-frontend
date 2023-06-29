@@ -30,6 +30,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
+import { API } from '../api/api'
 
 export default defineComponent({
   name: "Suporte",
@@ -54,7 +55,7 @@ export default defineComponent({
       try {
         this.isLoading = true;
         const response = await axios.post(
-          "http://127.0.0.1:5000/suporte",
+          `${API}/suporte`,
           {
             descricao: this.editor,
             pessoa_id: localStorage.getItem("id_pessoa")

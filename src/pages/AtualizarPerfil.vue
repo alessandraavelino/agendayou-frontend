@@ -174,6 +174,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
+import { API } from '../api/api'
 export default defineComponent({
   name: "AtualizarPerfil",
   data() {
@@ -201,7 +202,7 @@ export default defineComponent({
     async getPerfil() {
       this.loading = true;
       const pessoa_id = localStorage.getItem("id_pessoa");
-      const url = `http://127.0.0.1:5000/pessoas/${pessoa_id}`;
+      const url = `${API}/pessoas/${pessoa_id}`;
       try {
         const response = await axios.get(url);
         const agendamentos = response.data.map((el) => ({
@@ -241,7 +242,7 @@ export default defineComponent({
 
     async atualizarPerfil() {
       const pessoa_id = localStorage.getItem('id_pessoa');
-      const url = `http://127.0.0.1:5000/pessoas/${pessoa_id}`;
+      const url = `${API}/pessoas/${pessoa_id}`;
       const dadosAtualizados = {
         foto: this.inputFoto,
         nome: this.inputNome,

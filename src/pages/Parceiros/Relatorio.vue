@@ -113,7 +113,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import html2pdf from "html2pdf.js";
-
+import { API } from '../../api/api'
 export default defineComponent({
   name: "CadastrarServicos",
   data() {
@@ -158,7 +158,7 @@ export default defineComponent({
     async getRelatorio() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      const url = `http://127.0.0.1:5000/faturamentos/${parceiro_id}`;
+      const url = `${API}/faturamentos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
         const servicos = response.data.map((el) => ({
@@ -188,7 +188,7 @@ export default defineComponent({
     async getFaturamentoTotal() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      const url = `http://127.0.0.1:5000/faturamento/${parceiro_id}`;
+      const url = `${API}/faturamento/${parceiro_id}`;
       try {
         const response = await axios.get(url);
         this.ausente = response.data.ausente;

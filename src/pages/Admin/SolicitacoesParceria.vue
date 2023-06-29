@@ -87,6 +87,7 @@
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
+import { API } from '../../api/api'
 export default defineComponent({
   name: "SolicitacoesParceria",
   data() {
@@ -109,7 +110,7 @@ export default defineComponent({
   methods: {
     async getSolicitacoes() {
       this.loading = true;
-      const url = "http://127.0.0.1:5000/solicitarparceria";
+      const url = `${API}/solicitarparceria`;
       try {
         const response = await axios.get(url);
         const solicitacoes = response.data.map((el) => ({
@@ -133,7 +134,7 @@ export default defineComponent({
       this.solicitacoes.forEach((el) => {
         el.id_solicitacao;
       });
-      const url = `http://127.0.0.1:5000/solicitarparceria/${id_solicitacao}/${email}`;
+      const url = `${API}/solicitarparceria/${id_solicitacao}/${email}`;
       try {
         await axios.delete(url);
 
@@ -153,7 +154,7 @@ export default defineComponent({
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post("http://127.0.0.1:5000/parceiros", {
+        const response = await axios.post(`${API}/parceiros`, {
           nome: this.inputNome,
           nome_fantasia: this.inputNomeFantasia,
           categoria: this.inputCategoria,
@@ -177,7 +178,7 @@ export default defineComponent({
 
     async deleteSolicitacoesAprovada(email) {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/solicitarparceria/${email}`;
+      const url = `${API}/solicitarparceria/${email}`;
       try {
         await axios.delete(url);
 

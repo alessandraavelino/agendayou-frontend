@@ -105,6 +105,7 @@ import { defineComponent, ref } from "vue";
 import axios from "axios";
 import { isAdmin } from "src/auth";
 import EssentialLink from "components/EssentialLink.vue";
+import { API } from '../api/api'
 const listParceiro = [
   {
     title: "Dashboard",
@@ -172,7 +173,7 @@ export default defineComponent({
   methods: {
     async logout() {
       const key = localStorage.getItem("key");
-      const url = `http://127.0.0.1:5000/logout/${key}`;
+      const url = `${API}/logout/${key}`;
       try {
         await axios.delete(url);
         localStorage.removeItem("key");

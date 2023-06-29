@@ -229,7 +229,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import dayjs from "dayjs";
-
+import { API } from '../../api/api'
 export default defineComponent({
   name: "CadastrarServicos",
   data() {
@@ -276,7 +276,7 @@ export default defineComponent({
       if (this.fields.id_servico) {
         try {
           const response = await axios.put(
-            `http://127.0.0.1:5000/servicos/${this.fields.id_servico}`,
+            `${API}/servicos/${this.fields.id_servico}`,
             data
           );
           this.getServicos();
@@ -289,7 +289,7 @@ export default defineComponent({
           this.isLoading = true;
 
           const response = await axios.post(
-            "http://127.0.0.1:5000/servicos",
+            `${API}/servicos`,
             data
           );
           this.alert = false;
@@ -344,7 +344,7 @@ export default defineComponent({
     async getServicos() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      const url = `http://127.0.0.1:5000/servicos/${parceiro_id}`;
+      const url = `${API}/servicos/${parceiro_id}`;
       try {
         const response = await axios.get(url);
         const servicos = response.data.map((el) => ({
@@ -362,7 +362,7 @@ export default defineComponent({
     },
     async excluirItem() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/servicos/${this.deleteItemId}`;
+      const url = `${API}/servicos/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 

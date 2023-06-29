@@ -168,7 +168,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import dayjs from "dayjs";
-
+import { API } from '../../api/api'
 export default defineComponent({
   name: "CadastrarProfissional",
   data() {
@@ -205,7 +205,7 @@ export default defineComponent({
         console.log("id_servic", this.id_profissional);
         try {
           const response = await axios.put(
-            `http://127.0.0.1:5000/profissional/${this.id_profissional}`,
+            `${API}/profissional/${this.id_profissional}`,
             data
           );
           console.log("response", response);
@@ -219,7 +219,7 @@ export default defineComponent({
           this.isLoading = true;
 
           const response = await axios.post(
-            "http://127.0.0.1:5000/profissional",
+            `http://${API}/profissional`,
             data
           );
           this.alert = false;
@@ -273,7 +273,7 @@ export default defineComponent({
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
       console.log("parceiro id", parceiro_id);
-      const url = `http://127.0.0.1:5000/profissional/${parceiro_id}`;
+      const url = `${API}/profissional/${parceiro_id}`;
       try {
         const response = await axios.get(url);
         console.log("reponse", response);
@@ -293,7 +293,7 @@ export default defineComponent({
     },
     async excluirItem() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/profissional/${this.deleteItemId}`;
+      const url = `${API}/profissional/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 

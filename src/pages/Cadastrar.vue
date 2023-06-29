@@ -226,6 +226,7 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
+import { API } from '../api/api'
 export default {
   name: "Cadastrar",
 
@@ -333,7 +334,7 @@ export default {
           },
         };
         const response = await axios.post(
-          "http://127.0.0.1:5000/clientes",
+          `${API}/clientes`,
           data
         );
         this.alert = true;

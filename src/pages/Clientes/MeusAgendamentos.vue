@@ -48,6 +48,7 @@
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
+import { API } from '../../api/api'
 export default defineComponent({
   name: "MeusAgendamentos",
   data() {
@@ -68,7 +69,7 @@ export default defineComponent({
     async getAgendamentos() {
       this.loading = true;
       const pessoa_id = localStorage.getItem("id_pessoa");
-      const url = `http://127.0.0.1:5000/agendamentos/pessoa/${pessoa_id}`;
+      const url = `${API}/agendamentos/pessoa/${pessoa_id}`;
       try {
         const response = await axios.get(url);
         const agendamentos = response.data.map((el) => ({
@@ -125,7 +126,7 @@ export default defineComponent({
 
     async excluirParceiro() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/servicos/${this.deleteItemId}`;
+      const url = `${API}/servicos/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 

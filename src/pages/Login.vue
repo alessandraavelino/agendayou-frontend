@@ -241,6 +241,7 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import { validate } from "cnpj";
+import { API } from '../api/api'
 export default {
   name: "Login",
 
@@ -290,7 +291,7 @@ export default {
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post("http://127.0.0.1:5000/login", {
+        const response = await axios.post(`${API}/login`, {
           email: this.email,
           senha: this.senha,
         });
@@ -322,7 +323,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios.post(
-          "http://127.0.0.1:5000/solicitarparceria",
+          `${API}/solicitarparceria`,
           {
             nome: this.parceriaFields.nome,
             nome_fantasia: this.parceriaFields.nomeFantasia,
@@ -350,7 +351,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios.post(
-          "http://127.0.0.1:5000/esquecisenha",
+          `${API}/esquecisenha`,
           {
             email: this.emailRedefinir,
           }
@@ -371,7 +372,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios.post(
-          `http://127.0.0.1:5000/solicitarparceria/${id_pessoa}`,
+          `${API}/solicitarparceria/${id_pessoa}`,
           {
             nome: this.parceriaFields.nome,
             email: this.parceriaFields.email,
@@ -392,7 +393,7 @@ export default {
       }
     },
     async getCategoria() {
-      const url = "http://127.0.0.1:5000/categorias";
+      const url = `${API}/categorias`;
       try {
         const response = await axios.get(url);
         const allCategorias = response.data.map((el) => ({

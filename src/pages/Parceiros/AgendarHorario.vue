@@ -132,7 +132,7 @@
 <script>
 import { defineComponent } from "vue";
 import axios from "axios";
-
+import { API } from '../../api/api'
 export default defineComponent({
   name: "AgendarHorario",
   data() {
@@ -154,7 +154,7 @@ export default defineComponent({
       try {
         this.isLoading = true;
         const response = await axios.post(
-          "http://127.0.0.1:5000/agendamentos",
+          `${API}/agendamentos`,
           {
             nome_cliente: this.inputNome,
             telefone: this.inputTelefone,

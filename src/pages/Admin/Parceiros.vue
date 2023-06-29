@@ -58,6 +58,7 @@
 <script>
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
+import { API } from '../../api/api'
 import axios from "axios";
 export default defineComponent({
   name: "Parceiros",
@@ -78,7 +79,7 @@ export default defineComponent({
   methods: {
     async getParceiros() {
       this.loading = true;
-      const url = "http://127.0.0.1:5000/parceiros";
+      const url = `${API}/parceiros`;
       try {
         const response = await axios.get(url);
         const parceiros = response.data.map((el) => ({
@@ -133,7 +134,7 @@ export default defineComponent({
 
     async excluirParceiro() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/servicos/${this.deleteItemId}`;
+      const url = `${API}/servicos/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 

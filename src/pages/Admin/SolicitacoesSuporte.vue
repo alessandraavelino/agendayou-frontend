@@ -50,6 +50,7 @@
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
 import axios from "axios";
+import { API } from '../../api/api'
 export default defineComponent({
   name: "SolicitacaoesSuporte",
   data() {
@@ -67,7 +68,7 @@ export default defineComponent({
   methods: {
     async getSuporte() {
       this.loading = true;
-      const url = `http://127.0.0.1:5000/suporte`;
+      const url = `${API}/suporte`;
       try {
         const response = await axios.get(url);
         const suporte = response.data.map((el) => ({
@@ -91,7 +92,7 @@ export default defineComponent({
 
     async excluirSuporte() {
       this.isLoading = true;
-      const url = `http://127.0.0.1:5000/suporte/${this.deleteItemId}`;
+      const url = `${API}/suporte/${this.deleteItemId}`;
       try {
         await axios.delete(url);
 
