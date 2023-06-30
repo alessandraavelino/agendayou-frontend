@@ -432,4 +432,13 @@ hr {
   color: #0775f3;
   cursor: pointer;
 }
+
+@media only screen and (max-width: 600px) {
+  .area {
+    display: none;
+  }
+  .half {
+    width: 100%
+  }
+}
 </style>

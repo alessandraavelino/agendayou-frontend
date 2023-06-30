@@ -9,7 +9,7 @@
       </div>
     </div>
   </div>
-  <div class="half">
+  <div class="half flex-center">
     <div class="q-pt-xl">
       <div class="my-card q-pa-md card" align="center">
         <h4>Fazer Login</h4>
@@ -58,13 +58,13 @@
             </div>
           </q-btn>
         </div>
-        <div class="q-ma-md">
+        <div class="q-ma-sm">
           <p>Ainda não possui uma conta?</p>
           <p class="textLink" @click="cadastrarPage">Cadastrar-se</p>
         </div>
       </div>
       <hr />
-      <div class="parceria q-pt-sm">
+      <div class="parceria">
         <p>Deseja se tornar parceiro?</p>
         <q-btn
           type="submit"
@@ -178,6 +178,7 @@
             label="enviar"
             color="primary"
             @click="enviarEmailRedefincao"
+            :disable="!emailRedefinir"
             v-close-popup
           />
         </q-card-actions>
@@ -468,5 +469,14 @@ hr {
 .textLink {
   color: #0775f3;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .area {
+    display: none;
+  }
+  .half {
+    width: 100%
+  }
 }
 </style>
