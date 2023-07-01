@@ -13,7 +13,7 @@
     <div class="">
       <div class="my-card q-pa-sm card" align="center">
         <h5>Fazer Cadastro</h5>
-        <div class="q-gutter-sm" style="width: 660px">
+        <div class="campos q-gutter-sm" >
           <q-input
             label="Nome"
             name="nome"
@@ -23,7 +23,7 @@
             filled
           />
           <div class="row">
-            <div class="col" style="padding-right: 10px">
+            <div class="col">
               <q-input
                 label="CPF"
                 name="cpf"
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col" style="padding-right: 10px">
+            <div class="col">
               <q-input
                 label="CEP"
                 name="cep"
@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col" style="padding-right: 10px">
+            <div class="col">
               <q-select
                 label="Cidade"
                 name="cidade"
@@ -102,7 +102,7 @@
             />
           </div>
           <div class="row">
-            <div class="col" style="padding-right: 10px">
+            <div class="col">
               <q-input
                 label="E-mail"
                 name="email"
@@ -131,7 +131,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col" style="padding-right: 10px">
+            <div class="col">
               <q-input
                 label="Senha"
                 name="senha"
@@ -417,6 +417,10 @@ hr {
   overflow: hidden;
 }
 
+.col {
+  padding-right: 10px;
+}
+
 .button-parc {
   border: 1px solid black;
   border-radius: 20;
@@ -433,12 +437,45 @@ hr {
   cursor: pointer;
 }
 
+.campos {
+  width: 700px;
+}
+
 @media only screen and (max-width: 600px) {
   .area {
     display: none;
   }
   .half {
-    width: 100%
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .half {
+    width: 100%;
+  }
+  
+  .card {
+    width: auto;
+    margin: 0 20px;
+  }
+  
+  .row {
+    flex-direction: column;
+  }
+  
+  .col {
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .q-input,
+  .q-select {
+    width: 100%;
+  }
+
+  .campos {
+    width: 320px;
   }
 }
 </style>
