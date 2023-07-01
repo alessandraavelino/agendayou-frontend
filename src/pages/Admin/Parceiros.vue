@@ -1,5 +1,8 @@
 <template>
   <q-page class="q-pa-md">
+    <div class="q-pa-md row items-start q-gutter-md">
+      <span class="col-4 text-h6">Lista de Parceiros</span>
+    </div>
     <div class="flex flex-center">
       <q-input
         v-model="buscar"
@@ -11,9 +14,6 @@
           <q-icon name="search" />
         </template>
       </q-input>
-    </div>
-    <div class="q-pa-md row items-start q-gutter-md">
-      <span class="col-4 text-h6">Lista de Parceiros</span>
     </div>
     <div class="q-pa-md row items-start q-gutter-md">
       <q-card
@@ -58,7 +58,7 @@
 <script>
 import { defineComponent } from "vue";
 import { useQuasar } from "quasar";
-import { API } from '../../api/api'
+import { API } from "../../api/api";
 import axios from "axios";
 export default defineComponent({
   name: "Parceiros",

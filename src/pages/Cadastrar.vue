@@ -191,8 +191,8 @@
         </div>
       </div>
       <p>
-        Ao se cadastrar você concorda com todos os nossos Termos e Política de
-        Privacidade.
+        Ao se cadastrar você concorda com todos os nossos <a href="https://files.smallpdf.com/files/9c6a4c6ce007d3c6a16ffbf5798d0fdc.pdf?name=AgendaYOU-termo.pdf" download="termo-agendayou">Termos e Política de
+        Privacidade</a>.
       </p>
     </div>
   </div>
