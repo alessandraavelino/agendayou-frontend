@@ -201,14 +201,11 @@ export default defineComponent({
       };
 
       if (this.id_profissional) {
-        console.log("caiu aquiu");
-        console.log("id_servic", this.id_profissional);
         try {
           const response = await axios.put(
             `${API}/profissional/${this.id_profissional}`,
             data
           );
-          console.log("response", response);
           this.getProfissionais();
         } catch (error) {
           console.log(error);
@@ -219,7 +216,7 @@ export default defineComponent({
           this.isLoading = true;
 
           const response = await axios.post(
-            `http://${API}/profissional`,
+            `${API}/profissional`,
             data
           );
           this.alert = false;
@@ -272,11 +269,10 @@ export default defineComponent({
     async getProfissionais() {
       this.loading = true;
       const parceiro_id = localStorage.getItem("id_parceiro");
-      console.log("parceiro id", parceiro_id);
       const url = `${API}/profissional/${parceiro_id}`;
       try {
         const response = await axios.get(url);
-        console.log("reponse", response);
+        
         const profissionais = response.data.map((el) => ({
           id_profissional: el.id_profissional,
           nome: el.nome,
@@ -284,7 +280,7 @@ export default defineComponent({
           salario: el.salario,
         }));
 
-        console.log("servic", profissionais);
+        
 
         this.rows = profissionais;
       } catch (error) {
