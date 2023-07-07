@@ -324,7 +324,7 @@ export default {
       try {
         this.isLoading = true;
         const response = await axios.post(
-          `http://127.0.0.1:5000/solicitarparceria`,
+          `${API}/solicitarparceria`,
           {
             nome: this.parceriaFields.nome,
             nome_fantasia: this.parceriaFields.nomeFantasia,
