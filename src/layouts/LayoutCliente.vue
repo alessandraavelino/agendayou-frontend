@@ -109,7 +109,7 @@ import EssentialLink from "components/EssentialLink.vue";
 import { API } from '../api/api'
 const linksList = [
   {
-    title: "Dashboard",
+    title: "Início",
     icon: "dashboard",
     to: "/dashboard",
   },

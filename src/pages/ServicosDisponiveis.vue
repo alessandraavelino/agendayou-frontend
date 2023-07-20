@@ -111,7 +111,7 @@
               v-model="inputNome"
               :disable="true"
               value="nome"
-              label="Nome"
+              label="Cliente"
             />
           </div>
           <div class="q-gutter-md" style="width: 500px">

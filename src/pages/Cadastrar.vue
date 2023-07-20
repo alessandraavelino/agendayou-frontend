@@ -9,12 +9,13 @@
       </div>
     </div>
   </div>
-  <div class="half q-p-xl">
-    <div class="">
-      <div class="my-card q-pa-sm card" align="center">
+  <div class="half q-pt-xl">
+    <div class="content">
+      <div class="my-card q-pt-md card" align="center">
         <h5>Fazer Cadastro</h5>
-        <div class="campos q-gutter-sm" >
+        <div class="campos" >
           <q-input
+            class="q-pb-md"
             label="Nome"
             name="nome"
             type="text"
@@ -24,82 +25,8 @@
           />
           <div class="row">
             <div class="col">
-              <q-input
-                label="CPF"
-                name="cpf"
-                mask="###.###.###-##"
-                placeholder="XXX.XXX.XXX-XX"
-                v-model="fields.cpf"
-                :error-message="CpfErrorMessage"
-                :error="!validarCpf(fields.cpf) && fields.cpf !== ''"
-                required
-                filled
-              />
+              <q-input filled type="date" class="q-pb-md" v-model="fields.dt_nasc" required />
             </div>
-            <div class="col">
-              <q-input filled type="date" v-model="fields.dt_nasc" required />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <q-input
-                label="CEP"
-                name="cep"
-                mask="#####-###"
-                placeholder="XXXXX-XXX"
-                v-model="fields.cep"
-                :error-message="cepErrorMessage"
-                :error="!validarCep(fields.cep) && fields.cep !== ''"
-                required
-                filled
-              />
-            </div>
-            <div class="col">
-              <q-select
-                label="Estado"
-                name="estado"
-                type="text"
-                v-model="fields.estado"
-                :options="optionsEstado"
-                @update:modelValue="getEstado"
-                required
-                filled
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <q-select
-                label="Cidade"
-                name="cidade"
-                type="text"
-                v-model="fields.cidade"
-                :options="optionsCidade"
-                @update:modelValue="getCidade"
-                required
-                filled
-              />
-            </div>
-            <div class="col">
-              <q-input
-                label="Bairro"
-                name="bairro"
-                type="text"
-                v-model="fields.bairro"
-                required
-                filled
-              />
-            </div>
-          </div>
-          <div class="col">
-            <q-input
-              label="Rua"
-              name="rua"
-              type="text"
-              v-model="fields.rua"
-              required
-              filled
-            />
           </div>
           <div class="row">
             <div class="col">
@@ -178,8 +105,6 @@
             :disable="
               !validarEmail(fields.email) ||
               !validarSenha(fields.senha) ||
-              !validarCep(fields.cep) ||
-              !validarCpf(fields.cpf) ||
               !validarTelefone(fields.telefone)
             "
           >
@@ -234,26 +159,16 @@ export default {
     return {
       fields: {
         nome: "",
-        cpf: "",
         dt_nasc: "",
-        cep: "",
-        estado: "",
-        cidade: "",
-        bairro: "",
-        rua: "",
         email: "",
         telefone: "",
         senha: "",
         confirmarSenha: "",
       },
-      cepErrorMessage: "CEP inválido!",
-      CpfErrorMessage: "CPF inválido!",
       senhaIgualMessage: "As senhas digitadas não coincidem!",
       senhaErrorMessage: "A senha deve ter pelo menos 8 caractéres.",
       emailErrorMessage: "Por favor, insira um e-mail válido.",
       telefoneErrorMessage: "Telefone inválido!",
-      optionsEstado: [],
-      optionsCidade: [],
 
       isPwd: ref(true),
       isLoading: false,
@@ -261,40 +176,7 @@ export default {
     };
   },
 
-  async mounted() {
-    await this.getEstado();
-  },
   methods: {
-    validarCpf(cpf) {
-      cpf = cpf.replace(/\D/g, ""); // remover caracteres não numéricos
-      if (cpf.length !== 11) return false; // verificar se tem 11 dígitos
-
-      // calcular primeiro dígito verificador
-      let soma = 0;
-      for (let i = 0; i < 9; i++) {
-        soma += parseInt(cpf.charAt(i)) * (10 - i);
-      }
-      let resto = soma % 11;
-      let digitoVerificador1 = resto < 2 ? 0 : 11 - resto;
-
-      // calcular segundo dígito verificador
-      soma = 0;
-      for (let i = 0; i < 10; i++) {
-        soma += parseInt(cpf.charAt(i)) * (11 - i);
-      }
-      resto = soma % 11;
-      let digitoVerificador2 = resto < 2 ? 0 : 11 - resto;
-
-      // verificar se os dígitos verificadores correspondem
-      if (
-        parseInt(cpf.charAt(9)) !== digitoVerificador1 ||
-        parseInt(cpf.charAt(10)) !== digitoVerificador2
-      ) {
-        return false;
-      }
-      return true;
-    },
-
     validarTelefone(telefone) {
       const telefoneRegex = /^(\(\d{2}\)\s)?\d{4,5}-\d{5}$/;
       return telefoneRegex.test(telefone);
@@ -323,15 +205,7 @@ export default {
           senha: this.fields.senha,
           nome: this.fields.nome,
           dt_nasc: this.fields.dt_nasc,
-          cpf: this.fields.cpf,
-          telefone: this.fields.telefone,
-          endereco: {
-            cep: this.fields.cep,
-            estado: this.fields.estado.label,
-            cidade: this.fields.cidade.label,
-            bairro: this.fields.bairro,
-            rua: this.fields.rua,
-          },
+          telefone: this.fields.telefone
         };
         const response = await axios.post(
           `${API}/clientes`,
@@ -346,41 +220,6 @@ export default {
         });
       } finally {
         this.isLoading = false;
-      }
-    },
-
-    async getEstado() {
-      const estadoId = this.fields.estado.value;
-      const url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
-      try {
-        const response = await axios.get(url);
-        const nomeEstados = response.data.map((el) => ({
-          value: el.id,
-          label: el.nome,
-        }));
-
-        this.optionsEstado = nomeEstados;
-
-        await this.getCidade(estadoId);
-        return estadoId;
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    async getCidade() {
-      const estadoId = this.fields.estado.value;
-      const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estadoId}/municipios`;
-      try {
-        const response = await axios.get(url);
-        const nomeCidades = response.data.map((el) => ({
-          value: el.id,
-          label: el.nome,
-        }));
-
-        this.optionsCidade = nomeCidades;
-      } catch (error) {
-        console.log(error);
       }
     },
 
@@ -421,6 +260,9 @@ hr {
   padding-right: 10px;
 }
 
+p {
+  padding-top: 50px;
+}
 .button-parc {
   border: 1px solid black;
   border-radius: 20;
@@ -476,6 +318,10 @@ hr {
 
   .campos {
     width: 320px;
+  }
+
+  .content {
+    margin-top: -50px;
   }
 }
 </style>

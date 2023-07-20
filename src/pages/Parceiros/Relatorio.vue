@@ -44,7 +44,7 @@
           </q-badge>
         </div>
         <div class="text-h6">
-          Total de Lucro:
+          Receita:
           <q-badge outline align="middle" class="dados q-pa-sm" color="green">
             R$ {{ valor }}
           </q-badge>

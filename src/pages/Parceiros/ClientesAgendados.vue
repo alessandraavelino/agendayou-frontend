@@ -10,23 +10,23 @@
         :key="id_agendamento"
       >
         <q-card-section class="q-pa-md">
-          <div class="text-h6">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="person" />{{ user.nome_cliente }}
           </div>
-          <div class="text-subtitle">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="call" /> {{ user.telefone }}
           </div>
-          <div class="text-subtitle">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="description" /> {{ user.tipo_servico }}
           </div>
 
-          <div class="text-subtitle">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="badge" /> {{ user.profissional }}
           </div>
-          <div class="text-subtitle">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="today" /> {{ user.horario }}
           </div>
-          <div class="text-subtitle">
+          <div class="text-subtitle3">
             <q-icon class="icon" name="paid" /> {{ user.valor }}
           </div>
           <div class="text-subtitle">

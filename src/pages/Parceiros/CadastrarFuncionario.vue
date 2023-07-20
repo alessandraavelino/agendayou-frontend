@@ -66,8 +66,8 @@
 
     <q-dialog v-model="alert" persistent>
       <q-card>
-        <q-card-section>
-          <div class="text-h6">Preencha os dados abaixo:</div>
+        <q-card-section class="bg-primary">
+          <div class="text-h6" style="color: white">Preencha os dados abaixo:</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none" style="width: 500px">

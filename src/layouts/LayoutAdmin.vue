@@ -106,7 +106,7 @@ import { isAdmin } from "src/auth";
 import EssentialLink from "components/EssentialLink.vue";
 const listAdmin = [
   {
-    title: "Dashboard",
+    title: "Início",
     icon: "dashboard",
     to: "/admin/dashboard",
   },
@@ -164,6 +164,7 @@ export default defineComponent({
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
       this.fotoPerfil = localStorage.getItem("foto");
+      console.log('this.fotoPerfil', this.fotoPerfil)
     },
     isActive(to) {
       return this.activeLink === to;

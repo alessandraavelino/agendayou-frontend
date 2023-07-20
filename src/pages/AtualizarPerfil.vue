@@ -146,11 +146,6 @@
                 "
           />
           <q-input type="date" v-model="inputDateNasc" required />
-          <q-input type="text" label="CPF" mask="###.###.###-##" disable v-model="inputCpf" required />
-          <q-input type="text" label="Estado" v-model="inputEstado" required />
-          <q-input type="text" label="Cidade" v-model="inputCidade" required />
-          <q-input type="text" label="Bairro" v-model="inputBairro" required />
-          <q-input type="text" label="Rua" v-model="inputRua" required />
         </div>
       </q-card-section>
 
@@ -211,14 +206,7 @@ export default defineComponent({
           nome: el.nome,
           telefone: el.telefone,
           dt_nasc: el.dt_nasc,
-          cpf: el.cpf,
-          email: el.email,
-          endereco: {
-            estado: el.endereco.estado,
-            cidade: el.endereco.cidade,
-            bairro: el.endereco.bairro,
-            rua: el.endereco.rua,
-          },
+          email: el.email
         }));
 
         agendamentos.forEach((el) => {
@@ -228,13 +216,10 @@ export default defineComponent({
           this.inputEmail = el.email
           this.inputCpf = el.cpf
           this.inputDateNasc = el.dt_nasc
-          this.inputEstado = el.endereco.estado;
-          this.inputCidade = el.endereco.cidade;
-          this.inputBairro = el.endereco.bairro;
-          this.inputRua = el.endereco.rua;
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
+        console.log('this.tipoUsuario', this.tipoUsuario)
       } catch (error) {
         console.log(error);
       }
@@ -248,14 +233,7 @@ export default defineComponent({
         nome: this.inputNome,
         telefone: this.inputTelefone,
         email: this.inputEmail,
-        cpf: this.inputCpf,
-        dt_nasc: this.inputDateNasc,
-        endereco: {
-          estado: this.inputEstado,
-          cidade: this.inputCidade,
-          bairro: this.inputBairro,
-          rua: this.inputRua,
-        },
+        dt_nasc: this.inputDateNasc
       };
 
       try {
@@ -283,12 +261,8 @@ export default defineComponent({
 
     cleanFields() {
       this.inputFoto = ""
-      this.inputBairro = "",
-      this.inputCidade = "",
       this.inputTelefone = "",
-      this.inputEstado = ""
       this.inputNome = ""
-      this.inputRua = ""
     },
     validarTelefone(telefone) {
       const telefoneRegex = /^\(\d{2}\)\s\d{5}-\d{4}$/;
