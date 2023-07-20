@@ -19,15 +19,15 @@
             type="email"
             v-model="email"
             required
-            :error="!validarEmail(email) && email !== ''"
             label="E-mail"
+            class="q-pb-md"
           />
           <q-input
             filled
             v-model="senha"
             required
-            :error="!validarSenha(senha) && senha !== ''"
             label="Senha"
+            class="q-pb-md"
             :type="isPwd ? 'password' : 'text'"
           >
             <template v-slot:append>
@@ -84,8 +84,7 @@
         <q-card-section class="q-pt">
           <div class="q-pa-md">
             <div class="q-gutter-md" style="width: 500px">
-              <q-input v-model="parceriaFields.nome" label="Nome" />
-              <q-input v-model="parceriaFields.nomeFantasia" label="Nome Fantasia" />
+              <q-input v-model="parceriaFields.nome" label="Nome fantasia" />
               <q-select v-model="parceriaFields.categoria" :options="optionsCategorias" label="Categoria" @update:modelValue="getCategoria" />
               <q-input
                 v-model="parceriaFields.email"
@@ -95,15 +94,6 @@
                 "
                 :error-message="emailErrorMessage"
                 label="E-mail"
-              />
-              <q-input
-                v-model="parceriaFields.cnpj"
-                :error="
-                  !validarCnpj(parceriaFields.cnpj) &&
-                  parceriaFields.cnpj !== ''
-                "
-                :error-message="cnpjErrorMessage"
-                label="CNPJ"
               />
               <q-input
                 v-model="parceriaFields.qtdFunc"
@@ -132,7 +122,6 @@
             @click="enviarSolicitacao"
             :disable="
               !validarDescricao(parceriaFields.descricao) ||
-              !validarCnpj(parceriaFields.cnpj) ||
               !validarEmail(parceriaFields.email)
             "
             v-close-popup
@@ -241,7 +230,6 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
-import { validate } from "cnpj";
 import { API } from '../api/api'
 export default {
   name: "Login",
@@ -263,15 +251,13 @@ export default {
       ],
       parceriaFields: {
         nome: "",
-        nomeFantasia: "",
         email: "",
-        cnpj: "",
         qtdFunc: 0,
         descricao: "",
       },
       descricaoErrorMessage:
         "Sua descrição deve conter pelo menos 100 caractéres",
-      cnpjErrorMessage: "CNPJ inválido!",
+        mensagemConfirm: "Sua solicitação foi enviada com sucesso! Iremos analisar seus dados e em breve você receberá um retorno através do e-mail informado."
     };
   },
   async mounted() {
@@ -327,9 +313,7 @@ export default {
           `${API}/solicitarparceria`,
           {
             nome: this.parceriaFields.nome,
-            nome_fantasia: this.parceriaFields.nomeFantasia,
             email: this.parceriaFields.email,
-            cnpj: this.parceriaFields.cnpj,
             qtdFunc: parseInt(this.parceriaFields.qtdFunc),
             descricao: this.parceriaFields.descricao,
             categoria: this.parceriaFields.categoria.label
@@ -377,7 +361,6 @@ export default {
           {
             nome: this.parceriaFields.nome,
             email: this.parceriaFields.email,
-            cnpj: this.parceriaFields.cnpj,
             qtdFunc: parseInt(this.parceriaFields.qtdFunc),
             descricao: this.parceriaFields.descricao,
           }
@@ -418,14 +401,7 @@ export default {
 
     validarDescricao(descricao) {
       return descricao.length >= 50;
-    },
-    validarCnpj(cnpj) {
-      if (validate(cnpj)) {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    }
   },
 };
 </script>
