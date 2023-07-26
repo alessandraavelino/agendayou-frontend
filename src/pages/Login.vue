@@ -215,6 +215,32 @@
         </q-card-actions>
       </q-card>
     </q-dialog>
+    <div class="q-pa-md q-gutter-sm">
+    <q-dialog v-model="alert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">Atenção</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          O AgendaYou é uma plataforma de cadastro e agendamento de serviços,
+          o qual ainda se encontra em fase de melhorias, embora já seja possível utilizar.
+          Além disso, o objetivo do seu desenvolvimento foi ser o produto de software para a
+          apresentação do projeto final do curso de TSI.
+          - Ale
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn
+            flat
+            label="conhecer melhor"
+            color="primary"
+            v-close-popup
+          />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
+  </div>
   </div>
 </template>
 
@@ -232,6 +258,7 @@ export default {
 
   data() {
     return {
+      alert: true,
       email: "",
       senha: "",
       emailRedefinir: "",
