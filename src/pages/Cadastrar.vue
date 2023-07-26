@@ -3,7 +3,7 @@
   <div class="half q-pt-xl">
     <div class="content">
       <div class="my-card q-pt-md card" align="center">
-        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px"/>
+        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px" />
         <h4>Fazer Cadastro</h4>
         <div class="campos">
           <div class="row">
@@ -118,30 +118,30 @@
         >.
       </p>
     </div>
-  </div>
-  <div class="q-pa-md q-gutter-sm">
-    <q-dialog v-model="alert">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Cadastro realizado com sucesso!</div>
-        </q-card-section>
+    <div class="q-pa-md q-gutter-sm">
+      <q-dialog v-model="alert">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Cadastro realizado com sucesso!</div>
+          </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          Seja bem-vindo(a) ao nosso sistema. É um prazer ter você aqui! Faça
-          login para começar a agendar algum serviço.
-        </q-card-section>
+          <q-card-section class="q-pt-none">
+            Seja bem-vindo(a) ao nosso sistema. É um prazer ter você aqui! Faça
+            login para começar a agendar algum serviço.
+          </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="IR PARA LOGIN"
-            color="primary"
-            @click="navToLogin"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
+          <q-card-actions align="right">
+            <q-btn
+              flat
+              label="IR PARA LOGIN"
+              color="primary"
+              @click="navToLogin"
+              v-close-popup
+            />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </div>
 </template>
 
@@ -150,14 +150,13 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import { API } from "../api/api";
-import ImageLayoutVue from 'src/components/login/ImageLayout';
-
+import ImageLayoutVue from "src/components/login/ImageLayout";
 
 export default {
   name: "Cadastrar",
 
   components: {
-    ImageLayoutVue
+    ImageLayoutVue,
   },
 
   data() {
@@ -231,12 +230,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  overflow-y: hidden;
-  overflow-x: hidden;
-  overflow: hidden;
-}
-
 .area {
   background: #4b56d2;
   background: -webkit-linear-gradient(to left, #8f94fb, #4b56d2);

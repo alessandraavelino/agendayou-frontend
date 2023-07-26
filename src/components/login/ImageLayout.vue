@@ -1,8 +1,8 @@
 <template>
   <div class="half">
-    <div class="area q-pt-xl" align="center">
-      <div class="asset q-pt-xl window-height">
-        <div class="bg-login q-pt-xl">
+    <div class="area" align="center">
+      <div class="asset window-height">
+        <div class="bg-login">
           <img
             class="q-pt-xl"
             style="width: 600px; height: 400px"
@@ -49,12 +49,6 @@ export default defineComponent({
 </script>
 
 <style scoped>
-* {
-  overflow-y: hidden;
-  overflow-x: hidden;
-  overflow: hidden;
-}
-
 .area {
   background: #4b56d2;
   background: -webkit-linear-gradient(to left, #8f94fb, #4b56d2);

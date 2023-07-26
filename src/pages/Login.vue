@@ -216,18 +216,22 @@
       </q-card>
     </q-dialog>
     <div class="q-pa-md q-gutter-sm">
-    <q-dialog v-model="alert">
+    <q-dialog v-model="alert" @hide="dialogHidden">
       <q-card>
         <q-card-section>
           <div class="text-h6">Atenção</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          O AgendaYou é uma plataforma de cadastro e agendamento de serviços,
-          o qual ainda se encontra em fase de melhorias, embora já seja possível utilizar.
-          Além disso, o objetivo do seu desenvolvimento foi ser o produto de software para a
-          apresentação do projeto final do curso de TSI.
-          - Ale
+          O AgendaYOU é uma plataforma inovadora de cadastro e agendamento de serviços, atualmente em 
+          fase de aprimoramento contínuo. Embora já esteja totalmente funcional e disponível para uso, 
+          estou buscando aperfeiçoá-lo ainda mais. 
+          <br>
+          Este projeto foi concebido como o produto de 
+          software para a apresentação final do curso de TSI, refletindo em uma solução completa e 
+          eficiente para atender aos usuários.
+          <br>
+          - Alee
         </q-card-section>
 
         <q-card-actions align="right">
@@ -258,7 +262,7 @@ export default {
 
   data() {
     return {
-      alert: true,
+      alert: false,
       email: "",
       senha: "",
       emailRedefinir: "",
@@ -283,6 +287,17 @@ export default {
         mensagemConfirm: "Sua solicitação foi enviada com sucesso! Iremos analisar seus dados e em breve você receberá um retorno através do e-mail informado."
     };
   },
+
+  created() {
+    // Verifica se o diálogo já foi exibido anteriormente usando o localStorage
+    const dialogAlreadyShown = localStorage.getItem('dialogShown');
+
+    if (!dialogAlreadyShown) {
+      // Se o diálogo ainda não tiver sido exibido, mostra-o
+      this.alert = true;
+    }
+  }, 
+
   async mounted() {
     await this.getCategoria();
   },
@@ -295,6 +310,11 @@ export default {
 
     validarSenha(senha) {
       return senha.length >= 8;
+    },
+
+    dialogHidden() {
+      // Define o valor do localStorage para informar que o diálogo já foi exibido
+      localStorage.setItem('dialogShown', true);
     },
 
     async login() {
