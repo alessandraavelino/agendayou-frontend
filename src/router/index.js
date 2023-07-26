@@ -36,7 +36,7 @@ export default route(function () {
     const userType = isAdmin(); // função que retorna o tipo de usuário logado
   
     if (requiresAuth && !checkAuth()) {
-      next("/Login");
+      next("/login");
     } else if (
       (allowedUserTypes.length > 0 && !allowedUserTypes.includes(userType)) ||
       (to.path.includes("/suporte") && ![ "cliente", "parceiro" ].includes(userType))

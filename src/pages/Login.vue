@@ -1,17 +1,9 @@
 <template>
-  <div class="half ">
-    <div class="area" align="center">
-      
-      <div class="asset  q-pt-xl window-height">
-        <div class="bg-login q-pt-xl">
-          <img class="q-pt-xl" style="width: 600px; height: 400px" src="~assets/bg-login.svg" />
-        </div>
-      </div>
-    </div>
-  </div>
+  <image-layout-vue></image-layout-vue>
   <div class="half flex-center">
     <div class="q-pt-xl">
       <div class="my-card q-pa-md card" align="center">
+        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px"/>
         <h4>Fazer Login</h4>
         <div class="q-pa-md" style="width: 360px">
           <q-input
@@ -231,8 +223,12 @@ import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
 import { API } from '../api/api'
+import ImageLayoutVue from 'src/components/login/ImageLayout';
 export default {
   name: "Login",
+  components: {
+    ImageLayoutVue
+  },
 
   data() {
     return {
@@ -413,11 +409,6 @@ export default {
   overflow: hidden;
 }
 
-.area {
-  background: #4e54c8;
-  background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
-  overflow: hidden;
-}
 .half {
   width: 50%;
   height: 100%;

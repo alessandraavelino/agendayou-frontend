@@ -1,0 +1,116 @@
+<template>
+  <div class="half">
+    <div class="area q-pt-xl" align="center">
+      <div class="asset q-pt-xl window-height">
+        <div class="bg-login q-pt-xl">
+          <img
+            class="q-pt-xl"
+            style="width: 600px; height: 400px"
+            src="~assets/bg-login.svg"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "ImageLayout",
+  props: {
+    title: {
+      type: String,
+      required: true,
+    },
+
+    caption: {
+      type: String,
+      default: "",
+    },
+
+    to: {
+      type: String,
+      default: "#",
+    },
+
+    tabActive: {
+      type: String,
+      default: ""
+    },
+
+    icon: {
+      type: String,
+      default: "",
+    },
+  },
+});
+</script>
+
+<style scoped>
+* {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.area {
+  background: #4b56d2;
+  background: -webkit-linear-gradient(to left, #8f94fb, #4b56d2);
+  overflow: hidden;
+}
+
+.half {
+  width: 50%;
+  height: 100%;
+  float: left;
+  text-align: center;
+  overflow: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .area {
+    display: none;
+  }
+  .half {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .half {
+    width: 100%;
+  }
+
+  .card {
+    width: auto;
+    margin: 0 20px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .col {
+    padding-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .q-input,
+  .q-select {
+    width: 100%;
+  }
+
+  .campos {
+    width: 320px;
+  }
+
+  .content {
+    margin-top: -50px;
+  }
+
+  
+}
+
+</style>

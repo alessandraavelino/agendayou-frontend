@@ -337,7 +337,6 @@ export default {
 
     verifyTypeUser (parceiro) {
       const id_parceiro = localStorage.getItem("id_parceiro")
-      console.log('this.inputIdParceiro', parceiro)
 
       if (id_parceiro == parceiro) {
         return false
