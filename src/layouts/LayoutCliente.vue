@@ -66,7 +66,7 @@
         <div style="height: calc(100% - 117px); padding: 10px">
           <q-toolbar>
             <q-avatar>
-              <img src="../assets/logo-menu-agenda.svg" />
+              <img src="../assets/agendayou_logo.svg" />
             </q-avatar>
 
             <q-toolbar-title>AgendaYOU</q-toolbar-title>

@@ -205,7 +205,6 @@ export default defineComponent({
           foto: el.foto,
           nome: el.nome,
           telefone: el.telefone,
-          dt_nasc: el.dt_nasc,
           email: el.email
         }));
 
@@ -214,8 +213,6 @@ export default defineComponent({
           this.inputFoto = el.foto;
           this.inputTelefone = el.telefone
           this.inputEmail = el.email
-          this.inputCpf = el.cpf
-          this.inputDateNasc = el.dt_nasc
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
@@ -232,8 +229,7 @@ export default defineComponent({
         foto: this.inputFoto,
         nome: this.inputNome,
         telefone: this.inputTelefone,
-        email: this.inputEmail,
-        dt_nasc: this.inputDateNasc
+        email: this.inputEmail
       };
 
       try {

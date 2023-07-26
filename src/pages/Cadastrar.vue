@@ -1,31 +1,22 @@
 <template>
-  <div class="half ">
-    <div class="area q-pt-xl" align="center">
-      
-      <div class="asset  q-pt-xl window-height">
-        <div class="bg-login q-pt-xl">
-          <img class="q-pt-xl" style="width: 600px; height: 400px" src="~assets/bg-login.svg" />
-        </div>
-      </div>
-    </div>
-  </div>
+  <image-layout-vue></image-layout-vue>
   <div class="half q-pt-xl">
     <div class="content">
-      <div class="my-card q-pt-md card" align="center">
-        <h5>Fazer Cadastro</h5>
-        <div class="campos" >
-          <q-input
-            class="q-pb-md"
-            label="Nome"
-            name="nome"
-            type="text"
-            v-model="fields.nome"
-            required
-            filled
-          />
+      <div class="my-card q-pt-xl card" align="center">
+        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px"/>
+        <h4>Fazer Cadastro</h4>
+        <div class="campos">
           <div class="row">
             <div class="col">
-              <q-input filled type="date" class="q-pb-md" v-model="fields.dt_nasc" required />
+              <q-input
+                class="q-pb-md"
+                label="Nome"
+                name="nome"
+                type="text"
+                v-model="fields.nome"
+                required
+                filled
+              />
             </div>
           </div>
           <div class="row">
@@ -41,6 +32,8 @@
                 filled
               />
             </div>
+          </div>
+          <div class="row">
             <div class="col">
               <q-input
                 label="Telefone"
@@ -97,11 +90,12 @@
           </div>
 
           <q-btn
-            style="width: 310px; height: 25px"
+            style="width: 310px; height: 35px"
             color="primary"
             @click="cadastrar"
             type="submit"
             label="cadastrar-se"
+            rounded
             :disable="
               !validarEmail(fields.email) ||
               !validarSenha(fields.senha) ||
@@ -116,8 +110,12 @@
         </div>
       </div>
       <p>
-        Ao se cadastrar você concorda com todos os nossos <a href="https://files.smallpdf.com/files/9c6a4c6ce007d3c6a16ffbf5798d0fdc.pdf?name=AgendaYOU-termo.pdf" download="termo-agendayou">Termos e Política de
-        Privacidade</a>.
+        Ao se cadastrar você concorda com todos os nossos
+        <a
+          href="https://drive.google.com/u/3/uc?id=1L1licA1jrxmQoUlAk0Ye4klth1tbjrp7&export=download"
+          download="termo-privacidade-agendayou"
+          >Termos e Política de Privacidade</a
+        >.
       </p>
     </div>
   </div>
@@ -151,15 +149,21 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
-import { API } from '../api/api'
+import { API } from "../api/api";
+import ImageLayoutVue from 'src/components/login/ImageLayout';
+
+
 export default {
   name: "Cadastrar",
+
+  components: {
+    ImageLayoutVue
+  },
 
   data() {
     return {
       fields: {
         nome: "",
-        dt_nasc: "",
         email: "",
         telefone: "",
         senha: "",
@@ -204,13 +208,9 @@ export default {
           email: this.fields.email,
           senha: this.fields.senha,
           nome: this.fields.nome,
-          dt_nasc: this.fields.dt_nasc,
-          telefone: this.fields.telefone
+          telefone: this.fields.telefone,
         };
-        const response = await axios.post(
-          `${API}/clientes`,
-          data
-        );
+        const response = await axios.post(`${API}/clientes`, data);
         this.alert = true;
       } catch (error) {
         console.log(error);
@@ -238,8 +238,8 @@ export default {
 }
 
 .area {
-  background: #4B56D2;
-  background: -webkit-linear-gradient(to left, #8f94fb, #4B56D2);
+  background: #4b56d2;
+  background: -webkit-linear-gradient(to left, #8f94fb, #4b56d2);
   overflow: hidden;
 }
 
@@ -280,7 +280,7 @@ p {
 }
 
 .campos {
-  width: 700px;
+  width: 600px;
 }
 
 @media only screen and (max-width: 600px) {
@@ -296,21 +296,21 @@ p {
   .half {
     width: 100%;
   }
-  
+
   .card {
     width: auto;
     margin: 0 20px;
   }
-  
+
   .row {
     flex-direction: column;
   }
-  
+
   .col {
     padding-right: 0;
     margin-bottom: 10px;
   }
-  
+
   .q-input,
   .q-select {
     width: 100%;

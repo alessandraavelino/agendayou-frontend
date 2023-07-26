@@ -137,7 +137,7 @@ const routes = [
     meta: { requiresAuth: true, allowedUserTypes: ["parceiro"] },
   },
   {
-    path: "/Login",
+    path: "/login",
     name: "Login",
     component: () => import("pages/Login.vue"),
   },
