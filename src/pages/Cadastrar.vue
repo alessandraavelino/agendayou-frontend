@@ -2,7 +2,7 @@
   <image-layout-vue></image-layout-vue>
   <div class="half q-pt-xl">
     <div class="content">
-      <div class="my-card q-pt-xl card" align="center">
+      <div class="my-card q-pt-md card" align="center">
         <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px"/>
         <h4>Fazer Cadastro</h4>
         <div class="campos">
