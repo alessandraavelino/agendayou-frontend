@@ -4,7 +4,7 @@
       <div class="asset window-height q-pt-xl">
         <div class="bg-login q-pt-xl">
           <img
-            class="q-pt-xl"
+            class="q-mt-xl"
             style="width: 600px; height: 400px"
             src="~assets/bg-login.svg"
           />
