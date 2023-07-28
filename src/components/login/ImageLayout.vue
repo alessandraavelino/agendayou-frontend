@@ -2,10 +2,10 @@
   <div class="half">
     <div class="area" align="center">
       <div class="asset window-height q-pt-xl">
-        <div class="bg-login q-pt-xl">
+        <div class="bg-login q-pt-xl q-pr-md">
           <img
             class="q-mt-xl"
-            style="width: 600px; height: 400px"
+            style="width: 600px; height: 450px"
             src="~assets/bg-login.svg"
           />
         </div>
