@@ -1,8 +1,8 @@
 <template>
   <div class="half">
     <div class="area" align="center">
-      <div class="asset window-height">
-        <div class="bg-login">
+      <div class="asset window-height q-pt-xl">
+        <div class="bg-login q-pt-xl">
           <img
             class="q-pt-xl"
             style="width: 600px; height: 400px"
