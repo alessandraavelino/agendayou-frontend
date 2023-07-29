@@ -223,12 +223,10 @@
         </q-card-section>
 
         <q-card-section class="q-pt-none">
-          O AgendaYOU é uma plataforma inovadora de cadastro e agendamento de serviços, atualmente em 
-          fase de aprimoramento contínuo. Embora já esteja totalmente funcional e disponível para uso, 
-          estou buscando aperfeiçoá-lo ainda mais. 
+          O AgendaYOU é uma plataforma de cadastro e agendamento de serviços, atualmente em 
+          fase de aprimoramento contínuo. Embora já esteja totalmente funcional e disponível para uso. 
           <br>
-          Este projeto foi concebido como o produto de 
-          software para a apresentação final do curso de TSI, refletindo em uma solução completa e 
+          Este projeto foi desenvolvido para a apresentação final do curso de TSI, refletindo em uma solução completa e 
           eficiente para atender aos usuários.
           <br>
           - Alee

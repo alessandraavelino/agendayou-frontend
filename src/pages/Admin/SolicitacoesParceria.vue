@@ -11,8 +11,6 @@
       >
         <q-card-section>
           <div class="text-h6">{{ user.nome }}</div>
-          <div class="text-subtitle2">{{ user.nome_fantasia }}</div>
-          <div class="text-subtitle2">{{ user.cnpj }}</div>
           <div class="text-subtitle3">{{ user.email }}</div>
           <div class="text-subtitle4">{{ user.qtdFuncion }}</div>
           <div class="text-subtitle4">{{ user.categoria }}</div>
@@ -64,9 +62,6 @@
             />
           </div>
           <div class="q-gutter-md" style="width: 500px">
-            <q-input v-model="inputCnpj" value="cnpj" label="CNPJ" />
-          </div>
-          <div class="q-gutter-md" style="width: 500px">
             <q-input v-model="inputEmail" value="email" label="E-mail" />
           </div>
           <div class="q-gutter-md" style="width: 500px">
@@ -96,9 +91,7 @@ export default defineComponent({
       solicitacoes: "",
       isLoading: false,
       inputNome: "",
-      inputNomeFantasia: "",
       inputEmail: "",
-      inputCnpj: "",
       inputCategoria: ""
     };
   },
@@ -116,8 +109,6 @@ export default defineComponent({
         const solicitacoes = response.data.map((el) => ({
           id_solicitacao: el.id_solicitacao,
           nome: el.nome,
-          nome_fantasia: el.nome_fantasia,
-          cnpj: el.cnpj,
           email: el.email,
           qtdFuncion: el.qtdFuncion,
           descricao: el.descricao,
@@ -156,10 +147,8 @@ export default defineComponent({
         this.isLoading = true;
         const response = await axios.post(`${API}/parceiros`, {
           nome: this.inputNome,
-          nome_fantasia: this.inputNomeFantasia,
           categoria: this.inputCategoria,
           email: this.inputEmail,
-          cnpj: this.inputCnpj,
           senha: this.inputSenha,
         });
         
@@ -196,9 +185,7 @@ export default defineComponent({
 
     openModalAceitar(user) {
       this.inputNome = user.nome;
-      this.inputNomeFantasia = user.nome_fantasia;
       this.inputEmail = user.email;
-      this.inputCnpj = user.cnpj;
       this.inputCategoria = user.categoria;
       this.formularioConfirmacao = true;
     },
