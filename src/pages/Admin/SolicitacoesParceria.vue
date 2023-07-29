@@ -52,9 +52,6 @@
             <q-input v-model="inputNome" value="nome" label="Nome" />
           </div>
           <div class="q-gutter-md" style="width: 500px">
-            <q-input v-model="inputNomeFantasia" value="nome" label="Nome" />
-          </div>
-          <div class="q-gutter-md" style="width: 500px">
             <q-input
               v-model="inputCategoria"
               value="categoria"
