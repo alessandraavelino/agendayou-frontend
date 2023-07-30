@@ -19,7 +19,7 @@
             <div class="row no-wrap q-pa-md">
               <div class="column">
                 <div class="text-h6 q-mb-md">Configurações</div>
-                <q-toggle v-model="mobileData" label="Use Mobile Data" />
+                <q-toggle v-model="mobileData" label="Modo escuro" />
                 <q-toggle v-model="bluetooth" label="Bluetooth" />
               </div>
 
@@ -164,6 +164,7 @@ export default defineComponent({
     },
     getProfile() {
       this.nomeUsuario = localStorage.getItem("nome");
+      this.fotoPerfil = localStorage.getItem("foto");
     },
     isActive(to) {
       return this.activeLink === to;

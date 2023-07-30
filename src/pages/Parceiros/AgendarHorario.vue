@@ -1,15 +1,14 @@
 <template>
   <q-page class="q-gutter-flex-start q-pa-xl">
     <div class="q-pa-md">
-      <div class="row q-pb-md">
+      <div class="row q-pb-sm">
         <div class="col">
           <span class="col-4">Agendar Horário</span>
         </div>
       </div>
       <div class="q-pa-md row justify-center">
         <div
-          class="q-gutter-md q-pt-md col"
-          style="max-width: 600px; margin-right: 60px"
+          class="q-gutter-md col fields"
         >
           <!-- First column -->
           <q-input
@@ -33,14 +32,14 @@
           />
         </div>
         <div
-          class="q-gutter-md q-pt-md col"
-          style="max-width: 600px; margin-left: 20px"
+          class="q-gutter-md q-pt-md col col_2"
+          style="max-width: 600px;"
         >
           <!-- Second column -->
           <q-input
             outlined
             v-model="inputProfissional"
-            class="q-pa-sm"
+            class="q-px-md"
             label="Profissional:"
           />
           <q-input
@@ -49,7 +48,7 @@
             required
             v-model="inputHorario"
             hint="Selecione a data e hora"
-            class="custom-date-picker"
+            class="q-px-md custom-date-picker"
           >
             <template v-slot:prepend>
               <q-icon name="event" class="cursor-pointer">
@@ -91,7 +90,7 @@
             outlined
             v-model="inputValor"
             type="number"
-            class="q-pa-sm"
+            class="q-px-md"
             label="Valor:"
           />
         </div>
@@ -117,7 +116,7 @@
         </q-dialog>
       </div>
     </div>
-    <div class="text-center q-pt-xl">
+    <div class="text-center q-pt-sm">
       <q-btn
         label="realizar agendamento"
         rounded
@@ -197,7 +196,23 @@ span {
 }
 
 .custom-date-picker {
-  width: 95%;
+  width: 93%;
 }
+@media only screen and (max-width: 600px) {
+  .col {
+    flex: 100%;
+    margin-left: 0;
+  }
 
+  .col_2 {
+    flex: 100%;
+    margin-left: -15px;
+  }
+
+
+  .q-input, .q-select, .fields {
+    width: 320px;
+    margin-left: -20px;
+  }
+}
 </style>

@@ -261,8 +261,8 @@ export default {
   data() {
     return {
       alert: false,
-      email: "",
-      senha: "",
+      email: "simular_parceiro@mail.com",
+      senha: "12345678",
       emailRedefinir: "",
       isPwd: ref(true),
       isLoading: false,
@@ -330,7 +330,6 @@ export default {
         localStorage.setItem("foto", response.data.pessoa.foto);
         localStorage.setItem("telefone", response.data.pessoa.telefone);
         localStorage.setItem("id_parceiro", response.data.parceiro.id_parceiro);
-        localStorage.setItem("nome_fantasia", response.data.parceiro.nome_fantasia);
         localStorage.setItem("categoria", response.data.parceiro.categoria);
         localStorage.setItem("id_pessoa", response.data.pessoa.id_pessoa);
 

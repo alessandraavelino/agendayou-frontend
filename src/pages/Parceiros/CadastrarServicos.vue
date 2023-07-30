@@ -5,10 +5,9 @@
         <div>
           <span class="col-4">Cadastrar Serviços</span>
         </div>
-        <div class="col row justify-end">
+        <div class="col row justify-end botao">
           <q-btn
-            label="add"
-            icon="add_circle"
+            icon="add"
             rounded
             class=".col-md-4 .offset-md-4 btnAdd"
             color="primary"
@@ -23,7 +22,7 @@
         row-key="id_servico"
       >
         <template v-slot:body-cell-acoes="{ row }">
-          <div class="text-center q-pt-sm icons">
+          <div class="text-center q-pt-sm icons teste">
             <q-badge
               class="icons_delete_update"
               rounded
@@ -387,6 +386,8 @@ span {
 }
 .btnAdd {
   font-weight: 900;
+  width: 50px;
+  height: 50px;
 }
 .icons_delete_update {
   cursor: pointer;
@@ -394,5 +395,17 @@ span {
 
 .icons_delete_update:hover {
   color: rgb(79, 79, 79);
+}
+
+@media only screen and (max-width: 600px) {
+  .btn__pdf {
+    width: 50px;
+    font-size: 10px;
+  }
+
+  .botao {
+    margin-left: 30px;
+  }
+
 }
 </style>

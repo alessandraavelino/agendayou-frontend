@@ -23,7 +23,7 @@
         </template>
       </q-tabs>
 
-      <q-tab-panels v-model="tab" class="q-mt-md">
+      <q-tab-panels v-model="tab" class="q-mt-md bg-accent">
         <q-tab-panel
           v-for="tabItem in tabs"
           :key="tabItem.name"
@@ -263,7 +263,6 @@ export default {
         }));
 
         this.parceiro = servicos.parceiro_id
-        console.log('this.parceiro', this.parceiro)
 
         this.servicos = servicos;
       } catch (error) {

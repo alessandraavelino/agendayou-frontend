@@ -68,12 +68,12 @@
               <q-card class="my-card">
                 <q-video
                   class="video"
-                  src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+                  src="https://www.youtube.com/embed/7zXTSuKhya8"
                 />
 
                 <q-card-section>
-                  <div class="text-h6">Our Changing Planet</div>
-                  <div class="text-subtitle2">by John Doe</div>
+                  <div class="text-h6">COMO ESCALAR UM NEGÓCIO EM ATÉ 4 PASSOS SIMPLES!</div>
+                  <div class="text-subtitle2">Thiago Nigro</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -86,12 +86,12 @@
               <q-card class="my-card">
                 <q-video
                   class="video"
-                  src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+                  src="https://www.youtube.com/embed/SKl4L1t4jvA"
                 />
 
                 <q-card-section>
-                  <div class="text-h6">Our Changing Planet</div>
-                  <div class="text-subtitle2">by John Doe</div>
+                  <div class="text-h6">COMO ATRAIR CLIENTES? (Serve pra QUALQUER NEGÓCIO!)</div>
+                  <div class="text-subtitle2">Shirleyson Kaisser</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -104,12 +104,12 @@
               <q-card class="my-card">
                 <q-video
                   class="video"
-                  src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
+                  src="https://www.youtube.com/embed/69l-iaw_Vz0"
                 />
 
                 <q-card-section>
-                  <div class="text-h6">Our Changing Planet</div>
-                  <div class="text-subtitle2">by John Doe</div>
+                  <div class="text-h6">10 dicas INFALÍVEIS para a GESTÃO FINANCEIRA de um pequeno negócio!</div>
+                  <div class="text-subtitle2">Thiago Nigro</div>
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
@@ -158,7 +158,7 @@
           type="button"
           color="primary"
           @click="atualizarPerfil"
-          :disable="!validarTelefone(inputTelefone) || inputEstado === '' || inputCidade === '' || inputBairro === '' || inputRua === '' "
+          :disable="!validarTelefone(inputTelefone)"
           v-close-popup
         />
       </q-card-actions>
@@ -216,7 +216,6 @@ export default defineComponent({
         });
 
         this.tipoUsuario = localStorage.getItem("tipo_pessoa")
-        console.log('this.tipoUsuario', this.tipoUsuario)
       } catch (error) {
         console.log(error);
       }

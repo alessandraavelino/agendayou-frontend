@@ -24,7 +24,6 @@
       >
         <q-card-section>
           <div class="text-h6">{{ parceiro.nome }}</div>
-          <div class="text-subtitle2">{{ parceiro.nome_fantasia }}</div>
           <div class="text-subtitle3">{{ parceiro.cnpj }}</div>
           <div class="text-subtitle3">{{ parceiro.email }}</div>
         </q-card-section>
@@ -86,7 +85,6 @@ export default defineComponent({
           id_parceiro: el.id_parceiro,
           nome: el.nome,
           cnpj: el.cnpj,
-          nome_fantasia: el.nome_fantasia,
           email: el.email,
           categoria: el.categoria,
         }));

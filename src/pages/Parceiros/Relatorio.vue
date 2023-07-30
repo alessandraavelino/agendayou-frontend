@@ -21,13 +21,15 @@
               <q-icon name="search" />
             </template>
           </q-input>
-          <q-btn
+          <div class="botao">
+            <q-btn
             label="Baixar PDF"
-            class="q-ml-xl"
+            class="q-ml-xl btn__pdf"
             color="primary"
             @click="download"
             ref="downloadButton"
           />
+          </div>
         </template>
       </q-table>
       <div class="q-pa-md q-gutter-md row">
@@ -243,5 +245,16 @@ span {
 }
 .exclude-from-pdf {
   display: none !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .btn__pdf {
+    width: 50px;
+    font-size: 10px;
+  }
+
+  .botao {
+    margin: -50px 163px 0px;
+  }
 }
 </style>
