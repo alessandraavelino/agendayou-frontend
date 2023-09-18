@@ -3,7 +3,7 @@
   <div class="half flex-center">
     <div class="q-pt-xl">
       <div class="my-card q-pa-md card" align="center">
-        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px"/>
+        <q-img src="~../assets/agendayou_logo_login.svg" style="width: 100px" />
         <h4>Fazer Login</h4>
         <div class="q-pa-md" style="width: 360px">
           <q-input
@@ -66,6 +66,9 @@
           rounded
         />
       </div>
+      <footer class="q-pt-xl">
+        <span>Desenvolvido com ❤️ por Alessandra Avelino</span>
+      </footer>
     </div>
     <q-dialog v-model="solicitarParceria" persistent>
       <q-card>
@@ -77,7 +80,12 @@
           <div class="q-pa-md">
             <div class="q-gutter-md" style="width: 500px">
               <q-input v-model="parceriaFields.nome" label="Nome fantasia" />
-              <q-select v-model="parceriaFields.categoria" :options="optionsCategorias" label="Categoria" @update:modelValue="getCategoria" />
+              <q-select
+                v-model="parceriaFields.categoria"
+                :options="optionsCategorias"
+                label="Categoria"
+                @update:modelValue="getCategoria"
+              />
               <q-input
                 v-model="parceriaFields.email"
                 :error="
@@ -216,33 +224,30 @@
       </q-card>
     </q-dialog>
     <div class="q-pa-md q-gutter-sm">
-    <q-dialog v-model="alert" @hide="dialogHidden">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Atenção</div>
-        </q-card-section>
+      <q-dialog v-model="alert" @hide="dialogHidden">
+        <q-card>
+          <q-card-section>
+            <div class="text-h6">Atenção</div>
+          </q-card-section>
 
-        <q-card-section class="q-pt-none">
-          O AgendaYOU é uma plataforma de cadastro e agendamento de serviços, atualmente em 
-          fase de aprimoramento contínuo. Embora já esteja totalmente funcional e disponível para uso. 
-          <br>
-          Este projeto foi desenvolvido para a apresentação final do curso de TSI, refletindo em uma solução completa e 
-          eficiente para atender aos usuários.
-          <br>
-          - Alee
-        </q-card-section>
+          <q-card-section class="q-pt-none">
+            O AgendaYOU é uma plataforma de cadastro e agendamento de serviços,
+            atualmente em fase de aprimoramento contínuo. Embora já esteja
+            totalmente funcional e disponível para uso.
+            <br />
+            Este projeto foi desenvolvido para a apresentação final do curso de
+            TSI, refletindo em uma solução completa e eficiente para atender aos
+            usuários.
+            <br />
+            - Alee
+          </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn
-            flat
-            label="conhecer melhor"
-            color="primary"
-            v-close-popup
-          />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
-  </div>
+          <q-card-actions align="right">
+            <q-btn flat label="conhecer melhor" color="primary" v-close-popup />
+          </q-card-actions>
+        </q-card>
+      </q-dialog>
+    </div>
   </div>
 </template>
 
@@ -250,12 +255,12 @@
 import { ref } from "vue";
 import axios from "axios";
 import { useQuasar } from "quasar";
-import { API } from '../api/api'
-import ImageLayoutVue from 'src/components/login/ImageLayout';
+import { API } from "../api/api";
+import ImageLayoutVue from "src/components/login/ImageLayout";
 export default {
   name: "Login",
   components: {
-    ImageLayoutVue
+    ImageLayoutVue,
   },
 
   data() {
@@ -272,8 +277,7 @@ export default {
       solicitarParceria: false,
       confirmSolicitacao: false,
       codeRecebido: false,
-      optionsCategorias: [
-      ],
+      optionsCategorias: [],
       parceriaFields: {
         nome: "",
         email: "",
@@ -282,19 +286,20 @@ export default {
       },
       descricaoErrorMessage:
         "Sua descrição deve conter pelo menos 100 caractéres",
-        mensagemConfirm: "Sua solicitação foi enviada com sucesso! Iremos analisar seus dados e em breve você receberá um retorno através do e-mail informado."
+      mensagemConfirm:
+        "Sua solicitação foi enviada com sucesso! Iremos analisar seus dados e em breve você receberá um retorno através do e-mail informado.",
     };
   },
 
   created() {
     // Verifica se o diálogo já foi exibido anteriormente usando o localStorage
-    const dialogAlreadyShown = localStorage.getItem('dialogShown');
+    const dialogAlreadyShown = localStorage.getItem("dialogShown");
 
     if (!dialogAlreadyShown) {
       // Se o diálogo ainda não tiver sido exibido, mostra-o
       this.alert = true;
     }
-  }, 
+  },
 
   async mounted() {
     await this.getCategoria();
@@ -312,7 +317,7 @@ export default {
 
     dialogHidden() {
       // Define o valor do localStorage para informar que o diálogo já foi exibido
-      localStorage.setItem('dialogShown', true);
+      localStorage.setItem("dialogShown", true);
     },
 
     async login() {
@@ -349,16 +354,13 @@ export default {
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post(
-          `${API}/solicitarparceria`,
-          {
-            nome: this.parceriaFields.nome,
-            email: this.parceriaFields.email,
-            qtdFunc: parseInt(this.parceriaFields.qtdFunc),
-            descricao: this.parceriaFields.descricao,
-            categoria: this.parceriaFields.categoria.label
-          }
-        );
+        const response = await axios.post(`${API}/solicitarparceria`, {
+          nome: this.parceriaFields.nome,
+          email: this.parceriaFields.email,
+          qtdFunc: parseInt(this.parceriaFields.qtdFunc),
+          descricao: this.parceriaFields.descricao,
+          categoria: this.parceriaFields.categoria.label,
+        });
         this.confirmSolicitacao = true;
       } catch (error) {
         console.log(error);
@@ -375,12 +377,9 @@ export default {
       const $q = useQuasar();
       try {
         this.isLoading = true;
-        const response = await axios.post(
-          `${API}/esquecisenha`,
-          {
-            email: this.emailRedefinir,
-          }
-        );
+        const response = await axios.post(`${API}/esquecisenha`, {
+          email: this.emailRedefinir,
+        });
         this.codeRecebido = true;
       } catch (error) {
         console.log(error);
@@ -426,7 +425,6 @@ export default {
         }));
 
         this.optionsCategorias = allCategorias;
-
       } catch (error) {
         console.log(error);
       }
@@ -441,7 +439,7 @@ export default {
 
     validarDescricao(descricao) {
       return descricao.length >= 50;
-    }
+    },
   },
 };
 </script>
@@ -482,12 +480,19 @@ hr {
   cursor: pointer;
 }
 
+footer {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   .area {
     display: none;
   }
   .half {
-    width: 100%
+    width: 100%;
+  }
+  footer {
+    display: block;
   }
 }
 </style>

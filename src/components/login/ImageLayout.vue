@@ -9,8 +9,12 @@
             src="~assets/bg-login.svg"
           />
         </div>
+        <footer class="q-mt-xl" style="color: white">
+          <span>Desenvolvido com ❤️ por Alessandra Avelino</span>
+        </footer>
       </div>
     </div>
+    
   </div>
 </template>
 
